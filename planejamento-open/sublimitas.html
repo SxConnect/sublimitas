@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sublimitas - Personalizados</title>
+<style>
+  :root {
+    --purple: #4a148c;
+    --orange: #ff6d00;
+    --blue: #1565c0;
+    --green: #2e7d32;
+    --gray: #f5f5f5;
+    --text: #333;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: Arial, sans-serif; margin: 0; color: var(--text); }
+  a { text-decoration: none; color: inherit; }
+
+  .topbar {
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    font-size: 13px;
+    padding: 8px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .topbar a { color: var(--text); margin-right: 14px; }
+  .topbar .social a { margin-left: 6px; }
+
+  header { padding: 18px 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #ddd; }
+  .logo { font-size: 28px; font-weight: 700; color: var(--purple); }
+  nav a { margin-left: 18px; font-weight: 500; }
+  .header-icons input { padding: 6px; border: 1px solid #ccc; border-radius: 4px; width: 180px; }
+  .header-icons button { margin-left: 10px; padding: 6px 10px; cursor: pointer; }
+
+  .hero { background: #fff; padding: 50px 40px; display: flex; align-items: center; justify-content: space-between; gap: 30px; }
+  .hero-text { max-width: 520px; }
+  .hero h1 { font-size: 34px; margin-bottom: 10px; }
+  .hero h1 span { color: var(--purple); }
+  .hero p { margin: 18px 0; font-size: 16px; }
+  .hero .btn { padding: 10px 18px; border-radius: 6px; margin-right: 8px; display: inline-block; font-weight: 600; cursor: pointer; }
+  .btn.orange { background: var(--orange); color: #fff; }
+  .btn.white { border: 2px solid var(--purple); color: var(--purple); background: #fff; }
+  .values { display: flex; gap: 18px; margin-top: 22px; }
+  .values div { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+  .hero-visual { background: var(--gray); width: 320px; height: 260px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #777; }
+
+  .categories { padding: 30px 40px; }
+  .categories h2 { margin: 0 0 16px; }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .card { background: var(--gray); padding: 18px; border-radius: 8px; text-align: center; font-size: 14px; color: #444; }
+  .card.small { padding: 12px; }
+  .btn.purple { background: var(--purple); color: #fff; align-self: flex-end; }
+
+  .products { padding: 30px 40px; }
+  .section-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+
+  .how { padding: 40px; background: #fff; text-align: center; }
+  .steps { display: flex; justify-content: center; gap: 40px; margin-top: 20px; }
+  .step { width: 150px; }
+  .step .circle { width: 36px; height: 36px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; }
+  .step:nth-child(1) .circle { background: var(--purple); }
+  .step:nth-child(2) .circle { background: var(--orange); }
+  .step:nth-child(3) .circle { background: var(--green); }
+  .step:nth-child(4) .circle { background: var(--blue); }
+  .dotted { border-top: 2px dotted #ccc; margin: 10px 0; }
+
+  .banner { padding: 40px; background: var(--purple); color: #fff; display: flex; justify-content: space-between; align-items: center; }
+  .banner .btn { padding: 10px 16px; border-radius: 6px; margin-right: 8px; font-weight: 600; display: inline-block; }
+  .banner .btn.dark { background: #2a0a4d; color: #fff; }
+
+  .social-proof { padding: 40px; text-align: center; }
+
+  .faq { padding: 40px; }
+  details { border-bottom: 1px solid #ddd; padding: 10px 0; cursor: pointer; }
+
+  .cta { background: #fff; padding: 40px; text-align: center; border-top: 1px solid #ddd; }
+  .cta.cta-bottom { background: var(--purple); color: #fff; }
+  .cta.cta-bottom .btn { color: #fff; }
+
+  footer { padding: 40px; background: #f9f9f9; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; font-size: 14px; }
+  footer h4 { margin: 10px 0; color: var(--purple); }
+  footer ul { list-style: none; padding: 0; }
+  footer li { margin: 6px 0; }
+  .copys { padding: 10px 40px; border-top: 1px solid #ddd; display: flex; justify-content: space-between; font-size: 12px; color: #666; }
+
+  .whatsapp { position: fixed; right: 20px; bottom: 20px; background: #25d366; color: #fff; padding: 12px 16px; border-radius: 50px; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div><a href="#">Produção própria</a><a href="#">Entrega para todo Brasil</a><a href="#">Atendimento via WhatsApp</a></div>
+  <div class="social"><a href="#">Instagram</a><a href="#">Facebook</a></div>
+</div>
+
+<header>
+  <div class="logo">Sublimitas</div>
+  <nav>
+    <a href="#">Início</a>
+    <a href="#">Produtos</a>
+    <a href="#">Personalize</a>
+    <a href="#">Como funciona</a>
+    <a href="#">Sobre nós</a>
+    <a href="#">Contato</a>
+  </nav>
+  <div class="header-icons">
+    <input placeholder="Buscar produtos...">
+    <button>👤</button>
+    <button>🛒</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-text">
+    <h1><span>Personalizados</span> que contam histórias.</h1>
+    <p>Canecas, Camisas, Uniformes, Brindes, Garrafas e muito mais.</p>
+    <a class="btn orange" href="#">COMPRAR AGORA</a>
+    <a class="btn white" href="#">SOLICITAR ORÇAMENTO</a>
+    <div class="values">
+      <div>✅ Arte inclusa sem custo adicional</div>
+      <div>✅ Produção própria com qualidade</div>
+      <div>✅ Entrega rápida para todo Brasil</div>
+      <div>✅ Atendimento humanizado</div>
+    </div>
+  </div>
+  <div class="hero-visual">Collage de produtos</div>
+</section>
+
+<section class="categories">
+  <div class="section-head"><h2>Categorias</h2><a class="btn purple" href="#">VER TODOS</a></div>
+  <div class="grid">
+    <div class="card">Canecas</div>
+    <div class="card">Camisas</div>
+    <div class="card">Uniformes</div>
+    <div class="card">Garrafas</div>
+    <div class="card">Brindes</div>
+    <div class="card">Convites</div>
+    <div class="card">Almofadas</div>
+    <div class="card">Mouse Pads</div>
+  </div>
+</section>
+
+<section class="products">
+  <div class="section-head"><h2>Produtos em destaque</h2></div>
+  <div class="grid">
+    <div class="card small">Caneca Personalizada<br><b>R$ 34,90</b><br><span>Novo</span></div>
+    <div class="card small">Camiseta Personalizada<br><b>R$ 49,90</b><br><span>Novo</span></div>
+    <div class="card small">Garrafa Térmica<br><b>R$ 79,90</b></div>
+    <div class="card small">Almofada Personalizada<br><b>R$ 39,90</b></div>
+    <div class="card small">Mouse Pad Personalizado<br><b>R$ 24,90</b></div>
+    <div class="card small">Uniforme Empresarial<br><b>R$ 69,90</b></div>
+  </div>
+  <div style="text-align: right; margin-top: 10px;"><a class="btn purple" href="#">VER TODOS</a></div>
+</section>
+
+<section class="how">
+  <h2>Como funciona</h2>
+  <div class="steps">
+    <div class="step"><div class="circle">1</div><div class="dotted"></div><b>Escolha o produto</b><br>Encontre o que você precisa</div>
+    <div class="step"><div class="circle">2</div><div class="dotted"></div><b>Envie sua arte</b><br>Personalize com sua ideia</div>
+    <div class="step"><div class="circle">3</div><div class="dotted"></div><b>Produzimos</b><br>Com qualidade e muito cuidado</div>
+    <div class="step"><div class="circle">4</div><div class="dotted"></div><b>Receba em casa</b><br>Entregamos para todo o Brasil</div>
+  </div>
+</section>
+
+<section class="banner">
+  <div>
+    <h2>EMPRESAS - EVENTOS - EQUIPES</h2>
+    <p>Uniformes que fortalecem sua marca</p>
+    <a class="btn orange" href="#">SOLICITAR ORÇAMENTO</a>
+    <a class="btn dark" href="#">FALE NO WHATSAPP</a>
+  </div>
+  <div style="background:#2a0a4d; width: 220px; height: 120px; border-radius: 10px; color: #fff; display:flex; align-items:center; justify-content:center;">Imagens uniformes</div>
+</section>
+
+<section class="social-proof">
+  <h2>Clientes</h2>
+  <div class="grid" style="grid-template-columns: repeat(3,1fr);">
+    <div class="card">ESCOLA FUTURO</div>
+    <div class="card">Clínica Bem Viver</div>
+    <div class="card">SUPERMERCADO ECONOMIA</div>
+    <div class="card">ACADEMIA FORÇA TOTAL</div>
+    <div class="card">IGREJA VIDA NOVA</div>
+    <div class="card">FESTA PERFEITA</div>
+  </div>
+  <div style="margin-top: 20px;">
+    <h3>O que nossos clientes dizem</h3>
+    <p>⭐⭐⭐⭐⭐</p>
+    <p>Juliana Almeida - “Produto incrível!”</p>
+  </div>
+</section>
+
+<section class="faq">
+  <h2>Perguntas frequentes</h2>
+  <details><summary>Qual o prazo de produção?</summary><p>Padrão: 5 a 8 dias úteis.</p></details>
+  <details><summary>Vocês fazem a arte?</summary><p>Sim, arte inclusa sem custo adicional.</p></details>
+  <details><summary>Como envio minha arte?</summary><p>Por WhatsApp, e-mail ou formulários.</p></details>
+  <details><summary>Qual a forma de pagamento?</summary><p>Pix, cartão e boleto.</p></details>
+</section>
+
+<section class="cta cta-bottom">
+  <h2>Pronto para personalizar?</h2>
+  <p>Transforme sua ideia em algo único!</p>
+  <a class="btn orange" href="#">COMPRAR AGORA</a>
+  <a class="btn dark" href="#">FALE NO WHATSAPP</a>
+</section>
+
+<footer>
+  <div>
+    <div class="logo">Sublimitas</div>
+    <p>Personalizados que contam histórias.</p>
+  </div>
+  <div>
+    <h4>Institucional</h4>
+    <ul>
+      <li><a href="#">Sobre nós</a></li>
+      <li><a href="#">Como funciona</a></li>
+      <li><a href="#">Depoimentos</a></li>
+      <li><a href="#">Trabalhe conosco</a></li>
+      <li><a href="#">Blog</a></li>
+    </ul>
+    <h4>Ajuda</h4>
+    <ul>
+      <li><a href="#">FAQ</a></li>
+      <li><a href="#">Política de Privacidade</a></li>
+      <li><a href="#">Trocas e Devoluções</a></li>
+      <li><a href="#">Formas de pagamento</a></li>
+      <li><a href="#">Prazos</a></li>
+    </ul>
+  </div>
+  <div>
+    <h4>Categorias</h4>
+    <ul>
+      <li><a href="#">Canecas</a></li>
+      <li><a href="#">Camisas</a></li>
+      <li><a href="#">Brindes</a></li>
+      <li><a href="#">Uniformes</a></li>
+      <li><a href="#">Almofadas</a></li>
+      <li><a href="#">Garrafas</a></li>
+      <li><a href="#">Mouse Pads</a></li>
+    </ul>
+    <h4>Fale conosco</h4>
+    <p>📞 (21) 99999-9999<br>✉ contato@sublimitas.com<br>📍 Niterói - RJ<br>⏰ Seg-Sex 9h-18h</p>
+  </div>
+</footer>
+
+<div class="whatsapp">WhatsApp</div>
+
+<div class="copys">
+  <div>© 2024 Sublimitas - Todos os direitos reservados.</div>
+  <div>Desenvolvido por SyConnect</div>
+</div>
+
+</body>
+</html>
