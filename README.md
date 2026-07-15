@@ -1,6 +1,6 @@
-# sublimitas
+# Sublimitas Site Open
 
-Sublimitas Site Open  Site aberto de demonstração/prototipação do Sublimitas, focado em usabilidade pública e conversão.
+Site aberto de demonstração/prototipação do Sublimitas, focado em usabilidade pública e conversão.
 
 ## Funcionalidades
 - Página inicial
@@ -18,3 +18,6 @@ Sublimitas Site Open  Site aberto de demonstração/prototipação do Sublimitas
 
 ## Uso
 Aberto para validação visual e fluxos de usuário antes da integração com o ecossistema SxConnect/Xpanel.
+
+## Observação
+A pasta `planejamento-open/` é local e não faz parte deste repositório.
