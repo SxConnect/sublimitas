@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrinho — Sublimitas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .cart-page { padding: 40px 0; }
+    .cart-layout { display: grid; grid-template-columns: 1fr 380px; gap: 32px; align-items: flex-start; }
+    .cart-items { display: flex; flex-direction: column; gap: 16px; }
+    .cart-item { display: flex; align-items: center; gap: 16px; background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 20px; }
+    .cart-item-image { width: 90px; height: 90px; background: var(--gray-100); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 2rem; flex-shrink: 0; overflow: hidden; }
+    .cart-item-image img { width: 100%; height: 100%; object-fit: cover; }
+    .cart-item-details { flex: 1; min-width: 0; }
+    .cart-item-name { font-weight: 600; font-size: 1rem; margin-bottom: 4px; }
+    .cart-item-category { font-size: 0.8rem; color: var(--gray-500); margin-bottom: 8px; }
+    .cart-item-price { font-weight: 700; color: var(--accent); }
+    .cart-item-actions { display: flex; align-items: center; gap: 12px; }
+    .qty-control { display: flex; align-items: center; gap: 0; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); overflow: hidden; }
+    .qty-btn { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 600; background: var(--gray-50); transition: background var(--transition); }
+    .qty-btn:hover { background: var(--gray-200); }
+    .qty-value { width: 44px; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; font-weight: 600; border-left: 1px solid var(--gray-300); border-right: 1px solid var(--gray-300); }
+    .remove-btn { background: none; border: none; color: var(--danger); font-size: 1.2rem; padding: 8px; cursor: pointer; transition: opacity var(--transition); }
+    .remove-btn:hover { opacity: 0.7; }
+    .cart-empty { text-align: center; padding: 80px 20px; background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius); }
+    .cart-empty-icon { font-size: 4rem; margin-bottom: 16px; }
+    .cart-empty h2 { font-size: 1.5rem; margin-bottom: 8px; }
+    .cart-empty p { color: var(--gray-500); margin-bottom: 24px; }
+    .cart-summary { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 28px; position: sticky; top: 96px; }
+    .cart-summary h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 20px; }
+    .summary-row { display: flex; justify-content: space-between; padding: 10px 0; font-size: 0.95rem; }
+    .summary-row.total { border-top: 2px solid var(--gray-200); margin-top: 8px; padding-top: 16px; font-weight: 700; font-size: 1.15rem; }
+    .summary-row.total span:last-child { color: var(--accent); }
+    .summary-shipping { color: var(--gray-500); font-size: 0.85rem; }
+    .checkout-form { margin-top: 24px; border-top: 1px solid var(--gray-200); padding-top: 24px; }
+    .checkout-form h4 { font-size: 1rem; font-weight: 600; margin-bottom: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-row.full { grid-template-columns: 1fr; }
+    .guest-fields { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--gray-200); }
+    .guest-fields h4 { margin-bottom: 12px; }
+    .section-title { font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray-500); margin-bottom: 12px; margin-top: 16px; }
+    @media (max-width: 768px) {
+      .cart-layout { grid-template-columns: 1fr; }
+      .cart-item { flex-wrap: wrap; }
+      .cart-item-actions { width: 100%; justify-content: space-between; margin-top: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a href="/" class="logo">
+        <span class="logo-icon">✦</span>
+        <span class="logo-text">Sublimitas</span>
+      </a>
+      <nav class="nav-desktop">
+        <a href="/" class="nav-link">Início</a>
+        <a href="/produtos" class="nav-link">Produtos</a>
+        <a href="/categorias" class="nav-link">Categorias</a>
+        <a href="/como-funciona" class="nav-link">Como Funciona</a>
+        <a href="/sobre" class="nav-link">Sobre</a>
+        <a href="/faq" class="nav-link">FAQ</a>
+        <a href="/contato" class="nav-link">Contato</a>
+      </nav>
+      <div class="header-actions">
+        <button class="btn-icon" id="searchBtn" title="Buscar (Ctrl+K)">🔍</button>
+        <a href="/carrinho" class="btn-icon cart-icon" id="cartBtn">
+          🛒
+          <span class="cart-badge" id="cartBadge" style="display:none">0</span>
+        </a>
+        <div id="authButtons">
+          <a href="/login" class="btn btn-outline btn-sm">Entrar</a>
+          <a href="/cadastro" class="btn btn-primary btn-sm">Cadastrar</a>
+        </div>
+        <div id="userMenu" style="display:none">
+          <button class="btn-icon" id="userMenuBtn">👤</button>
+          <div class="dropdown" id="userDropdown" style="display:none">
+            <a href="/meus-pedidos">Meus Pedidos</a>
+            <a href="#" id="logoutBtn">Sair</a>
+          </div>
+        </div>
+        <button class="btn-icon mobile-menu-btn" id="mobileMenuBtn">☰</button>
+      </div>
+    </div>
+    <nav class="nav-mobile" id="mobileNav" style="display:none">
+      <a href="/">Início</a>
+      <a href="/produtos">Produtos</a>
+      <a href="/categorias">Categorias</a>
+      <a href="/como-funciona">Como Funciona</a>
+      <a href="/sobre">Sobre</a>
+      <a href="/faq">FAQ</a>
+      <a href="/contato">Contato</a>
+    </nav>
+  </header>
+
+  <main class="cart-page">
+    <div class="container">
+      <div class="section-header" style="text-align:left; margin-bottom:32px;">
+        <h1 style="font-size:1.75rem; font-weight:700;">Meu Carrinho</h1>
+      </div>
+
+      <div id="cartEmpty" class="cart-empty" style="display:none">
+        <div class="cart-empty-icon">🛒</div>
+        <h2>Seu carrinho está vazio</h2>
+        <p>Adicione produtos do nosso catálogo para começar suas compras.</p>
+        <a href="/produtos" class="btn btn-primary">Ver Catálogo</a>
+      </div>
+
+      <div id="cartContent" class="cart-layout" style="display:none">
+        <div>
+          <div class="cart-items" id="cartItems"></div>
+        </div>
+
+        <div class="cart-summary">
+          <h3>Resumo do Pedido</h3>
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span id="subtotal">R$ 0,00</span>
+          </div>
+          <div class="summary-row">
+            <span>Frete</span>
+            <span class="summary-shipping">Calculado no checkout</span>
+          </div>
+          <div class="summary-row total">
+            <span>Total</span>
+            <span id="totalPrice">R$ 0,00</span>
+          </div>
+
+          <div class="checkout-form">
+            <div id="guestSection" style="display:none">
+              <div class="guest-fields">
+                <h4>Dados do Visitante</h4>
+                <div class="form-group">
+                  <label for="guestName">Nome completo</label>
+                  <input type="text" id="guestName" placeholder="Seu nome">
+                </div>
+                <div class="form-group">
+                  <label for="guestEmail">E-mail</label>
+                  <input type="email" id="guestEmail" placeholder="seu@email.com">
+                </div>
+                <div class="form-group">
+                  <label for="guestPhone">Telefone</label>
+                  <input type="tel" id="guestPhone" placeholder="(11) 99999-9999">
+                </div>
+              </div>
+            </div>
+
+            <div class="section-title">Endereço de Entrega</div>
+            <div class="form-group">
+              <label for="street">Rua / Avenida</label>
+              <input type="text" id="street" placeholder="Rua das Flores">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="number">Número</label>
+                <input type="text" id="number" placeholder="123">
+              </div>
+              <div class="form-group">
+                <label for="complement">Complemento</label>
+                <input type="text" id="complement" placeholder="Apto 101">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="neighborhood">Bairro</label>
+              <input type="text" id="neighborhood" placeholder="Centro">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="city">Cidade</label>
+                <input type="text" id="city" placeholder="São Paulo">
+              </div>
+              <div class="form-group">
+                <label for="state">Estado</label>
+                <select id="state">
+                  <option value="">UF</option>
+                  <option value="AC">AC</option><option value="AL">AL</option><option value="AP">AP</option>
+                  <option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option>
+                  <option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option>
+                  <option value="MA">MA</option><option value="MT">MT</option><option value="MS">MS</option>
+                  <option value="MG">MG</option><option value="PA">PA</option><option value="PB">PB</option>
+                  <option value="PR">PR</option><option value="PE">PE</option><option value="PI">PI</option>
+                  <option value="RJ">RJ</option><option value="RN">RN</option><option value="RS">RS</option>
+                  <option value="RO">RO</option><option value="RR">RR</option><option value="SC">SC</option>
+                  <option value="SP">SP</option><option value="SE">SE</option><option value="TO">TO</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="zipCode">CEP</label>
+              <input type="text" id="zipCode" placeholder="01001-000" maxlength="9">
+            </div>
+
+            <button class="btn btn-primary btn-lg" style="width:100%; margin-top:8px;" id="checkoutBtn" onclick="checkout()">
+              Finalizar Pedido
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="/" class="logo">
+            <span class="logo-icon">✦</span>
+            <span class="logo-text">Sublimitas</span>
+          </a>
+          <p>Produtos personalizados de alta qualidade para empresas e eventos.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Produtos</h4>
+          <a href="/produtos">Catálogo</a>
+          <a href="/categorias">Categorias</a>
+          <a href="/criar-com-ia">Criar com IA</a>
+        </div>
+        <div class="footer-col">
+          <h4>Empresa</h4>
+          <a href="/sobre">Sobre Nós</a>
+          <a href="/como-funciona">Como Funciona</a>
+          <a href="/contato">Contato</a>
+        </div>
+        <div class="footer-col">
+          <h4>Minha Conta</h4>
+          <a href="/login">Entrar</a>
+          <a href="/cadastro">Cadastrar</a>
+          <a href="/meus-pedidos">Meus Pedidos</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="year"></span> Sublimitas. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="/js/main.js"></script>
+  <script>
+    let cartData = { items: [], total: 0 };
+
+    async function loadCart() {
+      try {
+        generateSessionId();
+        const data = await api('/api/cart');
+        cartData = data;
+        renderCart();
+      } catch {
+        showToast('Erro ao carregar carrinho', 'error');
+      }
+    }
+
+    function renderCart() {
+      const empty = document.getElementById('cartEmpty');
+      const content = document.getElementById('cartContent');
+      const user = JSON.parse(localStorage.getItem('user') || 'null');
+
+      if (!cartData.items || cartData.items.length === 0) {
+        empty.style.display = 'block';
+        content.style.display = 'none';
+        return;
+      }
+
+      empty.style.display = 'none';
+      content.style.display = 'grid';
+
+      document.getElementById('guestSection').style.display = user ? 'none' : 'block';
+
+      const itemsContainer = document.getElementById('cartItems');
+      itemsContainer.innerHTML = cartData.items.map(item => {
+        const img = (item.images && item.images.length > 0) ? item.images[0] : null;
+        const itemTotal = (parseFloat(item.base_price) * item.quantity).toFixed(2).replace('.', ',');
+        return `
+          <div class="cart-item" data-id="${item.id}">
+            <div class="cart-item-image">
+              ${img ? `<img src="${img}" alt="${item.name}">` : '📦'}
+            </div>
+            <div class="cart-item-details">
+              <div class="cart-item-name">${item.name}</div>
+              <div class="cart-item-category">${item.category_name || ''}</div>
+              <div class="cart-item-price">R$ ${itemTotal}</div>
+            </div>
+            <div class="cart-item-actions">
+              <div class="qty-control">
+                <button class="qty-btn" onclick="updateQty(${item.id}, ${item.quantity - 1})">−</button>
+                <div class="qty-value">${item.quantity}</div>
+                <button class="qty-btn" onclick="updateQty(${item.id}, ${item.quantity + 1})">+</button>
+              </div>
+              <button class="remove-btn" onclick="removeItem(${item.id})" title="Remover">🗑️</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('subtotal').textContent = formatPrice(cartData.total);
+      document.getElementById('totalPrice').textContent = formatPrice(cartData.total);
+      updateCartBadge();
+    }
+
+    async function updateQty(itemId, qty) {
+      if (qty < 1) {
+        removeItem(itemId);
+        return;
+      }
+      try {
+        await api(`/api/cart/items/${itemId}`, {
+          method: 'PATCH',
+          body: JSON.stringify({ quantity: qty })
+        });
+        await loadCart();
+      } catch (err) {
+        showToast(err.message || 'Erro ao atualizar', 'error');
+      }
+    }
+
+    async function removeItem(itemId) {
+      try {
+        await api(`/api/cart/items/${itemId}`, { method: 'DELETE' });
+        showToast('Item removido', 'success');
+        await loadCart();
+      } catch (err) {
+        showToast(err.message || 'Erro ao remover', 'error');
+      }
+    }
+
+    async function checkout() {
+      const user = JSON.parse(localStorage.getItem('user') || 'null');
+
+      if (!cartData.items || cartData.items.length === 0) {
+        showToast('Carrinho vazio', 'error');
+        return;
+      }
+
+      const street = document.getElementById('street').value.trim();
+      const number = document.getElementById('number').value.trim();
+      const complement = document.getElementById('complement').value.trim();
+      const neighborhood = document.getElementById('neighborhood').value.trim();
+      const city = document.getElementById('city').value.trim();
+      const state = document.getElementById('state').value;
+      const zip_code = document.getElementById('zipCode').value.trim();
+
+      if (!street || !number || !city || !state || !zip_code) {
+        showToast('Preencha os campos obrigatórios do endereço', 'error');
+        return;
+      }
+
+      const body = {
+        shipping_address: { street, number, complement, neighborhood, city, state, zip_code }
+      };
+
+      if (!user) {
+        const guestName = document.getElementById('guestName').value.trim();
+        const guestEmail = document.getElementById('guestEmail').value.trim();
+        const guestPhone = document.getElementById('guestPhone').value.trim();
+
+        if (!guestName || !guestEmail) {
+          showToast('Preencha nome e e-mail', 'error');
+          return;
+        }
+
+        body.guest_name = guestName;
+        body.guest_email = guestEmail;
+        body.guest_phone = guestPhone;
+      }
+
+      const btn = document.getElementById('checkoutBtn');
+      btn.disabled = true;
+      btn.textContent = 'Processando...';
+
+      try {
+        const result = await api('/api/orders', {
+          method: 'POST',
+          body: JSON.stringify(body)
+        });
+
+        showToast('Pedido realizado com sucesso!', 'success');
+        updateCartBadge();
+        window.location.href = '/meus-pedidos';
+      } catch (err) {
+        showToast(err.message || 'Erro ao finalizar pedido', 'error');
+        btn.disabled = false;
+        btn.textContent = 'Finalizar Pedido';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadCart();
+      const yearEl = document.getElementById('year');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+    });
+  </script>
+</body>
+</html>

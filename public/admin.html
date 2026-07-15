@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Sublimitas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .admin-page { min-height: 100vh; }
+    .admin-section { display: none; }
+    .admin-section.active { display: block; }
+    .admin-actions { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    .filter-bar { display: flex; gap: 12px; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
+    .filter-bar select { padding: 10px 14px; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); font-size: 0.9rem; font-family: var(--font); }
+    .modal-admin { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px; }
+    .modal-admin.open { display: flex; }
+    .modal-admin-box { background: var(--white); border-radius: var(--radius); padding: 32px; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg); }
+    .modal-admin-box h2 { font-size: 1.25rem; margin-bottom: 24px; }
+    .modal-admin-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; }
+    .table-wrap { overflow-x: auto; }
+    .admin-sidebar a { position: relative; }
+    .admin-sidebar a .nav-icon { width: 20px; text-align: center; flex-shrink: 0; }
+    .admin-user-info { padding: 20px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: auto; position: absolute; bottom: 0; width: 100%; }
+    .admin-user-name { color: var(--white); font-size: 0.85rem; font-weight: 600; }
+    .admin-user-role { color: var(--gray-500); font-size: 0.75rem; }
+    .admin-sidebar-inner { display: flex; flex-direction: column; height: 100%; position: relative; }
+    @media (max-width: 768px) {
+      .admin-sidebar { display: block; position: fixed; left: -260px; top: 0; height: 100vh; z-index: 500; transition: left 0.3s ease; }
+      .admin-sidebar.open { left: 0; }
+      .mobile-sidebar-toggle { display: block !important; }
+    }
+    .mobile-sidebar-toggle { display: none; position: fixed; bottom: 20px; left: 20px; z-index: 400; background: var(--primary); color: var(--white); width: 48px; height: 48px; border-radius: var(--radius-full); align-items: center; justify-content: center; font-size: 1.5rem; border: none; cursor: pointer; box-shadow: var(--shadow-lg); }
+  </style>
+</head>
+<body>
+
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a href="/" class="logo">
+        <span class="logo-icon">✦</span>
+        <span class="logo-text">Sublimitas</span>
+      </a>
+      <div class="header-actions">
+        <a href="/" class="btn btn-outline btn-sm">Voltar ao Site</a>
+        <div id="userMenu">
+          <button class="btn-icon" id="userMenuBtn">👤</button>
+          <div class="dropdown" id="userDropdown" style="display:none">
+            <a href="#" id="logoutBtn">Sair</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <button class="mobile-sidebar-toggle" id="sidebarToggle">☰</button>
+
+  <div class="admin-page">
+    <div class="admin-layout" style="min-height:calc(100vh - 64px)">
+      <aside class="admin-sidebar" id="adminSidebar">
+        <div class="admin-sidebar-inner">
+          <a href="#" class="active" data-section="dashboard"><span class="nav-icon">📊</span> Dashboard</a>
+          <a href="#" data-section="orders"><span class="nav-icon">📦</span> Pedidos</a>
+          <a href="#" data-section="products"><span class="nav-icon">🏷️</span> Produtos</a>
+          <a href="#" data-section="categories"><span class="nav-icon">📂</span> Categorias</a>
+          <a href="#" data-section="partners"><span class="nav-icon">🤝</span> Parceiros</a>
+          <a href="#" data-section="trust"><span class="nav-icon">🏢</span> Confiança</a>
+          <a href="#" data-section="reviews"><span class="nav-icon">⭐</span> Reviews</a>
+          <a href="#" data-section="settings"><span class="nav-icon">⚙️</span> Configurações</a>
+          <a href="#" data-section="users"><span class="nav-icon">👥</span> Usuários</a>
+        </div>
+      </aside>
+
+      <main class="admin-content">
+
+        <!-- Dashboard -->
+        <div class="admin-section active" id="section-dashboard">
+          <div class="admin-header">
+            <h1>Dashboard</h1>
+          </div>
+          <div class="admin-stats" id="dashStats"></div>
+          <div class="admin-header"><h2 style="font-size:1.15rem;">Pedidos Recentes</h2></div>
+          <div class="table-wrap">
+            <table class="admin-table">
+              <thead><tr><th>Código</th><th>Cliente</th><th>Total</th><th>Status</th><th>Data</th></tr></thead>
+              <tbody id="recentOrders"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Pedidos -->
+        <div class="admin-section" id="section-orders">
+          <div class="admin-header"><h1>Pedidos</h1></div>
+          <div class="filter-bar">
+            <select id="orderStatusFilter" onchange="loadOrders()">
+              <option value="">Todos os Status</option>
+              <option value="pending">Pendente</option>
+              <option value="paid">Pago</option>
+              <option value="processing">Processando</option>
+              <option value="shipped">Enviado</option>
+              <option value="delivered">Entregue</option>
+              <option value="cancelled">Cancelado</option>
+            </select>
+          </div>
+          <div class="table-wrap">
+            <table class="admin-table">
+              <thead><tr><th>Código</th><th>Cliente</th><th>Total</th><th>Status</th><th>Data</th><th>Ações</th></tr></thead>
+              <tbody id="ordersTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Produtos -->
+        <div class="admin-section" id="section-products">
+          <div class="admin-header">
+            <h1>Produtos</h1>
+            <button class="btn btn-primary btn-sm" onclick="openProductModal()">+ Novo Produto</button>
+          </div>
+          <div class="table-wrap">
+            <table class="admin-table">
+              <thead><tr><th>Nome</th><th>Categoria</th><th>Preço</th><th>Estoque</th><th>Ativo</th><th>Ações</th></tr></thead>
+              <tbody id="productsTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Categorias -->
+        <div class="admin-section" id="section-categories">
+          <div class="admin-header">
+            <h1>Categorias</h1>
+            <button class="btn btn-primary btn-sm" onclick="openCategoryModal()">+ Nova Categoria</button>
+          </div>
+          <div class="table-wrap">
+            <table class="admin-table">
+              <thead><tr><th>Nome</th><th>Slug</th><th>Ícone</th><th>Ordem</th><th>Ações</th></tr></thead>
+              <tbody id="categoriesTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Parceiros -->
+        <div class="admin-section" id="section-partners">
+          <div class="admin-header">
+            <h1>Parceiros</h1>
+            <button class="btn btn-primary btn-sm" onclick="openPartnerModal()">+ Novo Parceiro</button>
+          </div>
+          <div class="table-wrap">
+            <table class="admin-table">
+              <thead><tr><th>Empresa</th><th>Slug</th><th>Dono</th><th>E-mail</th><th>Ativo</th><th>Ações</th></tr></thead>
+              <tbody id="partnersTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Empresas de Confiança -->
+        <div class="admin-section" id="section-trust">
+          <div class="admin-header">
+            <h1>Empresas que Confiam</h1>
+            <button class="btn btn-primary btn-sm" onclick="openTrustModal()">+ Nova Empresa</button>
+          </div>
+          <div class="table-wrap">
+            <table class="admin-table">
+              <thead><tr><th>Nome</th><th>Website</th><th>Ordem</th><th>Ações</th></tr></thead>
+              <tbody id="trustTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Reviews -->
+        <div class="admin-section" id="section-reviews">
+          <div class="admin-header"><h1>Reviews</h1></div>
+          <div class="table-wrap">
+            <table class="admin-table">
+              <thead><tr><th>Produto</th><th>Usuário</th><th>Nota</th><th>Texto</th><th>Aprovado</th><th>Ações</th></tr></thead>
+              <tbody id="reviewsTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Configurações -->
+        <div class="admin-section" id="section-settings">
+          <div class="admin-header"><h1>Configurações</h1></div>
+          <div style="max-width:700px;">
+            <form id="settingsForm" onsubmit="saveSettings(event)">
+              <div class="form-group"><label>Nome do Site</label><input type="text" id="set_site_name"></div>
+              <div class="form-group"><label>Descrição</label><input type="text" id="set_site_description"></div>
+              <div class="form-group"><label>E-mail de Contato</label><input type="email" id="set_contact_email"></div>
+              <div class="form-group"><label>Telefone</label><input type="text" id="set_contact_phone"></div>
+              <div class="form-group"><label>WhatsApp</label><input type="text" id="set_whatsapp_number"></div>
+              <div class="form-group"><label>Mensagem WhatsApp</label><input type="text" id="set_whatsapp_message"></div>
+              <div class="form-group"><label>Cor Primária (hex)</label><input type="color" id="set_primary_color" style="height:44px;"></div>
+              <div class="form-group"><label>Cor Destaque (hex)</label><input type="color" id="set_accent_color" style="height:44px;"></div>
+              <div class="form-group">
+                <label>Modo de Suporte</label>
+                <select id="set_admin_support_mode">
+                  <option value="none">Desativado</option>
+                  <option value="whatsapp">WhatsApp</option>
+                  <option value="widget">Widget</option>
+                </select>
+              </div>
+              <div class="form-group"><label>Instagram URL</label><input type="url" id="set_social_instagram"></div>
+              <div class="form-group"><label>Facebook URL</label><input type="url" id="set_social_facebook"></div>
+              <div class="form-group"><label>LinkedIn URL</label><input type="url" id="set_social_linkedin"></div>
+              <button type="submit" class="btn btn-primary">Salvar Configurações</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Usuários -->
+        <div class="admin-section" id="section-users">
+          <div class="admin-header"><h1>Usuários</h1></div>
+          <div class="table-wrap">
+            <table class="admin-table">
+              <thead><tr><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Perfil</th><th>Cadastro</th></tr></thead>
+              <tbody id="usersTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Product Modal -->
+  <div class="modal-admin" id="productModal">
+    <div class="modal-admin-box">
+      <h2 id="productModalTitle">Novo Produto</h2>
+      <input type="hidden" id="productEditId">
+      <div class="form-group"><label>Nome</label><input type="text" id="p_name"></div>
+      <div class="form-group"><label>Slug</label><input type="text" id="p_slug"></div>
+      <div class="form-group"><label>Descrição Curta</label><input type="text" id="p_short_description"></div>
+      <div class="form-group"><label>Descrição</label><textarea id="p_description" rows="3"></textarea></div>
+      <div class="form-row">
+        <div class="form-group"><label>Preço Base</label><input type="number" step="0.01" id="p_base_price"></div>
+        <div class="form-group"><label>Estoque</label><input type="number" id="p_stock_quantity"></div>
+      </div>
+      <div class="form-group">
+        <label>Categoria</label>
+        <select id="p_category_id"><option value="">Selecione</option></select>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Tipo</label>
+          <select id="p_product_type"><option value="physical">Físico</option><option value="digital">Digital</option><option value="service">Serviço</option></select>
+        </div>
+        <div class="form-group"><label>Destaque</label>
+          <select id="p_is_featured"><option value="0">Não</option><option value="1">Sim</option></select>
+        </div>
+      </div>
+      <div class="form-group"><label>Ativo</label>
+        <select id="p_is_active"><option value="1">Sim</option><option value="0">Não</option></select>
+      </div>
+      <div class="modal-admin-actions">
+        <button class="btn btn-outline" onclick="closeProductModal()">Cancelar</button>
+        <button class="btn btn-primary" onclick="saveProduct()">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category Modal -->
+  <div class="modal-admin" id="categoryModal">
+    <div class="modal-admin-box">
+      <h2 id="categoryModalTitle">Nova Categoria</h2>
+      <input type="hidden" id="categoryEditId">
+      <div class="form-group"><label>Nome</label><input type="text" id="c_name"></div>
+      <div class="form-group"><label>Slug</label><input type="text" id="c_slug"></div>
+      <div class="form-group"><label>Descrição</label><input type="text" id="c_description"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Ícone</label><input type="text" id="c_icon" placeholder="👕"></div>
+        <div class="form-group"><label>Ordem</label><input type="number" id="c_sort_order" value="0"></div>
+      </div>
+      <div class="modal-admin-actions">
+        <button class="btn btn-outline" onclick="closeCategoryModal()">Cancelar</button>
+        <button class="btn btn-primary" onclick="saveCategory()">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Partner Modal -->
+  <div class="modal-admin" id="partnerModal">
+    <div class="modal-admin-box">
+      <h2 id="partnerModalTitle">Novo Parceiro</h2>
+      <input type="hidden" id="partnerEditId">
+      <div class="form-row">
+        <div class="form-group"><label>Nome da Empresa</label><input type="text" id="pt_company_name"></div>
+        <div class="form-group"><label>Slug</label><input type="text" id="pt_slug"></div>
+      </div>
+      <div class="form-group"><label>Nome do Dono</label><input type="text" id="pt_owner_name"></div>
+      <div class="form-row">
+        <div class="form-group"><label>E-mail</label><input type="email" id="pt_email"></div>
+        <div class="form-group"><label>Telefone</label><input type="text" id="pt_phone"></div>
+      </div>
+      <div class="form-group"><label>Descrição</label><textarea id="pt_description" rows="2"></textarea></div>
+      <div class="form-row">
+        <div class="form-group"><label>Logo URL</label><input type="url" id="pt_logo_url"></div>
+        <div class="form-group"><label>Banner URL</label><input type="url" id="pt_banner_url"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Cor Primária</label><input type="color" id="pt_primary_color" style="height:44px;"></div>
+        <div class="form-group"><label>Mensagem WhatsApp</label><input type="text" id="pt_whatsapp_message"></div>
+      </div>
+      <div class="modal-admin-actions">
+        <button class="btn btn-outline" onclick="closePartnerModal()">Cancelar</button>
+        <button class="btn btn-primary" onclick="savePartner()">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trust Company Modal -->
+  <div class="modal-admin" id="trustModal">
+    <div class="modal-admin-box">
+      <h2 id="trustModalTitle">Nova Empresa</h2>
+      <input type="hidden" id="trustEditId">
+      <div class="form-group"><label>Nome</label><input type="text" id="tr_name"></div>
+      <div class="form-group"><label>Logo URL</label><input type="url" id="tr_logo_url"></div>
+      <div class="form-group"><label>Website URL</label><input type="url" id="tr_website_url"></div>
+      <div class="form-group"><label>Ordem</label><input type="number" id="tr_sort_order" value="0"></div>
+      <div class="modal-admin-actions">
+        <button class="btn btn-outline" onclick="closeTrustModal()">Cancelar</button>
+        <button class="btn btn-primary" onclick="saveTrust()">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Status Modal -->
+  <div class="modal-admin" id="orderStatusModal">
+    <div class="modal-admin-box">
+      <h2>Atualizar Status do Pedido</h2>
+      <input type="hidden" id="orderStatusId">
+      <div class="form-group">
+        <label>Novo Status</label>
+        <select id="newOrderStatus">
+          <option value="pending">Pendente</option>
+          <option value="paid">Pago</option>
+          <option value="processing">Processando</option>
+          <option value="shipped">Enviado</option>
+          <option value="delivered">Entregue</option>
+          <option value="cancelled">Cancelado</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Código de Rastreio</label><input type="text" id="newTrackingCode" placeholder="Opcional"></div>
+      <div class="form-group"><label>Nota</label><input type="text" id="newOrderNote" placeholder="Opcional"></div>
+      <div class="modal-admin-actions">
+        <button class="btn btn-outline" onclick="closeOrderStatusModal()">Cancelar</button>
+        <button class="btn btn-primary" onclick="saveOrderStatus()">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="/js/main.js"></script>
+  <script>
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    if (!user || user.role !== 'admin') {
+      window.location.href = '/login';
+    }
+
+    const statusLabels = {
+      pending: 'Pendente', paid: 'Pago', processing: 'Processando',
+      shipped: 'Enviado', delivered: 'Entregue', cancelled: 'Cancelado'
+    };
+
+    document.querySelectorAll('#logoutBtn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        window.location.href = '/login';
+      });
+    });
+
+    // Sidebar
+    document.querySelectorAll('.admin-sidebar a[data-section]').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const section = link.dataset.section;
+        document.querySelectorAll('.admin-sidebar a').forEach(a => a.classList.remove('active'));
+        link.classList.add('active');
+        document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+        document.getElementById('section-' + section).classList.add('active');
+        document.getElementById('adminSidebar').classList.remove('open');
+      });
+    });
+
+    document.getElementById('sidebarToggle').addEventListener('click', () => {
+      document.getElementById('adminSidebar').classList.toggle('open');
+    });
+
+    // Dashboard
+    async function loadDashboard() {
+      try {
+        const data = await api('/api/admin/dashboard');
+        const d = data.dashboard;
+        document.getElementById('dashStats').innerHTML = `
+          <div class="stat-card"><div class="stat-card-label">Produtos</div><div class="stat-card-value">${d.totalProducts}</div></div>
+          <div class="stat-card"><div class="stat-card-label">Pedidos</div><div class="stat-card-value">${d.totalOrders}</div></div>
+          <div class="stat-card"><div class="stat-card-label">Receita Total</div><div class="stat-card-value">${formatPrice(d.totalRevenue)}</div></div>
+          <div class="stat-card"><div class="stat-card-label">Usuários</div><div class="stat-card-value">${d.totalUsers}</div></div>
+          <div class="stat-card"><div class="stat-card-label">Receita Mensal</div><div class="stat-card-value">${formatPrice(d.monthlyRevenue)}</div></div>
+          <div class="stat-card"><div class="stat-card-label">Pedidos Pendentes</div><div class="stat-card-value">${d.pendingOrders}</div></div>
+        `;
+        document.getElementById('recentOrders').innerHTML = d.recentOrders.map(o => `
+          <tr>
+            <td>${o.order_code || '-'}</td>
+            <td>${o.customer_name || o.guest_name || 'Anônimo'}</td>
+            <td>${formatPrice(o.total)}</td>
+            <td><span class="badge badge-${o.status}">${statusLabels[o.status] || o.status}</span></td>
+            <td>${new Date(o.created_at).toLocaleDateString('pt-BR')}</td>
+          </tr>
+        `).join('') || '<tr><td colspan="5" style="text-align:center;color:var(--gray-500);">Nenhum pedido</td></tr>';
+      } catch {}
+    }
+
+    // Orders
+    async function loadOrders() {
+      try {
+        const status = document.getElementById('orderStatusFilter').value;
+        const q = status ? `?status=${status}` : '';
+        const data = await api('/api/admin/orders' + q);
+        document.getElementById('ordersTable').innerHTML = data.orders.map(o => `
+          <tr>
+            <td>${o.order_code || '-'}</td>
+            <td>${o.customer_name || o.guest_name || 'Anônimo'}</td>
+            <td>${formatPrice(o.total)}</td>
+            <td><span class="badge badge-${o.status}">${statusLabels[o.status] || o.status}</span></td>
+            <td>${new Date(o.created_at).toLocaleDateString('pt-BR')}</td>
+            <td><button class="btn btn-outline btn-sm" onclick="openOrderStatusModal(${o.id}, '${o.status}')">Status</button></td>
+          </tr>
+        `).join('') || '<tr><td colspan="6" style="text-align:center;color:var(--gray-500);">Nenhum pedido encontrado</td></tr>';
+      } catch {}
+    }
+
+    function openOrderStatusModal(id, currentStatus) {
+      document.getElementById('orderStatusId').value = id;
+      document.getElementById('newOrderStatus').value = currentStatus;
+      document.getElementById('newTrackingCode').value = '';
+      document.getElementById('newOrderNote').value = '';
+      document.getElementById('orderStatusModal').classList.add('open');
+    }
+
+    function closeOrderStatusModal() {
+      document.getElementById('orderStatusModal').classList.remove('open');
+    }
+
+    async function saveOrderStatus() {
+      const id = document.getElementById('orderStatusId').value;
+      const status = document.getElementById('newOrderStatus').value;
+      const tracking_code = document.getElementById('newTrackingCode').value.trim() || undefined;
+      const note = document.getElementById('newOrderNote').value.trim() || undefined;
+      try {
+        await api(`/api/admin/orders/${id}/status`, {
+          method: 'PATCH',
+          body: JSON.stringify({ status, tracking_code, note })
+        });
+        showToast('Status atualizado', 'success');
+        closeOrderStatusModal();
+        loadOrders();
+        loadDashboard();
+      } catch (err) {
+        showToast(err.message || 'Erro ao atualizar status', 'error');
+      }
+    }
+
+    // Products
+    async function loadProducts() {
+      try {
+        const data = await api('/api/admin/products');
+        document.getElementById('productsTable').innerHTML = data.products.map(p => `
+          <tr>
+            <td>${p.name}</td>
+            <td>${p.category_name || '-'}</td>
+            <td>${formatPrice(p.base_price)}</td>
+            <td>${p.stock_quantity}</td>
+            <td>${p.is_active ? '<span class="badge badge-delivered">Sim</span>' : '<span class="badge badge-cancelled">Não</span>'}</td>
+            <td>
+              <button class="btn btn-outline btn-sm" onclick="editProduct(${p.id}, '${(p.name||'').replace(/'/g,"\\'")}', '${(p.slug||'').replace(/'/g,"\\'")}', '${(p.short_description||'').replace(/'/g,"\\'")}', '${(p.description||'').replace(/'/g,"\\'")}', ${p.base_price}, ${p.category_id||'null'}, '${p.product_type||'physical'}', ${p.stock_quantity}, ${p.is_active?1:0}, ${p.is_featured?1:0})">Editar</button>
+              <button class="btn btn-outline btn-sm" style="color:var(--danger);border-color:var(--danger);" onclick="deleteProduct(${p.id})">Desativar</button>
+            </td>
+          </tr>
+        `).join('') || '<tr><td colspan="6" style="text-align:center;color:var(--gray-500);">Nenhum produto</td></tr>';
+      } catch {}
+    }
+
+    function openProductModal() {
+      document.getElementById('productEditId').value = '';
+      document.getElementById('productModalTitle').textContent = 'Novo Produto';
+      document.getElementById('p_name').value = '';
+      document.getElementById('p_slug').value = '';
+      document.getElementById('p_short_description').value = '';
+      document.getElementById('p_description').value = '';
+      document.getElementById('p_base_price').value = '';
+      document.getElementById('p_stock_quantity').value = '0';
+      document.getElementById('p_category_id').value = '';
+      document.getElementById('p_product_type').value = 'physical';
+      document.getElementById('p_is_featured').value = '0';
+      document.getElementById('p_is_active').value = '1';
+      loadCategorySelect();
+      document.getElementById('productModal').classList.add('open');
+    }
+
+    function editProduct(id, name, slug, shortDesc, desc, price, catId, type, stock, active, featured) {
+      document.getElementById('productEditId').value = id;
+      document.getElementById('productModalTitle').textContent = 'Editar Produto';
+      document.getElementById('p_name').value = name;
+      document.getElementById('p_slug').value = slug;
+      document.getElementById('p_short_description').value = shortDesc;
+      document.getElementById('p_description').value = desc;
+      document.getElementById('p_base_price').value = price;
+      document.getElementById('p_stock_quantity').value = stock;
+      document.getElementById('p_product_type').value = type;
+      document.getElementById('p_is_featured').value = featured ? '1' : '0';
+      document.getElementById('p_is_active').value = active ? '1' : '0';
+      loadCategorySelect(catId);
+      document.getElementById('productModal').classList.add('open');
+    }
+
+    function closeProductModal() {
+      document.getElementById('productModal').classList.remove('open');
+    }
+
+    async function loadCategorySelect(selectedId) {
+      try {
+        const data = await api('/api/admin/categories');
+        const sel = document.getElementById('p_category_id');
+        sel.innerHTML = '<option value="">Selecione</option>' + data.categories.map(c =>
+          `<option value="${c.id}" ${c.id == selectedId ? 'selected' : ''}>${c.name}</option>`
+        ).join('');
+      } catch {}
+    }
+
+    async function saveProduct() {
+      const id = document.getElementById('productEditId').value;
+      const body = {
+        name: document.getElementById('p_name').value.trim(),
+        slug: document.getElementById('p_slug').value.trim(),
+        short_description: document.getElementById('p_short_description').value.trim(),
+        description: document.getElementById('p_description').value.trim(),
+        base_price: parseFloat(document.getElementById('p_base_price').value),
+        stock_quantity: parseInt(document.getElementById('p_stock_quantity').value) || 0,
+        category_id: document.getElementById('p_category_id').value ? parseInt(document.getElementById('p_category_id').value) : null,
+        product_type: document.getElementById('p_product_type').value,
+        is_featured: document.getElementById('p_is_featured').value === '1',
+        is_active: document.getElementById('p_is_active').value === '1'
+      };
+
+      try {
+        if (id) {
+          await api(`/api/admin/products/${id}`, { method: 'PUT', body: JSON.stringify(body) });
+        } else {
+          await api('/api/admin/products', { method: 'POST', body: JSON.stringify(body) });
+        }
+        showToast('Produto salvo', 'success');
+        closeProductModal();
+        loadProducts();
+        loadDashboard();
+      } catch (err) {
+        showToast(err.message || 'Erro ao salvar produto', 'error');
+      }
+    }
+
+    async function deleteProduct(id) {
+      if (!confirm('Desativar este produto?')) return;
+      try {
+        await api(`/api/admin/products/${id}`, { method: 'DELETE' });
+        showToast('Produto desativado', 'success');
+        loadProducts();
+      } catch (err) {
+        showToast(err.message || 'Erro ao desativar', 'error');
+      }
+    }
+
+    // Categories
+    async function loadCategories() {
+      try {
+        const data = await api('/api/admin/categories');
+        document.getElementById('categoriesTable').innerHTML = data.categories.map(c => `
+          <tr>
+            <td>${c.name}</td>
+            <td>${c.slug}</td>
+            <td>${c.icon || '-'}</td>
+            <td>${c.sort_order || 0}</td>
+            <td>
+              <button class="btn btn-outline btn-sm" onclick="editCategory(${c.id}, '${(c.name||'').replace(/'/g,"\\'")}', '${(c.slug||'').replace(/'/g,"\\'")}', '${(c.description||'').replace(/'/g,"\\'")}', '${(c.icon||'').replace(/'/g,"\\'")}', ${c.sort_order||0})">Editar</button>
+            </td>
+          </tr>
+        `).join('') || '<tr><td colspan="5" style="text-align:center;color:var(--gray-500);">Nenhuma categoria</td></tr>';
+      } catch {}
+    }
+
+    function openCategoryModal() {
+      document.getElementById('categoryEditId').value = '';
+      document.getElementById('categoryModalTitle').textContent = 'Nova Categoria';
+      document.getElementById('c_name').value = '';
+      document.getElementById('c_slug').value = '';
+      document.getElementById('c_description').value = '';
+      document.getElementById('c_icon').value = '';
+      document.getElementById('c_sort_order').value = '0';
+      document.getElementById('categoryModal').classList.add('open');
+    }
+
+    function editCategory(id, name, slug, desc, icon, order) {
+      document.getElementById('categoryEditId').value = id;
+      document.getElementById('categoryModalTitle').textContent = 'Editar Categoria';
+      document.getElementById('c_name').value = name;
+      document.getElementById('c_slug').value = slug;
+      document.getElementById('c_description').value = desc;
+      document.getElementById('c_icon').value = icon;
+      document.getElementById('c_sort_order').value = order;
+      document.getElementById('categoryModal').classList.add('open');
+    }
+
+    function closeCategoryModal() {
+      document.getElementById('categoryModal').classList.remove('open');
+    }
+
+    async function saveCategory() {
+      const id = document.getElementById('categoryEditId').value;
+      const body = {
+        name: document.getElementById('c_name').value.trim(),
+        slug: document.getElementById('c_slug').value.trim(),
+        description: document.getElementById('c_description').value.trim(),
+        icon: document.getElementById('c_icon').value.trim(),
+        sort_order: parseInt(document.getElementById('c_sort_order').value) || 0
+      };
+      try {
+        if (id) {
+          await api(`/api/admin/categories/${id}`, { method: 'PUT', body: JSON.stringify(body) });
+        } else {
+          await api('/api/admin/categories', { method: 'POST', body: JSON.stringify(body) });
+        }
+        showToast('Categoria salva', 'success');
+        closeCategoryModal();
+        loadCategories();
+        loadDashboard();
+      } catch (err) {
+        showToast(err.message || 'Erro ao salvar categoria', 'error');
+      }
+    }
+
+    // Partners
+    async function loadPartners() {
+      try {
+        const data = await api('/api/admin/partners');
+        document.getElementById('partnersTable').innerHTML = data.partners.map(p => `
+          <tr>
+            <td>${p.company_name}</td>
+            <td>${p.slug}</td>
+            <td>${p.owner_name || '-'}</td>
+            <td>${p.email || '-'}</td>
+            <td>${p.is_active ? '<span class="badge badge-delivered">Sim</span>' : '<span class="badge badge-cancelled">Não</span>'}</td>
+            <td>
+              <button class="btn btn-outline btn-sm" onclick='editPartner(${JSON.stringify(p).replace(/'/g,"&#39;")})'>Editar</button>
+              <button class="btn btn-outline btn-sm" style="color:var(--danger);border-color:var(--danger);" onclick="deletePartner(${p.id})">Excluir</button>
+            </td>
+          </tr>
+        `).join('') || '<tr><td colspan="6" style="text-align:center;color:var(--gray-500);">Nenhum parceiro</td></tr>';
+      } catch {}
+    }
+
+    function openPartnerModal() {
+      document.getElementById('partnerEditId').value = '';
+      document.getElementById('partnerModalTitle').textContent = 'Novo Parceiro';
+      ['pt_company_name','pt_slug','pt_owner_name','pt_email','pt_phone','pt_description','pt_logo_url','pt_banner_url','pt_whatsapp_message'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('pt_primary_color').value = '#7B2FBE';
+      document.getElementById('partnerModal').classList.add('open');
+    }
+
+    function editPartner(p) {
+      document.getElementById('partnerEditId').value = p.id;
+      document.getElementById('partnerModalTitle').textContent = 'Editar Parceiro';
+      document.getElementById('pt_company_name').value = p.company_name || '';
+      document.getElementById('pt_slug').value = p.slug || '';
+      document.getElementById('pt_owner_name').value = p.owner_name || '';
+      document.getElementById('pt_email').value = p.email || '';
+      document.getElementById('pt_phone').value = p.phone || '';
+      document.getElementById('pt_description').value = p.description || '';
+      document.getElementById('pt_logo_url').value = p.logo_url || '';
+      document.getElementById('pt_banner_url').value = p.banner_url || '';
+      document.getElementById('pt_primary_color').value = p.primary_color || '#7B2FBE';
+      document.getElementById('pt_whatsapp_message').value = p.whatsapp_message || '';
+      document.getElementById('partnerModal').classList.add('open');
+    }
+
+    function closePartnerModal() {
+      document.getElementById('partnerModal').classList.remove('open');
+    }
+
+    async function savePartner() {
+      const id = document.getElementById('partnerEditId').value;
+      const body = {
+        company_name: document.getElementById('pt_company_name').value.trim(),
+        slug: document.getElementById('pt_slug').value.trim(),
+        owner_name: document.getElementById('pt_owner_name').value.trim(),
+        email: document.getElementById('pt_email').value.trim(),
+        phone: document.getElementById('pt_phone').value.trim(),
+        description: document.getElementById('pt_description').value.trim(),
+        logo_url: document.getElementById('pt_logo_url').value.trim(),
+        banner_url: document.getElementById('pt_banner_url').value.trim(),
+        primary_color: document.getElementById('pt_primary_color').value,
+        whatsapp_message: document.getElementById('pt_whatsapp_message').value.trim()
+      };
+      try {
+        if (id) {
+          await api(`/api/admin/partners/${id}`, { method: 'PUT', body: JSON.stringify(body) });
+        } else {
+          await api('/api/admin/partners', { method: 'POST', body: JSON.stringify(body) });
+        }
+        showToast('Parceiro salvo', 'success');
+        closePartnerModal();
+        loadPartners();
+        loadDashboard();
+      } catch (err) {
+        showToast(err.message || 'Erro ao salvar parceiro', 'error');
+      }
+    }
+
+    async function deletePartner(id) {
+      if (!confirm('Excluir este parceiro?')) return;
+      try {
+        await api(`/api/admin/partners/${id}`, { method: 'DELETE' });
+        showToast('Parceiro excluído', 'success');
+        loadPartners();
+      } catch (err) {
+        showToast(err.message || 'Erro ao excluir', 'error');
+      }
+    }
+
+    // Trust Companies
+    async function loadTrust() {
+      try {
+        const data = await api('/api/admin/trust-companies');
+        document.getElementById('trustTable').innerHTML = data.companies.map(c => `
+          <tr>
+            <td>${c.name}</td>
+            <td>${c.website_url || '-'}</td>
+            <td>${c.sort_order || 0}</td>
+            <td>
+              <button class="btn btn-outline btn-sm" onclick="editTrust(${c.id}, '${(c.name||'').replace(/'/g,"\\'")}', '${(c.logo_url||'').replace(/'/g,"\\'")}', '${(c.website_url||'').replace(/'/g,"\\'")}', ${c.sort_order||0})">Editar</button>
+              <button class="btn btn-outline btn-sm" style="color:var(--danger);border-color:var(--danger);" onclick="deleteTrust(${c.id})">Excluir</button>
+            </td>
+          </tr>
+        `).join('') || '<tr><td colspan="4" style="text-align:center;color:var(--gray-500);">Nenhuma empresa</td></tr>';
+      } catch {}
+    }
+
+    function openTrustModal() {
+      document.getElementById('trustEditId').value = '';
+      document.getElementById('trustModalTitle').textContent = 'Nova Empresa';
+      document.getElementById('tr_name').value = '';
+      document.getElementById('tr_logo_url').value = '';
+      document.getElementById('tr_website_url').value = '';
+      document.getElementById('tr_sort_order').value = '0';
+      document.getElementById('trustModal').classList.add('open');
+    }
+
+    function editTrust(id, name, logo, website, order) {
+      document.getElementById('trustEditId').value = id;
+      document.getElementById('trustModalTitle').textContent = 'Editar Empresa';
+      document.getElementById('tr_name').value = name;
+      document.getElementById('tr_logo_url').value = logo;
+      document.getElementById('tr_website_url').value = website;
+      document.getElementById('tr_sort_order').value = order;
+      document.getElementById('trustModal').classList.add('open');
+    }
+
+    function closeTrustModal() {
+      document.getElementById('trustModal').classList.remove('open');
+    }
+
+    async function saveTrust() {
+      const id = document.getElementById('trustEditId').value;
+      const body = {
+        name: document.getElementById('tr_name').value.trim(),
+        logo_url: document.getElementById('tr_logo_url').value.trim(),
+        website_url: document.getElementById('tr_website_url').value.trim(),
+        sort_order: parseInt(document.getElementById('tr_sort_order').value) || 0
+      };
+      try {
+        if (id) {
+          await api(`/api/admin/trust-companies/${id}`, { method: 'PUT', body: JSON.stringify(body) });
+        } else {
+          await api('/api/admin/trust-companies', { method: 'POST', body: JSON.stringify(body) });
+        }
+        showToast('Empresa salva', 'success');
+        closeTrustModal();
+        loadTrust();
+      } catch (err) {
+        showToast(err.message || 'Erro ao salvar empresa', 'error');
+      }
+    }
+
+    async function deleteTrust(id) {
+      if (!confirm('Excluir esta empresa?')) return;
+      try {
+        await api(`/api/admin/trust-companies/${id}`, { method: 'DELETE' });
+        showToast('Empresa excluída', 'success');
+        loadTrust();
+      } catch (err) {
+        showToast(err.message || 'Erro ao excluir', 'error');
+      }
+    }
+
+    // Reviews
+    async function loadReviews() {
+      try {
+        const data = await api('/api/admin/reviews');
+        document.getElementById('reviewsTable').innerHTML = data.reviews.map(r => `
+          <tr>
+            <td>${r.product_name || '-'}</td>
+            <td>${r.user_name || 'Anônimo'}</td>
+            <td>${'⭐'.repeat(r.rating)}</td>
+            <td style="max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.comment || '-'}</td>
+            <td>${r.is_approved ? '<span class="badge badge-delivered">Sim</span>' : '<span class="badge badge-pending">Não</span>'}</td>
+            <td>${!r.is_approved ? `<button class="btn btn-outline btn-sm" onclick="approveReview(${r.id})">Aprovar</button>` : ''}</td>
+          </tr>
+        `).join('') || '<tr><td colspan="6" style="text-align:center;color:var(--gray-500);">Nenhum review</td></tr>';
+      } catch {}
+    }
+
+    async function approveReview(id) {
+      try {
+        await api(`/api/admin/reviews/${id}/approve`, { method: 'PATCH' });
+        showToast('Review aprovado', 'success');
+        loadReviews();
+      } catch (err) {
+        showToast(err.message || 'Erro ao aprovar', 'error');
+      }
+    }
+
+    // Settings
+    async function loadSettings() {
+      try {
+        const data = await api('/api/admin/settings');
+        const map = {};
+        data.settings.forEach(s => map[s.setting_key] = s.setting_value);
+        document.getElementById('set_site_name').value = map.site_name || '';
+        document.getElementById('set_site_description').value = map.site_description || '';
+        document.getElementById('set_contact_email').value = map.contact_email || '';
+        document.getElementById('set_contact_phone').value = map.contact_phone || '';
+        document.getElementById('set_whatsapp_number').value = map.whatsapp_number || '';
+        document.getElementById('set_whatsapp_message').value = map.whatsapp_message || '';
+        document.getElementById('set_primary_color').value = map.primary_color || '#7B2FBE';
+        document.getElementById('set_accent_color').value = map.accent_color || '#FF6B00';
+        document.getElementById('set_admin_support_mode').value = map.admin_support_mode || 'none';
+        document.getElementById('set_social_instagram').value = map.social_instagram || '';
+        document.getElementById('set_social_facebook').value = map.social_facebook || '';
+        document.getElementById('set_social_linkedin').value = map.social_linkedin || '';
+      } catch {}
+    }
+
+    async function saveSettings(e) {
+      e.preventDefault();
+      const settings = [
+        { key: 'site_name', value: document.getElementById('set_site_name').value.trim(), category: 'general' },
+        { key: 'site_description', value: document.getElementById('set_site_description').value.trim(), category: 'general' },
+        { key: 'contact_email', value: document.getElementById('set_contact_email').value.trim(), category: 'contact' },
+        { key: 'contact_phone', value: document.getElementById('set_contact_phone').value.trim(), category: 'contact' },
+        { key: 'whatsapp_number', value: document.getElementById('set_whatsapp_number').value.trim(), category: 'contact' },
+        { key: 'whatsapp_message', value: document.getElementById('set_whatsapp_message').value.trim(), category: 'contact' },
+        { key: 'primary_color', value: document.getElementById('set_primary_color').value, category: 'design' },
+        { key: 'accent_color', value: document.getElementById('set_accent_color').value, category: 'design' },
+        { key: 'admin_support_mode', value: document.getElementById('set_admin_support_mode').value, category: 'support' },
+        { key: 'social_instagram', value: document.getElementById('set_social_instagram').value.trim(), category: 'social' },
+        { key: 'social_facebook', value: document.getElementById('set_social_facebook').value.trim(), category: 'social' },
+        { key: 'social_linkedin', value: document.getElementById('set_social_linkedin').value.trim(), category: 'social' }
+      ];
+      try {
+        await api('/api/admin/settings', { method: 'PUT', body: JSON.stringify({ settings }) });
+        showToast('Configurações salvas', 'success');
+      } catch (err) {
+        showToast(err.message || 'Erro ao salvar', 'error');
+      }
+    }
+
+    // Users
+    async function loadUsers() {
+      try {
+        const data = await api('/api/admin/users');
+        const roleLabels = { admin: 'Admin', customer: 'Cliente' };
+        document.getElementById('usersTable').innerHTML = data.users.map(u => `
+          <tr>
+            <td>${u.name}</td>
+            <td>${u.email}</td>
+            <td>${u.phone || '-'}</td>
+            <td><span class="badge ${u.role === 'admin' ? 'badge-shipped' : 'badge-paid'}">${roleLabels[u.role] || u.role}</span></td>
+            <td>${new Date(u.created_at).toLocaleDateString('pt-BR')}</td>
+          </tr>
+        `).join('') || '<tr><td colspan="5" style="text-align:center;color:var(--gray-500);">Nenhum usuário</td></tr>';
+      } catch {}
+    }
+
+    // Init
+    loadDashboard();
+    loadOrders();
+    loadProducts();
+    loadCategories();
+    loadPartners();
+    loadTrust();
+    loadReviews();
+    loadSettings();
+    loadUsers();
+  </script>
+</body>
+</html>

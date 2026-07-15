@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Produtos — Sublimitas</title>
+  <meta name="description" content="Explore nosso catálogo de produtos personalizados. Camisetas, canecas, uniformes e muito mais.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a href="/" class="logo">
+        <span class="logo-icon">✦</span>
+        <span class="logo-text">Sublimitas</span>
+      </a>
+      <nav class="nav-desktop">
+        <a href="/" class="nav-link">Início</a>
+        <a href="/produtos" class="nav-link active">Produtos</a>
+        <a href="/categorias" class="nav-link">Categorias</a>
+        <a href="/como-funciona" class="nav-link">Como Funciona</a>
+        <a href="/sobre" class="nav-link">Sobre</a>
+        <a href="/faq" class="nav-link">FAQ</a>
+        <a href="/contato" class="nav-link">Contato</a>
+      </nav>
+      <div class="header-actions">
+        <button class="btn-icon" id="searchBtn" title="Buscar (Ctrl+K)">🔍</button>
+        <a href="/carrinho" class="btn-icon cart-icon" id="cartBtn">
+          🛒
+          <span class="cart-badge" id="cartBadge" style="display:none">0</span>
+        </a>
+        <div id="authButtons">
+          <a href="/login" class="btn btn-outline btn-sm">Entrar</a>
+          <a href="/cadastro" class="btn btn-primary btn-sm">Cadastrar</a>
+        </div>
+        <div id="userMenu" style="display:none">
+          <button class="btn-icon" id="userMenuBtn">👤</button>
+          <div class="dropdown" id="userDropdown" style="display:none">
+            <a href="/meus-pedidos">Meus Pedidos</a>
+            <a href="#" id="logoutBtn">Sair</a>
+          </div>
+        </div>
+        <button class="btn-icon mobile-menu-btn" id="mobileMenuBtn">☰</button>
+      </div>
+    </div>
+    <nav class="nav-mobile" id="mobileNav" style="display:none">
+      <a href="/">Início</a>
+      <a href="/produtos">Produtos</a>
+      <a href="/categorias">Categorias</a>
+      <a href="/como-funciona">Como Funciona</a>
+      <a href="/sobre">Sobre</a>
+      <a href="/faq">FAQ</a>
+      <a href="/contato">Contato</a>
+    </nav>
+  </header>
+
+  <section class="section" style="padding-top:40px;">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:260px 1fr;gap:32px;align-items:start;" id="productsLayout">
+
+        <aside id="filterSidebar" style="position:sticky;top:80px;">
+          <div style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:24px;">
+            <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:20px;">Filtros</h3>
+
+            <div class="form-group">
+              <label for="filterCategory">Categoria</label>
+              <select id="filterCategory" class="form-group">
+                <option value="">Todas</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Faixa de Preço</label>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <input type="number" id="priceMin" placeholder="Mín" style="width:50%;padding:10px 12px;border:1px solid var(--gray-300);border-radius:var(--radius-sm);font-size:0.9rem;font-family:var(--font);">
+                <span style="color:var(--gray-400);">—</span>
+                <input type="number" id="priceMax" placeholder="Máx" style="width:50%;padding:10px 12px;border:1px solid var(--gray-300);border-radius:var(--radius-sm);font-size:0.9rem;font-family:var(--font);">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="filterSort">Ordenar por</label>
+              <select id="filterSort">
+                <option value="">Mais relevantes</option>
+                <option value="price_asc">Menor preço</option>
+                <option value="price_desc">Maior preço</option>
+                <option value="name_asc">Nome A-Z</option>
+                <option value="newest">Mais recentes</option>
+              </select>
+            </div>
+
+            <button class="btn btn-primary" style="width:100%;margin-top:8px;" id="applyFilters">Aplicar Filtros</button>
+            <button class="btn btn-outline" style="width:100%;margin-top:8px;" id="clearFilters">Limpar</button>
+          </div>
+        </aside>
+
+        <main>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+            <div>
+              <h1 style="font-size:1.75rem;font-weight:700;" id="pageTitle">Produtos</h1>
+              <p style="color:var(--gray-500);font-size:0.95rem;" id="resultCount"></p>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <button class="btn-icon" id="viewGrid" title="Grade" style="font-size:1.2rem;">⊞</button>
+              <button class="btn-icon" id="viewList" title="Lista" style="font-size:1.2rem;">☰</button>
+            </div>
+          </div>
+          <div class="products-grid" id="productsGrid">
+            <div class="loading-spinner"></div>
+          </div>
+          <div id="pagination" style="display:flex;justify-content:center;gap:8px;margin-top:40px;flex-wrap:wrap;"></div>
+        </main>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Não encontrou o que procura?</h2>
+      <p>Entre em contato conosco e criamos um produto personalizado para você</p>
+      <div class="cta-actions">
+        <a href="/contato" class="btn btn-accent btn-lg">Fale Conosco</a>
+        <a href="/criar-com-ia" class="btn btn-outline-light btn-lg">🎨 Criar com IA</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="/" class="logo">
+            <span class="logo-icon">✦</span>
+            <span class="logo-text">Sublimitas</span>
+          </a>
+          <p>Produtos personalizados de alta qualidade para empresas e eventos.</p>
+          <div class="social-links" id="socialLinks"></div>
+        </div>
+        <div class="footer-col">
+          <h4>Produtos</h4>
+          <a href="/produtos">Catálogo</a>
+          <a href="/categorias">Categorias</a>
+          <a href="/criar-com-ia">Criar com IA</a>
+          <a href="/produtos?featured=1">Destaques</a>
+        </div>
+        <div class="footer-col">
+          <h4>Empresa</h4>
+          <a href="/sobre">Sobre Nós</a>
+          <a href="/como-funciona">Como Funciona</a>
+          <a href="/faq">FAQ</a>
+          <a href="/contato">Contato</a>
+        </div>
+        <div class="footer-col">
+          <h4>Minha Conta</h4>
+          <a href="/login">Entrar</a>
+          <a href="/cadastro">Cadastrar</a>
+          <a href="/meus-pedidos">Meus Pedidos</a>
+          <a href="/rastrear">Rastrear Pedido</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="year"></span> Sublimitas. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal-overlay" id="searchModal" style="display:none">
+    <div class="modal search-modal">
+      <div class="search-input-wrap">
+        <input type="text" id="searchInput" placeholder="Buscar produtos, categorias..." autofocus>
+        <kbd>ESC</kbd>
+      </div>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/support.js"></script>
+  <script>
+    let currentPage = 1;
+    const limit = 12;
+    let totalProducts = 0;
+
+    function getParams() {
+      const p = new URLSearchParams(window.location.search);
+      return {
+        category: p.get('category') || '',
+        search: p.get('search') || '',
+        page: parseInt(p.get('page')) || 1
+      };
+    }
+
+    async function loadCategories() {
+      try {
+        const data = await api('/api/categories');
+        const select = document.getElementById('filterCategory');
+        const params = getParams();
+        if (data.categories) {
+          data.categories.forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c.slug;
+            opt.textContent = c.name;
+            if (params.category === c.slug) opt.selected = true;
+            select.appendChild(opt);
+          });
+        }
+      } catch {}
+    }
+
+    async function loadProducts(page = 1) {
+      const grid = document.getElementById('productsGrid');
+      const params = getParams();
+      currentPage = page;
+
+      let url = `/api/products?page=${page}&limit=${limit}`;
+      if (params.category) url += `&category=${encodeURIComponent(params.category)}`;
+      if (params.search) url += `&search=${encodeURIComponent(params.search)}`;
+
+      const sort = document.getElementById('filterSort').value;
+      if (sort) url += `&sort=${sort}`;
+
+      const priceMin = document.getElementById('priceMin').value;
+      const priceMax = document.getElementById('priceMax').value;
+      if (priceMin) url += `&price_min=${priceMin}`;
+      if (priceMax) url += `&price_max=${priceMax}`;
+
+      try {
+        const data = await api(url);
+        const products = data.products || data.data || [];
+        totalProducts = data.total || products.length;
+
+        if (params.category) {
+          document.getElementById('pageTitle').textContent = `Categoria: ${params.category.replace(/-/g, ' ')}`;
+        } else if (params.search) {
+          document.getElementById('pageTitle').textContent = `Resultados para "${params.search}"`;
+        } else {
+          document.getElementById('pageTitle').textContent = 'Produtos';
+        }
+
+        document.getElementById('resultCount').textContent = `${totalProducts} produto${totalProducts !== 1 ? 's' : ''} encontrado${totalProducts !== 1 ? 's' : ''}`;
+
+        if (products.length === 0) {
+          grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--gray-500);padding:60px 0;">Nenhum produto encontrado com os filtros selecionados.</p>';
+          document.getElementById('pagination').innerHTML = '';
+          return;
+        }
+
+        grid.innerHTML = products.map(p => {
+          const img = (p.images && p.images.length > 0) ? p.images[0] : null;
+          return `
+            <div class="product-card">
+              <div class="product-image">${img ? `<img src="${img}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover">` : '📦'}</div>
+              <div class="product-info">
+                <div class="product-category">${p.category_name || ''}</div>
+                <div class="product-name">${p.name}</div>
+                <div class="product-price">${formatPrice(p.base_price)}</div>
+              </div>
+              <div class="product-actions">
+                <a href="/produto?slug=${p.slug}" class="btn btn-outline btn-sm">Ver Detalhes</a>
+                <button class="btn btn-primary btn-sm" onclick="addToCart(${p.id})">Adicionar</button>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        renderPagination();
+      } catch {
+        grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--gray-500);padding:60px 0;">Erro ao carregar produtos. Tente novamente.</p>';
+      }
+    }
+
+    function renderPagination() {
+      const container = document.getElementById('pagination');
+      const totalPages = Math.ceil(totalProducts / limit);
+      if (totalPages <= 1) { container.innerHTML = ''; return; }
+
+      let html = '';
+      if (currentPage > 1) {
+        html += `<button class="btn btn-outline btn-sm" onclick="loadProducts(${currentPage - 1})">← Anterior</button>`;
+      }
+      for (let i = 1; i <= totalPages; i++) {
+        if (i === currentPage) {
+          html += `<button class="btn btn-primary btn-sm">${i}</button>`;
+        } else if (Math.abs(i - currentPage) <= 2 || i === 1 || i === totalPages) {
+          html += `<button class="btn btn-outline btn-sm" onclick="loadProducts(${i})">${i}</button>`;
+        } else if (Math.abs(i - currentPage) === 3) {
+          html += `<span style="padding:8px 12px;color:var(--gray-400);">...</span>`;
+        }
+      }
+      if (currentPage < totalPages) {
+        html += `<button class="btn btn-outline btn-sm" onclick="loadProducts(${currentPage + 1})">Próximo →</button>`;
+      }
+      container.innerHTML = html;
+    }
+
+    function applyFilters() {
+      const params = new URLSearchParams();
+      const category = document.getElementById('filterCategory').value;
+      const search = getParams().search;
+      if (category) params.set('category', category);
+      if (search) params.set('search', search);
+      const url = '/produtos' + (params.toString() ? '?' + params.toString() : '');
+      history.pushState(null, '', url);
+      loadProducts(1);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = getParams();
+      if (params.category || params.search) {
+        loadCategories();
+        loadProducts(1);
+      } else {
+        loadCategories();
+        loadProducts(1);
+      }
+
+      document.getElementById('applyFilters').addEventListener('click', applyFilters);
+      document.getElementById('clearFilters').addEventListener('click', () => {
+        document.getElementById('filterCategory').value = '';
+        document.getElementById('priceMin').value = '';
+        document.getElementById('priceMax').value = '';
+        document.getElementById('filterSort').value = '';
+        history.pushState(null, '', '/produtos');
+        loadProducts(1);
+      });
+    });
+  </script>
+</body>
+</html>

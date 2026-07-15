@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Produto — Sublimitas</title>
+  <meta name="description" content="Detalhes do produto personalizado na Sublimitas.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a href="/" class="logo">
+        <span class="logo-icon">✦</span>
+        <span class="logo-text">Sublimitas</span>
+      </a>
+      <nav class="nav-desktop">
+        <a href="/" class="nav-link">Início</a>
+        <a href="/produtos" class="nav-link active">Produtos</a>
+        <a href="/categorias" class="nav-link">Categorias</a>
+        <a href="/como-funciona" class="nav-link">Como Funciona</a>
+        <a href="/sobre" class="nav-link">Sobre</a>
+        <a href="/faq" class="nav-link">FAQ</a>
+        <a href="/contato" class="nav-link">Contato</a>
+      </nav>
+      <div class="header-actions">
+        <button class="btn-icon" id="searchBtn" title="Buscar (Ctrl+K)">🔍</button>
+        <a href="/carrinho" class="btn-icon cart-icon" id="cartBtn">
+          🛒
+          <span class="cart-badge" id="cartBadge" style="display:none">0</span>
+        </a>
+        <div id="authButtons">
+          <a href="/login" class="btn btn-outline btn-sm">Entrar</a>
+          <a href="/cadastro" class="btn btn-primary btn-sm">Cadastrar</a>
+        </div>
+        <div id="userMenu" style="display:none">
+          <button class="btn-icon" id="userMenuBtn">👤</button>
+          <div class="dropdown" id="userDropdown" style="display:none">
+            <a href="/meus-pedidos">Meus Pedidos</a>
+            <a href="#" id="logoutBtn">Sair</a>
+          </div>
+        </div>
+        <button class="btn-icon mobile-menu-btn" id="mobileMenuBtn">☰</button>
+      </div>
+    </div>
+    <nav class="nav-mobile" id="mobileNav" style="display:none">
+      <a href="/">Início</a>
+      <a href="/produtos">Produtos</a>
+      <a href="/categorias">Categorias</a>
+      <a href="/como-funciona">Como Funciona</a>
+      <a href="/sobre">Sobre</a>
+      <a href="/faq">FAQ</a>
+      <a href="/contato">Contato</a>
+    </nav>
+  </header>
+
+  <section class="section" style="padding-top:40px;padding-bottom:40px;">
+    <div class="container">
+      <div style="margin-bottom:16px;">
+        <a href="/produtos" style="color:var(--primary);font-size:0.9rem;font-weight:500;">← Voltar para Produtos</a>
+      </div>
+      <div id="productDetail" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;">
+        <div class="loading-spinner" style="grid-column:1/-1;"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="reviewsSection">
+    <div class="container">
+      <div class="section-header">
+        <h2>Avaliações</h2>
+      </div>
+      <div id="reviewsList" style="max-width:800px;margin:0 auto;">
+        <p style="text-align:center;color:var(--gray-500);">Carregando avaliações...</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="relatedSection" style="display:none;">
+    <div class="container">
+      <div class="section-header">
+        <h2>Produtos Relacionados</h2>
+      </div>
+      <div class="products-grid" id="relatedGrid">
+        <div class="loading-spinner"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Gostou do produto?</h2>
+      <p>Personalize com sua arte ou crie um design único com nossa IA</p>
+      <div class="cta-actions">
+        <a href="/criar-com-ia" class="btn btn-accent btn-lg">🎨 Criar com IA</a>
+        <a href="/contato" class="btn btn-outline-light btn-lg">Fale Conosco</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="/" class="logo">
+            <span class="logo-icon">✦</span>
+            <span class="logo-text">Sublimitas</span>
+          </a>
+          <p>Produtos personalizados de alta qualidade para empresas e eventos.</p>
+          <div class="social-links" id="socialLinks"></div>
+        </div>
+        <div class="footer-col">
+          <h4>Produtos</h4>
+          <a href="/produtos">Catálogo</a>
+          <a href="/categorias">Categorias</a>
+          <a href="/criar-com-ia">Criar com IA</a>
+          <a href="/produtos?featured=1">Destaques</a>
+        </div>
+        <div class="footer-col">
+          <h4>Empresa</h4>
+          <a href="/sobre">Sobre Nós</a>
+          <a href="/como-funciona">Como Funciona</a>
+          <a href="/faq">FAQ</a>
+          <a href="/contato">Contato</a>
+        </div>
+        <div class="footer-col">
+          <h4>Minha Conta</h4>
+          <a href="/login">Entrar</a>
+          <a href="/cadastro">Cadastrar</a>
+          <a href="/meus-pedidos">Meus Pedidos</a>
+          <a href="/rastrear">Rastrear Pedido</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="year"></span> Sublimitas. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal-overlay" id="searchModal" style="display:none">
+    <div class="modal search-modal">
+      <div class="search-input-wrap">
+        <input type="text" id="searchInput" placeholder="Buscar produtos, categorias..." autofocus>
+        <kbd>ESC</kbd>
+      </div>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/support.js"></script>
+  <script>
+    let currentProduct = null;
+    let selectedImage = 0;
+    let quantity = 1;
+
+    function getSlug() {
+      return new URLSearchParams(window.location.search).get('slug');
+    }
+
+    function renderStars(rating) {
+      let stars = '';
+      for (let i = 1; i <= 5; i++) {
+        stars += i <= rating ? '⭐' : '☆';
+      }
+      return stars;
+    }
+
+    async function loadProduct() {
+      const slug = getSlug();
+      if (!slug) {
+        document.getElementById('productDetail').innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--gray-500);padding:60px 0;">Produto não encontrado.</p>';
+        return;
+      }
+
+      try {
+        const data = await api(`/api/products/${slug}`);
+        const p = data.product || data;
+        currentProduct = p;
+
+        const images = p.images && p.images.length > 0 ? p.images : [];
+        const specs = p.specs || p.specifications || {};
+
+        document.title = `${p.name} — Sublimitas`;
+
+        let specsHtml = '';
+        if (typeof specs === 'object' && Object.keys(specs).length > 0) {
+          specsHtml = `
+            <div style="margin-top:24px;">
+              <h3 style="font-size:1rem;font-weight:600;margin-bottom:12px;">Especificações</h3>
+              <div style="border:1px solid var(--gray-200);border-radius:var(--radius-sm);overflow:hidden;">
+                ${Object.entries(specs).map(([k, v], i) => `
+                  <div style="display:flex;padding:12px 16px;${i % 2 === 0 ? 'background:var(--gray-50);' : ''}">
+                    <span style="font-weight:600;font-size:0.9rem;min-width:140px;">${k}</span>
+                    <span style="font-size:0.9rem;color:var(--gray-600);">${v}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        }
+
+        document.getElementById('productDetail').innerHTML = `
+          <div>
+            <div id="mainImage" style="background:var(--gray-100);border-radius:var(--radius);height:420px;display:flex;align-items:center;justify-content:center;font-size:5rem;overflow:hidden;margin-bottom:16px;">
+              ${images.length > 0 ? `<img src="${images[0]}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;" id="mainImg">` : '📦'}
+            </div>
+            ${images.length > 1 ? `
+              <div style="display:flex;gap:8px;overflow-x:auto;" id="thumbnails">
+                ${images.map((img, i) => `
+                  <div onclick="changeImage(${i})" style="width:80px;height:80px;border-radius:var(--radius-sm);overflow:hidden;cursor:pointer;border:2px solid ${i === 0 ? 'var(--primary)' : 'var(--gray-200)'};flex-shrink:0;" data-thumb="${i}">
+                    <img src="${img}" alt="${p.name} ${i + 1}" style="width:100%;height:100%;object-fit:cover;">
+                  </div>
+                `).join('')}
+              </div>
+            ` : ''}
+          </div>
+          <div>
+            <div style="font-size:0.75rem;color:var(--primary);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">${p.category_name || ''}</div>
+            <h1 style="font-size:1.75rem;font-weight:700;margin-bottom:8px;">${p.name}</h1>
+            ${p.average_rating ? `<div style="margin-bottom:12px;font-size:0.95rem;">${renderStars(Math.round(p.average_rating))} <span style="color:var(--gray-500);">(${p.review_count || 0} avaliações)</span></div>` : ''}
+            <div style="font-size:2rem;font-weight:800;color:var(--accent);margin-bottom:16px;">${formatPrice(p.base_price)}</div>
+            <p style="color:var(--gray-600);line-height:1.7;margin-bottom:24px;">${p.description || ''}</p>
+
+            ${p.sizes && p.sizes.length > 0 ? `
+              <div class="form-group">
+                <label>Tamanho</label>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                  ${p.sizes.map((s, i) => `
+                    <button class="btn ${i === 0 ? 'btn-primary' : 'btn-outline'} btn-sm size-btn" data-size="${s}" onclick="selectSize(this)">${s}</button>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+
+            ${p.colors && p.colors.length > 0 ? `
+              <div class="form-group">
+                <label>Cor</label>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                  ${p.colors.map((c, i) => `
+                    <button class="btn ${i === 0 ? 'btn-primary' : 'btn-outline'} btn-sm color-btn" data-color="${c}" onclick="selectColor(this)">${c}</button>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+
+            <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;">
+              <label style="font-weight:600;font-size:0.9rem;">Quantidade:</label>
+              <div style="display:flex;align-items:center;border:1px solid var(--gray-300);border-radius:var(--radius-sm);overflow:hidden;">
+                <button onclick="changeQty(-1)" style="width:40px;height:40px;font-size:1.2rem;display:flex;align-items:center;justify-content:center;border:none;background:none;cursor:pointer;">−</button>
+                <span id="qtyValue" style="width:48px;text-align:center;font-weight:600;">1</span>
+                <button onclick="changeQty(1)" style="width:40px;height:40px;font-size:1.2rem;display:flex;align-items:center;justify-content:center;border:none;background:none;cursor:pointer;">+</button>
+              </div>
+            </div>
+
+            <button class="btn btn-primary btn-lg" style="width:100%;" onclick="addProductToCart()">🛒 Adicionar ao Carrinho</button>
+
+            <div style="margin-top:16px;display:flex;gap:12px;">
+              <a href="/criar-com-ia" class="btn btn-outline" style="flex:1;">🎨 Criar com IA</a>
+              <a href="/contato" class="btn btn-outline" style="flex:1;">💬 Tirar Dúvida</a>
+            </div>
+
+            ${specsHtml}
+          </div>
+        `;
+      } catch {
+        document.getElementById('productDetail').innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--gray-500);padding:60px 0;">Erro ao carregar produto. Tente novamente.</p>';
+      }
+    }
+
+    function changeImage(index) {
+      const images = currentProduct.images || [];
+      if (!images[index]) return;
+      selectedImage = index;
+      const mainImg = document.getElementById('mainImg');
+      if (mainImg) mainImg.src = images[index];
+      document.querySelectorAll('[data-thumb]').forEach(el => {
+        el.style.borderColor = parseInt(el.dataset.thumb) === index ? 'var(--primary)' : 'var(--gray-200)';
+      });
+    }
+
+    function changeQty(delta) {
+      quantity = Math.max(1, quantity + delta);
+      document.getElementById('qtyValue').textContent = quantity;
+    }
+
+    function selectSize(btn) {
+      document.querySelectorAll('.size-btn').forEach(b => { b.className = 'btn btn-outline btn-sm size-btn'; });
+      btn.className = 'btn btn-primary btn-sm size-btn';
+    }
+
+    function selectColor(btn) {
+      document.querySelectorAll('.color-btn').forEach(b => { b.className = 'btn btn-outline btn-sm color-btn'; });
+      btn.className = 'btn btn-primary btn-sm color-btn';
+    }
+
+    async function addProductToCart() {
+      if (!currentProduct) return;
+      await addToCart(currentProduct.id, quantity);
+    }
+
+    async function loadReviews() {
+      const slug = getSlug();
+      if (!slug) return;
+      const container = document.getElementById('reviewsList');
+      try {
+        const data = await api(`/api/products/${slug}/reviews`);
+        const reviews = data.reviews || data || [];
+        if (reviews.length === 0) {
+          container.innerHTML = '<p style="text-align:center;color:var(--gray-500);padding:40px 0;">Nenhuma avaliação ainda. Seja o primeiro a avaliar!</p>';
+          return;
+        }
+        container.innerHTML = reviews.map(r => `
+          <div style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:24px;margin-bottom:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+              <strong>${r.user_name || r.name || 'Anônimo'}</strong>
+              <span style="color:var(--warning);">${renderStars(r.rating || 5)}</span>
+            </div>
+            <p style="color:var(--gray-600);font-size:0.95rem;line-height:1.6;">${r.comment || r.text || ''}</p>
+            ${r.created_at ? `<div style="font-size:0.8rem;color:var(--gray-400);margin-top:8px;">${new Date(r.created_at).toLocaleDateString('pt-BR')}</div>` : ''}
+          </div>
+        `).join('');
+      } catch {
+        container.innerHTML = '<p style="text-align:center;color:var(--gray-500);">Erro ao carregar avaliações.</p>';
+      }
+    }
+
+    async function loadRelated() {
+      const slug = getSlug();
+      if (!slug || !currentProduct) return;
+      const section = document.getElementById('relatedSection');
+      const grid = document.getElementById('relatedGrid');
+      try {
+        const data = await api(`/api/products/${slug}/related`);
+        const products = data.products || [];
+        if (products.length === 0) { section.style.display = 'none'; return; }
+        section.style.display = 'block';
+        grid.innerHTML = products.slice(0, 4).map(p => {
+          const img = (p.images && p.images.length > 0) ? p.images[0] : null;
+          return `
+            <div class="product-card">
+              <div class="product-image">${img ? `<img src="${img}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover">` : '📦'}</div>
+              <div class="product-info">
+                <div class="product-category">${p.category_name || ''}</div>
+                <div class="product-name">${p.name}</div>
+                <div class="product-price">${formatPrice(p.base_price)}</div>
+              </div>
+              <div class="product-actions">
+                <a href="/produto?slug=${p.slug}" class="btn btn-outline btn-sm">Ver Detalhes</a>
+                <button class="btn btn-primary btn-sm" onclick="addToCart(${p.id})">Adicionar</button>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } catch {
+        section.style.display = 'none';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadProduct();
+      loadReviews();
+      setTimeout(loadRelated, 500);
+    });
+  </script>
+</body>
+</html>

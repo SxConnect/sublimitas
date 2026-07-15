@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sublimitas — Produtos Personalizados</title>
+  <meta name="description" content="Produtos personalizados de alta qualidade. Camisetas, canecas, uniformes, brindes e muito mais.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a href="/" class="logo">
+        <span class="logo-icon">✦</span>
+        <span class="logo-text">Sublimitas</span>
+      </a>
+      <nav class="nav-desktop">
+        <a href="/" class="nav-link active">Início</a>
+        <a href="/produtos" class="nav-link">Produtos</a>
+        <a href="/categorias" class="nav-link">Categorias</a>
+        <a href="/como-funciona" class="nav-link">Como Funciona</a>
+        <a href="/sobre" class="nav-link">Sobre</a>
+        <a href="/faq" class="nav-link">FAQ</a>
+        <a href="/contato" class="nav-link">Contato</a>
+      </nav>
+      <div class="header-actions">
+        <button class="btn-icon" id="searchBtn" title="Buscar (Ctrl+K)">🔍</button>
+        <a href="/carrinho" class="btn-icon cart-icon" id="cartBtn">
+          🛒
+          <span class="cart-badge" id="cartBadge" style="display:none">0</span>
+        </a>
+        <div id="authButtons">
+          <a href="/login" class="btn btn-outline btn-sm">Entrar</a>
+          <a href="/cadastro" class="btn btn-primary btn-sm">Cadastrar</a>
+        </div>
+        <div id="userMenu" style="display:none">
+          <button class="btn-icon" id="userMenuBtn">👤</button>
+          <div class="dropdown" id="userDropdown" style="display:none">
+            <a href="/meus-pedidos">Meus Pedidos</a>
+            <a href="#" id="logoutBtn">Sair</a>
+          </div>
+        </div>
+        <button class="btn-icon mobile-menu-btn" id="mobileMenuBtn">☰</button>
+      </div>
+    </div>
+    <!-- Mobile Nav -->
+    <nav class="nav-mobile" id="mobileNav" style="display:none">
+      <a href="/">Início</a>
+      <a href="/produtos">Produtos</a>
+      <a href="/categorias">Categorias</a>
+      <a href="/como-funciona">Como Funciona</a>
+      <a href="/sobre">Sobre</a>
+      <a href="/faq">FAQ</a>
+      <a href="/contato">Contato</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1>Produtos <span class="gradient-text">personalizados</span> com qualidade profissional</h1>
+        <p>Camisetas, canecas, uniformes, brindes corporativos e muito mais. Crie designs únicos com nossa ferramenta de IA ou envie seu arquivo.</p>
+        <div class="hero-actions">
+          <a href="/criar-com-ia" class="btn btn-primary btn-lg">🎨 Criar com IA</a>
+          <a href="/produtos" class="btn btn-outline btn-lg">Ver Catálogo</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="stat-number" data-stat="products">0</span>
+            <span class="stat-label">Produtos</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-stat="orders">0</span>
+            <span class="stat-label">Pedidos Entregues</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-stat="companies">0</span>
+            <span class="stat-label">Empresas que Confitam</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card">
+          <div class="hero-card-icon">✨</div>
+          <h3>Design com IA</h3>
+          <p>Descreva o que quer e receba um design profissional em segundos</p>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-icon">📦</div>
+          <h3>Impressão Premium</h3>
+          <p>Tecnologia de ponta para cores vibrantes e duradouras</p>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-icon">🚚</div>
+          <h3>Entrega Rápida</h3>
+          <p>Toda o Brasil com rastreamento completo</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categorias -->
+  <section class="section" id="categoriesSection">
+    <div class="container">
+      <div class="section-header">
+        <h2>Nossas Categorias</h2>
+        <p>Explore我们的 produtos por categoria</p>
+      </div>
+      <div class="categories-grid" id="categoriesGrid">
+        <div class="loading-spinner"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Produtos em Destaque -->
+  <section class="section section-alt" id="featuredSection">
+    <div class="container">
+      <div class="section-header">
+        <h2>Produtos em Destaque</h2>
+        <p>Os favoritos dos nossos clientes</p>
+      </div>
+      <div class="products-grid" id="featuredGrid">
+        <div class="loading-spinner"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Como Funciona -->
+  <section class="section" id="howItWorks">
+    <div class="container">
+      <div class="section-header">
+        <h2>Como Funciona</h2>
+        <p>Do design à entrega em 4 passos simples</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3>Escolha o Produto</h3>
+          <p>Navegue pelo catálogo e escolha o produto que deseja personalizar</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3>Crie o Design</h3>
+          <p>Use nossa IA ou envie seu arquivo pronto para personalização</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3>Aprove e Compre</h3>
+          <p>Visualize o resultado em mockups reais e finalize seu pedido</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <h3>Receba em Casa</h3>
+          <p>Acompanhe a produção e receba com rastreamento completo</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Depoimentos -->
+  <section class="section section-alt" id="testimonialsSection">
+    <div class="container">
+      <div class="section-header">
+        <h2>O que dizem nossos clientes</h2>
+      </div>
+      <div class="testimonials-carousel" id="testimonialsCarousel">
+        <div class="loading-spinner"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Empresas que Confitam -->
+  <section class="section" id="trustSection">
+    <div class="container">
+      <div class="section-header">
+        <h2>Empresas que Confitam em Nós</h2>
+      </div>
+      <div class="trust-logos" id="trustLogos">
+        <div class="loading-spinner"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Pronto para personalizar?</h2>
+      <p>Comece agora mesmo e crie produtos únicos para sua empresa ou evento</p>
+      <div class="cta-actions">
+        <a href="/criar-com-ia" class="btn btn-accent btn-lg">🎨 Criar com IA</a>
+        <a href="/contato" class="btn btn-outline-light btn-lg">Fale Conosco</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="/" class="logo">
+            <span class="logo-icon">✦</span>
+            <span class="logo-text">Sublimitas</span>
+          </a>
+          <p>Produtos personalizados de alta qualidade para empresas e eventos.</p>
+          <div class="social-links" id="socialLinks"></div>
+        </div>
+        <div class="footer-col">
+          <h4>Produtos</h4>
+          <a href="/produtos">Catálogo</a>
+          <a href="/categorias">Categorias</a>
+          <a href="/criar-com-ia">Criar com IA</a>
+          <a href="/produtos?featured=1">Destaques</a>
+        </div>
+        <div class="footer-col">
+          <h4>Empresa</h4>
+          <a href="/sobre">Sobre Nós</a>
+          <a href="/como-funciona">Como Funciona</a>
+          <a href="/faq">FAQ</a>
+          <a href="/contato">Contato</a>
+        </div>
+        <div class="footer-col">
+          <h4>Minha Conta</h4>
+          <a href="/login">Entrar</a>
+          <a href="/cadastro">Cadastrar</a>
+          <a href="/meus-pedidos">Meus Pedidos</a>
+          <a href="/rastrear">Rastrear Pedido</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="year"></span> Sublimitas. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Search Modal -->
+  <div class="modal-overlay" id="searchModal" style="display:none">
+    <div class="modal search-modal">
+      <div class="search-input-wrap">
+        <input type="text" id="searchInput" placeholder="Buscar produtos, categorias..." autofocus>
+        <kbd>ESC</kbd>
+      </div>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

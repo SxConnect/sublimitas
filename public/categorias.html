@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Categorias — Sublimitas</title>
+  <meta name="description" content="Explore todas as categorias de produtos personalizados da Sublimitas.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a href="/" class="logo">
+        <span class="logo-icon">✦</span>
+        <span class="logo-text">Sublimitas</span>
+      </a>
+      <nav class="nav-desktop">
+        <a href="/" class="nav-link">Início</a>
+        <a href="/produtos" class="nav-link">Produtos</a>
+        <a href="/categorias" class="nav-link active">Categorias</a>
+        <a href="/como-funciona" class="nav-link">Como Funciona</a>
+        <a href="/sobre" class="nav-link">Sobre</a>
+        <a href="/faq" class="nav-link">FAQ</a>
+        <a href="/contato" class="nav-link">Contato</a>
+      </nav>
+      <div class="header-actions">
+        <button class="btn-icon" id="searchBtn" title="Buscar (Ctrl+K)">🔍</button>
+        <a href="/carrinho" class="btn-icon cart-icon" id="cartBtn">
+          🛒
+          <span class="cart-badge" id="cartBadge" style="display:none">0</span>
+        </a>
+        <div id="authButtons">
+          <a href="/login" class="btn btn-outline btn-sm">Entrar</a>
+          <a href="/cadastro" class="btn btn-primary btn-sm">Cadastrar</a>
+        </div>
+        <div id="userMenu" style="display:none">
+          <button class="btn-icon" id="userMenuBtn">👤</button>
+          <div class="dropdown" id="userDropdown" style="display:none">
+            <a href="/meus-pedidos">Meus Pedidos</a>
+            <a href="#" id="logoutBtn">Sair</a>
+          </div>
+        </div>
+        <button class="btn-icon mobile-menu-btn" id="mobileMenuBtn">☰</button>
+      </div>
+    </div>
+    <nav class="nav-mobile" id="mobileNav" style="display:none">
+      <a href="/">Início</a>
+      <a href="/produtos">Produtos</a>
+      <a href="/categorias">Categorias</a>
+      <a href="/como-funciona">Como Funciona</a>
+      <a href="/sobre">Sobre</a>
+      <a href="/faq">FAQ</a>
+      <a href="/contato">Contato</a>
+    </nav>
+  </header>
+
+  <section class="hero" style="padding:60px 0 40px;">
+    <div class="container">
+      <div class="hero-content" style="text-align:center;max-width:600px;margin:0 auto;">
+        <h1 style="font-size:2.5rem;">Nossas <span class="gradient-text">Categorias</span></h1>
+        <p>Encontre o produto ideal para sua necessidade. Temos soluções para empresas, eventos e presenteamentos.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="categories-grid" id="categoriesGrid" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:24px;">
+        <div class="loading-spinner"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <h2>Não encontrou o que precisa?</h2>
+        <p>Temos centenas de produtos disponíveis. Use nossa busca ou fale conosco.</p>
+      </div>
+      <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+        <a href="/produtos" class="btn btn-primary btn-lg">Ver Todos os Produtos</a>
+        <a href="/contato" class="btn btn-outline btn-lg">Falar com Consultor</a>
+        <a href="/criar-com-ia" class="btn btn-accent btn-lg">🎨 Criar com IA</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Pronto para personalizar?</h2>
+      <p>Comece agora mesmo e crie produtos únicos para sua empresa ou evento</p>
+      <div class="cta-actions">
+        <a href="/criar-com-ia" class="btn btn-accent btn-lg">🎨 Criar com IA</a>
+        <a href="/contato" class="btn btn-outline-light btn-lg">Fale Conosco</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="/" class="logo">
+            <span class="logo-icon">✦</span>
+            <span class="logo-text">Sublimitas</span>
+          </a>
+          <p>Produtos personalizados de alta qualidade para empresas e eventos.</p>
+          <div class="social-links" id="socialLinks"></div>
+        </div>
+        <div class="footer-col">
+          <h4>Produtos</h4>
+          <a href="/produtos">Catálogo</a>
+          <a href="/categorias">Categorias</a>
+          <a href="/criar-com-ia">Criar com IA</a>
+          <a href="/produtos?featured=1">Destaques</a>
+        </div>
+        <div class="footer-col">
+          <h4>Empresa</h4>
+          <a href="/sobre">Sobre Nós</a>
+          <a href="/como-funciona">Como Funciona</a>
+          <a href="/faq">FAQ</a>
+          <a href="/contato">Contato</a>
+        </div>
+        <div class="footer-col">
+          <h4>Minha Conta</h4>
+          <a href="/login">Entrar</a>
+          <a href="/cadastro">Cadastrar</a>
+          <a href="/meus-pedidos">Meus Pedidos</a>
+          <a href="/rastrear">Rastrear Pedido</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="year"></span> Sublimitas. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal-overlay" id="searchModal" style="display:none">
+    <div class="modal search-modal">
+      <div class="search-input-wrap">
+        <input type="text" id="searchInput" placeholder="Buscar produtos, categorias..." autofocus>
+        <kbd>ESC</kbd>
+      </div>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/support.js"></script>
+  <script>
+    async function loadCategoriesPage() {
+      const grid = document.getElementById('categoriesGrid');
+      try {
+        const data = await api('/api/categories');
+        const categories = data.categories || [];
+        if (categories.length === 0) {
+          grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--gray-500);padding:60px 0;">Nenhuma categoria encontrada.</p>';
+          return;
+        }
+        grid.innerHTML = categories.map(c => `
+          <a href="/produtos?category=${c.slug}" class="category-card" style="padding:32px 24px;display:flex;flex-direction:column;align-items:center;">
+            <div class="category-icon" style="font-size:3rem;margin-bottom:16px;">${c.icon || '📂'}</div>
+            <div class="category-name" style="font-size:1.05rem;margin-bottom:8px;">${c.name}</div>
+            <div class="category-count" style="font-size:0.85rem;">${c.product_count || 0} produto${(c.product_count || 0) !== 1 ? 's' : ''}</div>
+            ${c.description ? `<p style="font-size:0.85rem;color:var(--gray-500);margin-top:8px;text-align:center;">${c.description}</p>` : ''}
+          </a>
+        `).join('');
+      } catch {
+        grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--gray-500);padding:60px 0;">Erro ao carregar categorias. Tente novamente.</p>';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadCategoriesPage);
+  </script>
+</body>
+</html>

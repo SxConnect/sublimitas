@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criar com IA — Sublimitas</title>
+  <meta name="description" content="Crie designs personalizados com inteligência artificial para seus produtos Sublimitas.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .designer-page { padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
+    .designer-header { margin-bottom: 32px; }
+    .designer-header h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 4px; }
+    .designer-header p { color: var(--gray-500); }
+    .designer-layout { display: grid; grid-template-columns: 1fr 380px; gap: 32px; }
+    .designer-canvas { background: var(--gray-100); border: 2px dashed var(--gray-300); border-radius: var(--radius); min-height: 480px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px; color: var(--gray-500); position: relative; overflow: hidden; }
+    .designer-canvas.has-preview { border-style: solid; border-color: var(--gray-200); background: var(--white); }
+    .designer-canvas-placeholder { text-align: center; padding: 40px; }
+    .designer-canvas-placeholder .icon { font-size: 4rem; margin-bottom: 16px; opacity: 0.5; }
+    .designer-canvas-placeholder h3 { font-size: 1.1rem; font-weight: 600; color: var(--gray-600); margin-bottom: 8px; }
+    .designer-canvas-placeholder p { font-size: 0.9rem; }
+    .designer-canvas img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    .designer-sidebar { display: flex; flex-direction: column; gap: 20px; }
+    .designer-panel { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 24px; }
+    .designer-panel h3 { font-size: 1rem; font-weight: 600; margin-bottom: 16px; }
+    .designer-panel textarea { width: 100%; min-height: 100px; resize: vertical; }
+    .upload-zone { border: 2px dashed var(--gray-300); border-radius: var(--radius-sm); padding: 32px 20px; text-align: center; cursor: pointer; transition: all 0.2s ease; }
+    .upload-zone:hover, .upload-zone.dragover { border-color: var(--primary); background: rgba(123,47,190,0.03); }
+    .upload-zone-icon { font-size: 2rem; margin-bottom: 8px; }
+    .upload-zone p { font-size: 0.85rem; color: var(--gray-500); }
+    .upload-zone small { font-size: 0.75rem; color: var(--gray-400); }
+    .upload-zone input[type="file"] { display: none; }
+    .templates-section { margin-top: 40px; }
+    .templates-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
+    .template-card { background: var(--white); border: 2px solid var(--gray-200); border-radius: var(--radius-sm); padding: 20px; text-align: center; cursor: pointer; transition: all 0.2s ease; }
+    .template-card:hover, .template-card.selected { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(123,47,190,0.1); }
+    .template-card.selected { background: rgba(123,47,190,0.05); }
+    .template-icon { font-size: 2.5rem; margin-bottom: 8px; }
+    .template-name { font-size: 0.85rem; font-weight: 600; }
+    .template-price { font-size: 0.75rem; color: var(--gray-500); margin-top: 4px; }
+    .download-bar { display: none; align-items: center; justify-content: space-between; background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 16px 24px; margin-top: 24px; }
+    .download-bar.visible { display: flex; }
+    @media (max-width: 900px) {
+      .designer-layout { grid-template-columns: 1fr; }
+      .designer-canvas { min-height: 320px; }
+      .templates-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+    }
+    @media (max-width: 480px) {
+      .designer-page { padding: 24px 12px; }
+      .download-bar { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a href="/" class="logo">
+        <span class="logo-icon">✦</span>
+        <span class="logo-text">Sublimitas</span>
+      </a>
+      <nav class="nav-desktop">
+        <a href="/" class="nav-link">Início</a>
+        <a href="/produtos" class="nav-link">Produtos</a>
+        <a href="/categorias" class="nav-link">Categorias</a>
+        <a href="/como-funciona" class="nav-link">Como Funciona</a>
+        <a href="/sobre" class="nav-link">Sobre</a>
+        <a href="/faq" class="nav-link">FAQ</a>
+        <a href="/contato" class="nav-link">Contato</a>
+      </nav>
+      <div class="header-actions">
+        <button class="btn-icon" id="searchBtn" title="Buscar (Ctrl+K)">🔍</button>
+        <a href="/carrinho" class="btn-icon cart-icon" id="cartBtn">
+          🛒
+          <span class="cart-badge" id="cartBadge" style="display:none">0</span>
+        </a>
+        <div id="authButtons">
+          <a href="/login" class="btn btn-outline btn-sm">Entrar</a>
+          <a href="/cadastro" class="btn btn-primary btn-sm">Cadastrar</a>
+        </div>
+        <div id="userMenu" style="display:none">
+          <button class="btn-icon" id="userMenuBtn">👤</button>
+          <div class="dropdown" id="userDropdown" style="display:none">
+            <a href="/meus-pedidos">Meus Pedidos</a>
+            <a href="#" id="logoutBtn">Sair</a>
+          </div>
+        </div>
+        <button class="btn-icon mobile-menu-btn" id="mobileMenuBtn">☰</button>
+      </div>
+    </div>
+    <nav class="nav-mobile" id="mobileNav" style="display:none">
+      <a href="/">Início</a>
+      <a href="/produtos">Produtos</a>
+      <a href="/categorias">Categorias</a>
+      <a href="/como-funciona">Como Funciona</a>
+      <a href="/sobre">Sobre</a>
+      <a href="/faq">FAQ</a>
+      <a href="/contato">Contato</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="designer-page">
+      <div class="designer-header">
+        <h1>Criar com IA</h1>
+        <p>Descreva o que deseja e gere um design profissional para seu produto</p>
+      </div>
+
+      <div class="designer-layout">
+        <div>
+          <div class="designer-canvas" id="designerCanvas">
+            <div class="designer-canvas-placeholder" id="canvasPlaceholder">
+              <div class="icon">🎨</div>
+              <h3>Área de Preview</h3>
+              <p>Seu design aparecerá aqui após a geração</p>
+            </div>
+            <img id="previewImage" style="display:none" alt="Preview do design">
+          </div>
+
+          <div class="download-bar" id="downloadBar">
+            <span style="font-weight:600;font-size:0.95rem;">Design gerado com sucesso!</span>
+            <button class="btn btn-primary btn-sm" onclick="showToast('Download iniciado — funcionalidade em breve', 'success')">⬇ Baixar Design</button>
+          </div>
+
+          <div class="templates-section">
+            <div class="section-header" style="margin-bottom:24px;">
+              <h2>Modelos de Produtos</h2>
+              <p>Escolha um modelo para aplicar seu design</p>
+            </div>
+            <div class="templates-grid" id="templatesGrid"></div>
+          </div>
+        </div>
+
+        <div class="designer-sidebar">
+          <div class="designer-panel">
+            <h3>Produto</h3>
+            <div class="form-group">
+              <label for="productSelect">Categoria / Produto</label>
+              <select id="productSelect">
+                <option value="">Carregando produtos...</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="designer-panel">
+            <h3>Arquivo</h3>
+            <div class="upload-zone" id="uploadZone">
+              <div class="upload-zone-icon">📁</div>
+              <p>Arraste um arquivo aqui ou <strong>clique para selecionar</strong></p>
+              <small>PNG, JPG, SVG — Máx. 10MB</small>
+              <input type="file" id="fileInput" accept=".png,.jpg,.jpeg,.svg">
+            </div>
+            <p id="fileName" style="margin-top:8px;font-size:0.85rem;color:var(--primary);font-weight:500;display:none;"></p>
+          </div>
+
+          <div class="designer-panel">
+            <h3>Descrição do Design</h3>
+            <div class="form-group">
+              <textarea id="designDescription" placeholder="Descreva o design que deseja criar. Exemplo: 'Uma camiseta preta com um leão estilizado em dourado, estilo minimalista, para evento corporativo'"></textarea>
+            </div>
+            <button class="btn btn-accent btn-lg" style="width:100%" id="generateBtn" onclick="generateDesign()">✨ Gerar Design</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="/" class="logo">
+            <span class="logo-icon">✦</span>
+            <span class="logo-text">Sublimitas</span>
+          </a>
+          <p>Produtos personalizados de alta qualidade para empresas e eventos.</p>
+          <div class="social-links" id="socialLinks"></div>
+        </div>
+        <div class="footer-col">
+          <h4>Produtos</h4>
+          <a href="/produtos">Catálogo</a>
+          <a href="/categorias">Categorias</a>
+          <a href="/criar-com-ia">Criar com IA</a>
+          <a href="/produtos?featured=1">Destaques</a>
+        </div>
+        <div class="footer-col">
+          <h4>Empresa</h4>
+          <a href="/sobre">Sobre Nós</a>
+          <a href="/como-funciona">Como Funciona</a>
+          <a href="/faq">FAQ</a>
+          <a href="/contato">Contato</a>
+        </div>
+        <div class="footer-col">
+          <h4>Minha Conta</h4>
+          <a href="/login">Entrar</a>
+          <a href="/cadastro">Cadastrar</a>
+          <a href="/meus-pedidos">Meus Pedidos</a>
+          <a href="/rastrear">Rastrear Pedido</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="year"></span> Sublimitas. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/support.js"></script>
+  <script>
+    var selectedTemplate = null;
+    var uploadedFile = null;
+
+    var TEMPLATES = [
+      { id: 'tshirt-black', name: 'Camiseta Preta', icon: '👕', price: 'A partir de R$ 49,90' },
+      { id: 'tshirt-white', name: 'Camiseta Branca', icon: '👕', price: 'A partir de R$ 49,90' },
+      { id: 'mug', name: 'Caneca', icon: '☕', price: 'A partir de R$ 34,90' },
+      { id: 'bottle', name: 'Garrafa', icon: '🍶', price: 'A partir de R$ 59,90' },
+      { id: 'cap', name: 'Boné', icon: '🧢', price: 'A partir de R$ 39,90' },
+      { id: 'tote-bag', name: 'Sacola', icon: '👜', price: 'A partir de R$ 29,90' },
+      { id: 'notebook', name: 'Caderno', icon: '📓', price: 'A partir de R$ 24,90' },
+      { id: 'pen', name: 'Caneta', icon: '🖊️', price: 'A partir de R$ 9,90' },
+      { id: 'mousepad', name: 'Mouse Pad', icon: '🖱️', price: 'A partir de R$ 19,90' },
+      { id: 'sticker', name: 'Adesivo', icon: '🏷️', price: 'A partir de R$ 4,90' },
+      { id: 'hoodie', name: 'Moletom', icon: '🧥', price: 'A partir de R$ 89,90' },
+      { id: 'towel', name: 'Toalha', icon: '🏖️', price: 'A partir de R$ 39,90' }
+    ];
+
+    function renderTemplates() {
+      var grid = document.getElementById('templatesGrid');
+      grid.innerHTML = TEMPLATES.map(function(t) {
+        return '<div class="template-card" id="tpl-' + t.id + '" onclick="selectTemplate(\'' + t.id + '\')">' +
+          '<div class="template-icon">' + t.icon + '</div>' +
+          '<div class="template-name">' + t.name + '</div>' +
+          '<div class="template-price">' + t.price + '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    function selectTemplate(id) {
+      TEMPLATES.forEach(function(t) {
+        var el = document.getElementById('tpl-' + t.id);
+        if (el) el.classList.remove('selected');
+      });
+      var el = document.getElementById('tpl-' + id);
+      if (el) el.classList.add('selected');
+      selectedTemplate = id;
+    }
+
+    async function loadProducts() {
+      var select = document.getElementById('productSelect');
+      try {
+        var data = await api('/api/products');
+        var products = data.products || data || [];
+        if (products.length > 0) {
+          var grouped = {};
+          products.forEach(function(p) {
+            var cat = p.category_name || 'Outros';
+            if (!grouped[cat]) grouped[cat] = [];
+            grouped[cat].push(p);
+          });
+          var html = '<option value="">Selecione um produto</option>';
+          Object.keys(grouped).forEach(function(cat) {
+            html += '<optgroup label="' + cat + '">';
+            grouped[cat].forEach(function(p) {
+              html += '<option value="' + p.id + '">' + p.name + ' — ' + formatPrice(p.base_price) + '</option>';
+            });
+            html += '</optgroup>';
+          });
+          select.innerHTML = html;
+        } else {
+          select.innerHTML = '<option value="">Nenhum produto disponível</option>';
+        }
+      } catch {
+        select.innerHTML = '<option value="">Erro ao carregar produtos</option>';
+      }
+    }
+
+    function setupUpload() {
+      var zone = document.getElementById('uploadZone');
+      var input = document.getElementById('fileInput');
+      var nameEl = document.getElementById('fileName');
+
+      zone.addEventListener('click', function() { input.click(); });
+
+      zone.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        zone.classList.add('dragover');
+      });
+      zone.addEventListener('dragleave', function() {
+        zone.classList.remove('dragover');
+      });
+      zone.addEventListener('drop', function(e) {
+        e.preventDefault();
+        zone.classList.remove('dragover');
+        if (e.dataTransfer.files.length > 0) {
+          handleFile(e.dataTransfer.files[0]);
+        }
+      });
+
+      input.addEventListener('change', function() {
+        if (input.files.length > 0) {
+          handleFile(input.files[0]);
+        }
+      });
+
+      function handleFile(file) {
+        if (file.size > 10 * 1024 * 1024) {
+          showToast('Arquivo muito grande. Máximo 10MB.', 'error');
+          return;
+        }
+        uploadedFile = file;
+        nameEl.textContent = '📎 ' + file.name;
+        nameEl.style.display = 'block';
+        showToast('Arquivo selecionado: ' + file.name, 'success');
+      }
+    }
+
+    async function generateDesign() {
+      var description = document.getElementById('designDescription').value.trim();
+      var product = document.getElementById('productSelect').value;
+
+      if (!description) {
+        showToast('Descreva o design que deseja criar', 'error');
+        return;
+      }
+
+      var btn = document.getElementById('generateBtn');
+      btn.disabled = true;
+      btn.textContent = 'Gerando...';
+
+      try {
+        var body = { description: description };
+        if (product) body.product_id = product;
+        if (selectedTemplate) body.template = selectedTemplate;
+
+        var data = await api('/api/designer/generate', {
+          method: 'POST',
+          body: JSON.stringify(body)
+        });
+
+        if (data.image_url || data.url) {
+          var img = document.getElementById('previewImage');
+          var placeholder = document.getElementById('canvasPlaceholder');
+          img.src = data.image_url || data.url;
+          img.style.display = 'block';
+          placeholder.style.display = 'none';
+          document.getElementById('designerCanvas').classList.add('has-preview');
+          document.getElementById('downloadBar').classList.add('visible');
+          showToast('Design gerado com sucesso!', 'success');
+        } else {
+          showToast('Design enviado para processamento. Verifique seus pedidos em breve.', 'success');
+        }
+      } catch (err) {
+        showToast(err.message || 'Erro ao gerar design. Tente novamente.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '✨ Gerar Design';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      renderTemplates();
+      loadProducts();
+      setupUpload();
+    });
+  </script>
+</body>
+</html>

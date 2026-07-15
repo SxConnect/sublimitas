@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Como Funciona — Sublimitas</title>
+  <meta name="description" content="Descubra como é fácil criar produtos personalizados com a Sublimitas. Do design à entrega em 4 passos.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a href="/" class="logo">
+        <span class="logo-icon">✦</span>
+        <span class="logo-text">Sublimitas</span>
+      </a>
+      <nav class="nav-desktop">
+        <a href="/" class="nav-link">Início</a>
+        <a href="/produtos" class="nav-link">Produtos</a>
+        <a href="/categorias" class="nav-link">Categorias</a>
+        <a href="/como-funciona" class="nav-link active">Como Funciona</a>
+        <a href="/sobre" class="nav-link">Sobre</a>
+        <a href="/faq" class="nav-link">FAQ</a>
+        <a href="/contato" class="nav-link">Contato</a>
+      </nav>
+      <div class="header-actions">
+        <button class="btn-icon" id="searchBtn" title="Buscar (Ctrl+K)">🔍</button>
+        <a href="/carrinho" class="btn-icon cart-icon" id="cartBtn">
+          🛒
+          <span class="cart-badge" id="cartBadge" style="display:none">0</span>
+        </a>
+        <div id="authButtons">
+          <a href="/login" class="btn btn-outline btn-sm">Entrar</a>
+          <a href="/cadastro" class="btn btn-primary btn-sm">Cadastrar</a>
+        </div>
+        <div id="userMenu" style="display:none">
+          <button class="btn-icon" id="userMenuBtn">👤</button>
+          <div class="dropdown" id="userDropdown" style="display:none">
+            <a href="/meus-pedidos">Meus Pedidos</a>
+            <a href="#" id="logoutBtn">Sair</a>
+          </div>
+        </div>
+        <button class="btn-icon mobile-menu-btn" id="mobileMenuBtn">☰</button>
+      </div>
+    </div>
+    <nav class="nav-mobile" id="mobileNav" style="display:none">
+      <a href="/">Início</a>
+      <a href="/produtos">Produtos</a>
+      <a href="/categorias">Categorias</a>
+      <a href="/como-funciona">Como Funciona</a>
+      <a href="/sobre">Sobre</a>
+      <a href="/faq">FAQ</a>
+      <a href="/contato">Contato</a>
+    </nav>
+  </header>
+
+  <section class="hero" style="padding:60px 0 40px;">
+    <div class="container">
+      <div style="text-align:center;max-width:650px;margin:0 auto;">
+        <h1 style="font-size:2.5rem;">Como <span class="gradient-text">Funciona</span></h1>
+        <p style="font-size:1.1rem;color:var(--gray-600);margin-top:16px;">Do design à entrega, tudo de forma simples e rápida. Em apenas 4 passos você tem seu produto personalizado.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="steps-grid" style="gap:32px;">
+        <div class="step-card" style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:40px 24px;transition:all var(--transition);">
+          <div class="step-number">1</div>
+          <h3 style="font-size:1.15rem;">Escolha o Produto</h3>
+          <p style="margin-top:8px;">Navegue pelo nosso catálogo com dezenas de categorias. Camisetas, canecas, bonés, uniformes, brindes corporativos e muito mais. Use os filtros para encontrar exatamente o que precisa.</p>
+        </div>
+        <div class="step-card" style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:40px 24px;transition:all var(--transition);">
+          <div class="step-number">2</div>
+          <h3 style="font-size:1.15rem;">Crie o Design</h3>
+          <p style="margin-top:8px;">Use nossa ferramenta de inteligência artificial para gerar um design profissional em segundos, ou envie sua arte pronta. Você tem total liberdade criativa.</p>
+        </div>
+        <div class="step-card" style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:40px 24px;transition:all var(--transition);">
+          <div class="step-number">3</div>
+          <h3 style="font-size:1.15rem;">Aprove e Compre</h3>
+          <p style="margin-top:8px;">Visualize o resultado em mockups realistas antes de confirmar. Escolha quantidades, tamanhos e cores, finalize o pedido com segurança.</p>
+        </div>
+        <div class="step-card" style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:40px 24px;transition:all var(--transition);">
+          <div class="step-number">4</div>
+          <h3 style="font-size:1.15rem;">Receba em Casa</h3>
+          <p style="margin-top:8px;">Produção com tecnologia de ponta e entrega para todo o Brasil. Acompanhe seu pedido do início ao fim com rastreamento completo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <h2>Por que escolher a Sublimitas?</h2>
+        <p>Vantagens que fazem a diferença</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">
+        <div style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:32px;">
+          <div style="font-size:2.5rem;margin-bottom:16px;">🎨</div>
+          <h3 style="font-size:1.05rem;font-weight:600;margin-bottom:8px;">Design com IA</h3>
+          <p style="color:var(--gray-600);font-size:0.9rem;">Crie designs profissionais usando inteligência artificial. Descreva o que quer e receba opções em segundos.</p>
+        </div>
+        <div style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:32px;">
+          <div style="font-size:2.5rem;margin-bottom:16px;">🏆</div>
+          <h3 style="font-size:1.05rem;font-weight:600;margin-bottom:8px;">Qualidade Premium</h3>
+          <p style="color:var(--gray-600);font-size:0.9rem;">Utilizamos materiais de alta qualidade e técnicas de impressão avançadas para resultados duradouros.</p>
+        </div>
+        <div style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:32px;">
+          <div style="font-size:2.5rem;margin-bottom:16px;">⚡</div>
+          <h3 style="font-size:1.05rem;font-weight:600;margin-bottom:8px;">Produção Rápida</h3>
+          <p style="color:var(--gray-600);font-size:0.9rem;">Prazos curtos de produção sem comprometer a qualidade. Entregas para todo o Brasil.</p>
+        </div>
+        <div style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:32px;">
+          <div style="font-size:2.5rem;margin-bottom:16px;">💰</div>
+          <h3 style="font-size:1.05rem;font-weight:600;margin-bottom:8px;">Preços Justos</h3>
+          <p style="color:var(--gray-600);font-size:0.9rem;">Sem custos ocultos. Orçamento transparente e descontos para pedidos em volume.</p>
+        </div>
+        <div style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:32px;">
+          <div style="font-size:2.5rem;margin-bottom:16px;">📦</div>
+          <h3 style="font-size:1.05rem;font-weight:600;margin-bottom:8px;">Rastreamento Completo</h3>
+          <p style="color:var(--gray-600);font-size:0.9rem;">Acompanhe cada etapa do seu pedido, da produção até a entrega na sua porta.</p>
+        </div>
+        <div style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:32px;">
+          <div style="font-size:2.5rem;margin-bottom:16px;">🤝</div>
+          <h3 style="font-size:1.05rem;font-weight:600;margin-bottom:8px;">Suporte Dedicado</h3>
+          <p style="color:var(--gray-600);font-size:0.9rem;">Nossa equipe está pronta para ajudar em cada etapa do seu pedido.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faqPreview">
+    <div class="container">
+      <div class="section-header">
+        <h2>Perguntas Frequentes</h2>
+        <p>Respostas rápidas para as dúvidas mais comuns</p>
+      </div>
+      <div style="max-width:700px;margin:0 auto;" id="faqPreviewList">
+        <div style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:20px 24px;margin-bottom:12px;cursor:pointer;" class="faq-item" onclick="toggleFaq(this)">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <strong style="font-size:0.95rem;">Qual o prazo de entrega?</strong>
+            <span style="font-size:1.2rem;color:var(--gray-400);transition:transform 0.2s;">+</span>
+          </div>
+          <p style="color:var(--gray-600);font-size:0.9rem;margin-top:12px;display:none;">O prazo de entrega varia de 5 a 15 dias úteis dependendo do produto e da região. Todo pedido acompanha rastreamento completo.</p>
+        </div>
+        <div style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:20px 24px;margin-bottom:12px;cursor:pointer;" class="faq-item" onclick="toggleFaq(this)">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <strong style="font-size:0.95rem;">Posso pedir amostra antes?</strong>
+            <span style="font-size:1.2rem;color:var(--gray-400);transition:transform 0.2s;">+</span>
+          </div>
+          <p style="color:var(--gray-600);font-size:0.9rem;margin-top:12px;display:none;">Sim! Para pedidos corporativos grandes, oferecemos amostras para aprovação antes da produção em escala.</p>
+        </div>
+        <div style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:20px 24px;margin-bottom:12px;cursor:pointer;" class="faq-item" onclick="toggleFaq(this)">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <strong style="font-size:0.95rem;">Como funciona o pagamento?</strong>
+            <span style="font-size:1.2rem;color:var(--gray-400);transition:transform 0.2s;">+</span>
+          </div>
+          <p style="color:var(--gray-600);font-size:0.9rem;margin-top:12px;display:none;">Aceitamos PIX, cartão de crédito e boleto bancário. Para pedidos corporativos, oferecemos também pagamento parcelado.</p>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:32px;">
+        <a href="/faq" class="btn btn-outline btn-lg">Ver Todas as Perguntas →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Pronto para começar?</h2>
+      <p>Crie seu primeiro produto personalizado agora mesmo</p>
+      <div class="cta-actions">
+        <a href="/criar-com-ia" class="btn btn-accent btn-lg">🎨 Criar com IA</a>
+        <a href="/produtos" class="btn btn-outline-light btn-lg">Ver Catálogo</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="/" class="logo">
+            <span class="logo-icon">✦</span>
+            <span class="logo-text">Sublimitas</span>
+          </a>
+          <p>Produtos personalizados de alta qualidade para empresas e eventos.</p>
+          <div class="social-links" id="socialLinks"></div>
+        </div>
+        <div class="footer-col">
+          <h4>Produtos</h4>
+          <a href="/produtos">Catálogo</a>
+          <a href="/categorias">Categorias</a>
+          <a href="/criar-com-ia">Criar com IA</a>
+          <a href="/produtos?featured=1">Destaques</a>
+        </div>
+        <div class="footer-col">
+          <h4>Empresa</h4>
+          <a href="/sobre">Sobre Nós</a>
+          <a href="/como-funciona">Como Funciona</a>
+          <a href="/faq">FAQ</a>
+          <a href="/contato">Contato</a>
+        </div>
+        <div class="footer-col">
+          <h4>Minha Conta</h4>
+          <a href="/login">Entrar</a>
+          <a href="/cadastro">Cadastrar</a>
+          <a href="/meus-pedidos">Meus Pedidos</a>
+          <a href="/rastrear">Rastrear Pedido</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="year"></span> Sublimitas. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal-overlay" id="searchModal" style="display:none">
+    <div class="modal search-modal">
+      <div class="search-input-wrap">
+        <input type="text" id="searchInput" placeholder="Buscar produtos, categorias..." autofocus>
+        <kbd>ESC</kbd>
+      </div>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/support.js"></script>
+  <script>
+    function toggleFaq(el) {
+      const answer = el.querySelector('p');
+      const icon = el.querySelector('span');
+      if (answer.style.display === 'none') {
+        answer.style.display = 'block';
+        icon.textContent = '−';
+        icon.style.transform = 'rotate(180deg)';
+      } else {
+        answer.style.display = 'none';
+        icon.textContent = '+';
+        icon.style.transform = 'rotate(0deg)';
+      }
+    }
+  </script>
+</body>
+</html>

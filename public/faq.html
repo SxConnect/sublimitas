@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ — Sublimitas</title>
+  <meta name="description" content="Perguntas frequentes sobre produtos, personalização, pagamento, entrega e muito mais na Sublimitas.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a href="/" class="logo">
+        <span class="logo-icon">✦</span>
+        <span class="logo-text">Sublimitas</span>
+      </a>
+      <nav class="nav-desktop">
+        <a href="/" class="nav-link">Início</a>
+        <a href="/produtos" class="nav-link">Produtos</a>
+        <a href="/categorias" class="nav-link">Categorias</a>
+        <a href="/como-funciona" class="nav-link">Como Funciona</a>
+        <a href="/sobre" class="nav-link">Sobre</a>
+        <a href="/faq" class="nav-link active">FAQ</a>
+        <a href="/contato" class="nav-link">Contato</a>
+      </nav>
+      <div class="header-actions">
+        <button class="btn-icon" id="searchBtn" title="Buscar (Ctrl+K)">🔍</button>
+        <a href="/carrinho" class="btn-icon cart-icon" id="cartBtn">
+          🛒
+          <span class="cart-badge" id="cartBadge" style="display:none">0</span>
+        </a>
+        <div id="authButtons">
+          <a href="/login" class="btn btn-outline btn-sm">Entrar</a>
+          <a href="/cadastro" class="btn btn-primary btn-sm">Cadastrar</a>
+        </div>
+        <div id="userMenu" style="display:none">
+          <button class="btn-icon" id="userMenuBtn">👤</button>
+          <div class="dropdown" id="userDropdown" style="display:none">
+            <a href="/meus-pedidos">Meus Pedidos</a>
+            <a href="#" id="logoutBtn">Sair</a>
+          </div>
+        </div>
+        <button class="btn-icon mobile-menu-btn" id="mobileMenuBtn">☰</button>
+      </div>
+    </div>
+    <nav class="nav-mobile" id="mobileNav" style="display:none">
+      <a href="/">Início</a>
+      <a href="/produtos">Produtos</a>
+      <a href="/categorias">Categorias</a>
+      <a href="/como-funciona">Como Funciona</a>
+      <a href="/sobre">Sobre</a>
+      <a href="/faq">FAQ</a>
+      <a href="/contato">Contato</a>
+    </nav>
+  </header>
+
+  <section class="hero" style="padding:60px 0 30px;">
+    <div class="container">
+      <div style="text-align:center;max-width:600px;margin:0 auto;">
+        <h1 style="font-size:2.5rem;">Perguntas <span class="gradient-text">Frequentes</span></h1>
+        <p style="font-size:1.1rem;color:var(--gray-600);margin-top:16px;">Respostas para as dúvidas mais comuns sobre nossos produtos e serviços.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div style="max-width:300px;margin:0 auto 32px;">
+        <div class="form-group" style="margin:0;">
+          <input type="text" id="faqSearch" placeholder="🔍  Buscar pergunta..." style="padding:14px 20px;border:1px solid var(--gray-300);border-radius:var(--radius-full);font-size:1rem;font-family:var(--font);width:100%;outline:none;" oninput="filterFaq(this.value)">
+        </div>
+      </div>
+
+      <div style="max-width:800px;margin:0 auto;" id="faqList">
+
+        <div class="faq-category" style="margin-bottom:32px;">
+          <h2 style="font-size:1.2rem;font-weight:700;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid var(--primary);display:inline-block;">🛒 Produtos</h2>
+
+          <div class="faq-item" data-question="quais produtos vocês personalizam">
+            <div class="faq-toggle" onclick="toggleFaq(this.parentElement)">
+              <strong>Quais produtos vocês personalizam?</strong>
+              <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>Trabalhamos com uma ampla variedade de produtos: camisetas, canecas, bonés, moletons, jaquetas, uniformes, brindes corporativos, adesivos, mousepads, copos térmicos, sacolas e muito mais. Consulte nosso catálogo completo para ver todas as opções disponíveis.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-question="qual a quantidade mínima de pedido">
+            <div class="faq-toggle" onclick="toggleFaq(this.parentElement)">
+              <strong>Qual a quantidade mínima de pedido?</strong>
+              <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>Para a maioria dos produtos, não há quantidade mínima. Você pode pedir a partir de 1 unidade. Para pedidos corporativos com quantidades acima de 50 unidades, oferecemos descontos especiais.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-question="quais materiais são utilizados">
+            <div class="faq-toggle" onclick="toggleFaq(this.parentElement)">
+              <strong>Quais materiais são utilizados?</strong>
+              <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>Utilizamos materiais de alta qualidade: algodão premium para camisetas, cerâmica de alta resistência para canecas, tecidos sintéticos para uniformes esportivos. Todas as especificações estão disponíveis na página de cada produto.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-question="como funciona a garantia dos produtos">
+            <div class="faq-toggle" onclick="toggleFaq(this.parentElement)">
+              <strong>Como funciona a garantia dos produtos?</strong>
+              <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>Todos os nossos produtos possuem garantia de qualidade. Caso apresente defeito de fabricação ou impressão, faremos a substituição sem custo adicional. A garantia cobre desbotamento e desgaste anormal por até 6 meses após a compra.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-category" style="margin-bottom:32px;">
+          <h2 style="font-size:1.2rem;font-weight:700;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid var(--accent);display:inline-block;">🎨 Personalização</h2>
+
+          <div class="faq-item" data-question="como enviar minha arte para personalização">
+            <div class="faq-toggle" onclick="toggleFaq(this.parentElement)">
+              <strong>Como enviar minha arte para personalização?</strong>
+              <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>Você pode enviar sua arte diretamente pela plataforma durante o processo de compra. Aceitamos arquivos PNG, JPG, SVG e PDF com resolução mínima de 300 DPI. Também é possível criar seu design usando nossa ferramenta de IA integrada.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-question="como funciona a criação com inteligência artificial">
+            <div class="faq-toggle" onclick="toggleFaq(this.parentElement)">
+              <strong>Como funciona a criação com inteligência artificial?</strong>
+              <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>Nossa ferramenta de IA permite que você descreva o que deseja em linguagem natural e receba opções de design profissionais em segundos. Você pode ajustar cores, textos e elementos até ficar satisfeito antes de aprovar o design final.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-question="posso ver um protótipo antes da produção">
+            <div class="faq-toggle" onclick="toggleFaq(this.parentElement)">
+              <strong>Posso ver um protótipo antes da produção?</strong>
+              <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>Sim! Antes de confirmar a produção, você receberá um mockup digital com sua arte aplicada no produto. Para pedidos corporativos grandes (acima de 100 unidades), oferecemos também uma amostra física para aprovação.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-question="que tipos de impressão vocês utilizam">
+            <div class="faq-toggle" onclick="toggleFaq(this.parentElement)">
+              <strong>Que tipos de impressão vocês utilizam?</strong>
+              <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>Utilizamos DTG (Direct to Garment), sublimação, silk screen, DTF e transfer térmico. O tipo de impressão ideal depende do produto, quantidade e complexidade do design. Nossa equipe recomenda a melhor opção para cada caso.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-category" style="margin-bottom:32px;">
+          <h2 style="font-size:1.2rem;font-weight:700;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid var(--success);display:inline-block;">🚚 Entrega</h2>
+
+          <div class="faq-item" data-question="qual o prazo de entrega">
+            <div class="faq-toggle" onclick="toggleFaq(this.parentElement)">
+              <strong>Qual o prazo de entrega?</strong>
+              <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>O prazo de produção é de 3 a 7 dias úteis dependendo do produto e quantidade. A entrega por transportadora leva de 2 a 10 dias úteis dependendo da região. Todo pedido acompanha rastreamento completo.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-question="vocês entregam em todo o brasil">
+            <div class="faq-toggle" onclick="toggleFaq(this.parentElement)">
+              <strong>Vocês entregam em todo o Brasil?</strong>
+              <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>Sim! Entregamos em todos os estados brasileiros. Para capitais e regiões metropolitanas, o prazo é menor. Para localidades mais remotas, pode haver um prazo adicional de alguns dias.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-question="como rastrear meu pedido">
+            <div class="faq-toggle" onclick="toggleFaq(this.parentElement)">
+              <strong>Como rastrear meu pedido?</strong>
+              <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>Após o envio, você receberá um e-mail com o código de rastreamento. Também pode acessar a página "Meus Pedidos" na sua conta para acompanhar cada etapa: produção, separação, envio e entrega.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-question="posso retirar o pedido na loja">
+            <div class="faq-toggle" onclick="toggleFaq(this.parentElement)">
+              <strong>Posso retirar o pedido na loja?</strong>
+              <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>No momento trabalhamos apenas com entrega via transportadora. Estamos trabalhando para disponibilizar retirada em pontos de coleta em breve.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-category" style="margin-bottom:32px;">
+          <h2 style="font-size:1.2rem;font-weight:700;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid var(--warning);display:inline-block;">💳 Pagamento</h2>
+
+          <div class="faq-item" data-question="quais formas de pagamento são aceitas">
+            <div class="faq-toggle" onclick="toggleFaq(this.parentElement)">
+              <strong>Quais formas de pagamento são aceitas?</strong>
+              <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>Aceitamos PIX (com 5% de desconto), cartão de crédito em até 6x sem juros, boleto bancário e transferência. Para pedidos corporativos, oferecemos também pagamento personalizado com negociação direta.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-question="posso parcelar minha compra">
+            <div class="faq-toggle" onclick="toggleFaq(this.parentElement)">
+              <strong>Posso parcelar minha compra?</strong>
+              <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>Sim! Aceitamos parcelamento em até 6x sem juros no cartão de crédito. Para valores acima de R$ 500, o parcelamento pode chegar a 12x. Consulte as condições específicas durante o checkout.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-question="o pagamento via pix tem desconto">
+            <div class="faq-toggle" onclick="toggleFaq(this.parentElement)">
+              <strong>O pagamento via PIX tem desconto?</strong>
+              <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>Sim! Ao optar pelo pagamento via PIX, você recebe 5% de desconto sobre o valor total do pedido. O desconto é aplicado automaticamente no momento da finalização da compra.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Ainda tem dúvidas?</h2>
+      <p>Nossa equipe está pronta para ajudar. Entre em contato conosco!</p>
+      <div class="cta-actions">
+        <a href="/contato" class="btn btn-accent btn-lg">Fale Conosco</a>
+        <a href="https://wa.me/5511999999999" target="_blank" class="btn btn-outline-light btn-lg">💬 WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="/" class="logo">
+            <span class="logo-icon">✦</span>
+            <span class="logo-text">Sublimitas</span>
+          </a>
+          <p>Produtos personalizados de alta qualidade para empresas e eventos.</p>
+          <div class="social-links" id="socialLinks"></div>
+        </div>
+        <div class="footer-col">
+          <h4>Produtos</h4>
+          <a href="/produtos">Catálogo</a>
+          <a href="/categorias">Categorias</a>
+          <a href="/criar-com-ia">Criar com IA</a>
+          <a href="/produtos?featured=1">Destaques</a>
+        </div>
+        <div class="footer-col">
+          <h4>Empresa</h4>
+          <a href="/sobre">Sobre Nós</a>
+          <a href="/como-funciona">Como Funciona</a>
+          <a href="/faq">FAQ</a>
+          <a href="/contato">Contato</a>
+        </div>
+        <div class="footer-col">
+          <h4>Minha Conta</h4>
+          <a href="/login">Entrar</a>
+          <a href="/cadastro">Cadastrar</a>
+          <a href="/meus-pedidos">Meus Pedidos</a>
+          <a href="/rastrear">Rastrear Pedido</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="year"></span> Sublimitas. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal-overlay" id="searchModal" style="display:none">
+    <div class="modal search-modal">
+      <div class="search-input-wrap">
+        <input type="text" id="searchInput" placeholder="Buscar produtos, categorias..." autofocus>
+        <kbd>ESC</kbd>
+      </div>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/support.js"></script>
+  <script>
+    function toggleFaq(el) {
+      const answer = el.querySelector('.faq-answer');
+      const icon = el.querySelector('.faq-icon');
+      const isOpen = answer.style.display === 'block';
+      answer.style.display = isOpen ? 'none' : 'block';
+      icon.textContent = isOpen ? '+' : '−';
+      el.style.borderColor = isOpen ? 'var(--gray-200)' : 'var(--primary)';
+    }
+
+    function filterFaq(query) {
+      const items = document.querySelectorAll('.faq-item');
+      const q = query.toLowerCase().trim();
+      items.forEach(item => {
+        const question = (item.getAttribute('data-question') || '').toLowerCase();
+        const text = item.textContent.toLowerCase();
+        const match = !q || question.includes(q) || text.includes(q);
+        item.style.display = match ? 'block' : 'none';
+      });
+      document.querySelectorAll('.faq-category').forEach(cat => {
+        const visibleItems = cat.querySelectorAll('.faq-item[style*="display: block"], .faq-item:not([style*="display: none"])');
+        const hasVisible = Array.from(cat.querySelectorAll('.faq-item')).some(i => i.style.display !== 'none');
+        cat.style.display = hasVisible || !q ? 'block' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>

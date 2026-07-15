@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configuração do Widget — Sublimitas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #7B2FBE;
+      --accent: #FF6B00;
+      --gray-900: #111827;
+      --gray-700: #374151;
+      --gray-500: #6B7280;
+      --gray-300: #D1D5DB;
+      --gray-200: #E5E7EB;
+      --gray-100: #F3F4F6;
+      --gray-50: #F9FAFB;
+      --white: #FFFFFF;
+      --success: #22C55E;
+      --radius: 16px;
+      --radius-sm: 8px;
+      --font: 'Inter', system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--gray-50);
+      color: var(--gray-700);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .page-header {
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-200);
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .page-header h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--gray-900);
+    }
+
+    .page-header .logo-icon {
+      color: var(--primary);
+      font-size: 1.5rem;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 32px auto;
+      padding: 0 32px;
+      align-items: start;
+    }
+
+    .config-form {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 32px;
+    }
+
+    .config-form h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: var(--gray-900);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+      color: var(--gray-700);
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--gray-300);
+      border-radius: var(--radius-sm);
+      font-size: 0.95rem;
+      font-family: var(--font);
+      transition: border-color 0.2s;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(123,47,190,0.1);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .color-input {
+      height: 48px;
+      padding: 4px;
+      cursor: pointer;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--font);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .btn-primary:hover {
+      background: #5A1F8C;
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--gray-300);
+      color: var(--gray-700);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .preview-panel {
+      position: sticky;
+      top: 32px;
+    }
+
+    .preview-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    .preview-widget {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      height: 580px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .preview-header {
+      padding: 20px;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .preview-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .preview-header-info h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .preview-header-info p {
+      font-size: 0.75rem;
+      opacity: 0.85;
+    }
+
+    .preview-body {
+      flex: 1;
+      background: var(--gray-50);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .preview-msg {
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      align-self: flex-start;
+      max-width: 85%;
+      border-bottom-left-radius: 4px;
+    }
+
+    .preview-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .preview-action {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--gray-700);
+    }
+
+    .preview-action-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: var(--white);
+    }
+
+    .preview-footer {
+      padding: 12px 16px;
+      border-top: 1px solid var(--gray-200);
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--gray-500);
+    }
+
+    .preview-btn-area {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 16px;
+    }
+
+    .preview-fab {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      font-size: 1.5rem;
+      color: var(--white);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--success);
+      color: var(--white);
+      padding: 14px 24px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      z-index: 10000;
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        padding: 0 16px;
+      }
+
+      .page-header {
+        padding: 16px;
+      }
+
+      .preview-panel {
+        position: static;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <span class="logo-icon">✦</span>
+    <h1>Configuração do Widget de Suporte</h1>
+  </div>
+
+  <div class="layout">
+    <div class="config-form">
+      <h2>Personalizar Widget</h2>
+      <form id="configForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Cor Primária</label>
+            <input type="color" id="cfg_primary" class="color-input" value="#7B2FBE">
+          </div>
+          <div class="form-group">
+            <label>Cor de Destaque</label>
+            <input type="color" id="cfg_accent" class="color-input" value="#FF6B00">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Número WhatsApp</label>
+            <input type="text" id="cfg_whatsapp" placeholder="11999998888">
+          </div>
+          <div class="form-group">
+            <label>E-mail de Contato</label>
+            <input type="email" id="cfg_email" placeholder="contato@empresa.com">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Mensagem WhatsApp</label>
+          <textarea id="cfg_message" rows="2" placeholder="Olá! Gostaria de saber mais..."></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Posição</label>
+            <select id="cfg_position">
+              <option value="bottom-right">Inferior Direita</option>
+              <option value="bottom-left">Inferior Esquerda</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Nome da Empresa</label>
+            <input type="text" id="cfg_company" placeholder="Sublimitas">
+          </div>
+        </div>
+        <div class="btn-row">
+          <button type="submit" class="btn btn-primary">Salvar Configuração</button>
+          <button type="button" class="btn btn-outline" onclick="resetConfig()">Redefinir</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="preview-panel">
+      <div class="preview-label">Pré-visualização</div>
+      <div class="preview-widget" id="previewWidget">
+        <div class="preview-header" id="previewHeader">
+          <div class="preview-avatar">✦</div>
+          <div class="preview-header-info">
+            <h3 id="previewName">Sublimitas</h3>
+            <p>Como podemos ajudar?</p>
+          </div>
+        </div>
+        <div class="preview-body">
+          <div class="preview-msg">
+            Olá! 👋 Bem-vindo à <strong id="previewMsg">Sublimitas</strong>. Como podemos ajudar você hoje?
+          </div>
+          <div class="preview-actions" id="previewActions">
+            <div class="preview-action">
+              <div class="preview-action-icon" style="background:#25D366;">💬</div>
+              <div>
+                <div>WhatsApp</div>
+                <div style="font-size:0.75rem;font-weight:400;color:#6B7280;">Resposta rápida</div>
+              </div>
+            </div>
+            <div class="preview-action">
+              <div class="preview-action-icon" style="background:var(--accent);">✉️</div>
+              <div>
+                <div>E-mail</div>
+                <div style="font-size:0.75rem;font-weight:400;color:#6B7280;"> contato@empresa.com</div>
+              </div>
+            </div>
+            <div class="preview-action">
+              <div class="preview-action-icon" style="background:var(--primary);">📝</div>
+              <div>
+                <div>Formulário de Contato</div>
+                <div style="font-size:0.75rem;font-weight:400;color:#6B7280;">Preencha online</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="preview-footer">
+          Powered by <strong>Sublimitas</strong>
+        </div>
+      </div>
+      <div class="preview-btn-area">
+        <div class="preview-fab" id="previewFab" style="background:var(--primary);">💬</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function loadSaved() {
+      try {
+        const saved = JSON.parse(localStorage.getItem('sl_widget_config') || '{}');
+        if (saved.primary) document.getElementById('cfg_primary').value = saved.primary;
+        if (saved.accent) document.getElementById('cfg_accent').value = saved.accent;
+        if (saved.whatsapp) document.getElementById('cfg_whatsapp').value = saved.whatsapp;
+        if (saved.email) document.getElementById('cfg_email').value = saved.email;
+        if (saved.message) document.getElementById('cfg_message').value = saved.message;
+        if (saved.position) document.getElementById('cfg_position').value = saved.position;
+        if (saved.company) document.getElementById('cfg_company').value = saved.company;
+        updatePreview();
+      } catch {}
+    }
+
+    function updatePreview() {
+      const primary = document.getElementById('cfg_primary').value;
+      const accent = document.getElementById('cfg_accent').value;
+      const company = document.getElementById('cfg_company').value || 'Sublimitas';
+      const whatsapp = document.getElementById('cfg_whatsapp').value;
+      const email = document.getElementById('cfg_email').value;
+
+      document.getElementById('previewHeader').style.background = primary;
+      document.getElementById('previewName').textContent = company;
+      document.getElementById('previewMsg').textContent = company;
+      document.getElementById('previewFab').style.background = primary;
+
+      let actions = '';
+
+      if (whatsapp) {
+        actions += `
+          <div class="preview-action">
+            <div class="preview-action-icon" style="background:#25D366;">💬</div>
+            <div><div>WhatsApp</div><div style="font-size:0.75rem;font-weight:400;color:#6B7280;">Resposta rápida</div></div>
+          </div>
+        `;
+      }
+
+      if (email) {
+        actions += `
+          <div class="preview-action">
+            <div class="preview-action-icon" style="background:${accent};">✉️</div>
+            <div><div>E-mail</div><div style="font-size:0.75rem;font-weight:400;color:#6B7280;">${email}</div></div>
+          </div>
+        `;
+      }
+
+      actions += `
+        <div class="preview-action">
+          <div class="preview-action-icon" style="background:${primary};">📝</div>
+          <div><div>Formulário de Contato</div><div style="font-size:0.75rem;font-weight:400;color:#6B7280;">Preencha online</div></div>
+        </div>
+      `;
+
+      document.getElementById('previewActions').innerHTML = actions;
+
+      const fab = document.getElementById('previewFab');
+      fab.style.position = 'relative';
+    }
+
+    document.querySelectorAll('#configForm input, #configForm select, #configForm textarea').forEach(el => {
+      el.addEventListener('input', updatePreview);
+    });
+
+    document.getElementById('configForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const config = {
+        primary: document.getElementById('cfg_primary').value,
+        accent: document.getElementById('cfg_accent').value,
+        whatsapp: document.getElementById('cfg_whatsapp').value.trim(),
+        email: document.getElementById('cfg_email').value.trim(),
+        message: document.getElementById('cfg_message').value.trim(),
+        position: document.getElementById('cfg_position').value,
+        company: document.getElementById('cfg_company').value.trim()
+      };
+      localStorage.setItem('sl_widget_config', JSON.stringify(config));
+
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = 'Configuração salva com sucesso!';
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    });
+
+    function resetConfig() {
+      localStorage.removeItem('sl_widget_config');
+      document.getElementById('cfg_primary').value = '#7B2FBE';
+      document.getElementById('cfg_accent').value = '#FF6B00';
+      document.getElementById('cfg_whatsapp').value = '';
+      document.getElementById('cfg_email').value = '';
+      document.getElementById('cfg_message').value = '';
+      document.getElementById('cfg_position').value = 'bottom-right';
+      document.getElementById('cfg_company').value = '';
+      updatePreview();
+    }
+
+    loadSaved();
+  </script>
+</body>
+</html>
