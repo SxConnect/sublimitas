@@ -66,6 +66,7 @@
           <a href="#" data-section="reviews"><span class="nav-icon">⭐</span> Reviews</a>
           <a href="#" data-section="settings"><span class="nav-icon">⚙️</span> Configurações</a>
           <a href="#" data-section="sections"><span class="nav-icon">📝</span> Seções do Site</a>
+          <a href="#" data-section="widget"><span class="nav-icon">💬</span> Widget Chat</a>
           <a href="#" data-section="users"><span class="nav-icon">👥</span> Usuários</a>
         </div>
       </aside>
@@ -189,14 +190,6 @@
               <div class="form-group"><label>Mensagem WhatsApp</label><input type="text" id="set_whatsapp_message"></div>
               <div class="form-group"><label>Cor Primária (hex)</label><input type="color" id="set_primary_color" style="height:44px;"></div>
               <div class="form-group"><label>Cor Destaque (hex)</label><input type="color" id="set_accent_color" style="height:44px;"></div>
-              <div class="form-group">
-                <label>Modo de Suporte</label>
-                <select id="set_admin_support_mode">
-                  <option value="none">Desativado</option>
-                  <option value="whatsapp">WhatsApp</option>
-                  <option value="widget">Widget</option>
-                </select>
-              </div>
 
               <h3 style="margin:24px 0 12px;font-size:1.1rem;border-bottom:2px solid var(--border);padding-bottom:8px;">Redes Sociais</h3>
               <p style="font-size:.85rem;color:var(--gray-500);margin-bottom:12px;">Preencha apenas as redes que a Sublimitas utiliza. O ícone pode ser uma imagem (URL) ou emoji. Os ícones aparecem no footer do site.</p>
@@ -238,46 +231,6 @@
               <div style="display:flex;gap:10px;align-items:center;margin-top:8px;">
                 <button type="button" class="btn btn-outline" onclick="testAiConnection()">🔌 Testar Conexão IA</button>
                 <span id="aiTestResult" style="font-size:.85rem;"></span>
-              </div>
-
-              <h3 style="margin:24px 0 12px;font-size:1.1rem;border-bottom:2px solid var(--border);padding-bottom:8px;">💬 Widget de Conversa</h3>
-              <p style="font-size:.85rem;color:var(--gray-500);margin-bottom:12px;">Configure o widget flutuante de atendimento que aparece no canto do site.</p>
-              <div class="form-row">
-                <div class="form-group"><label>Modo de Suporte</label>
-                  <select id="set_widget_mode">
-                    <option value="none">Desativado</option>
-                    <option value="whatsapp">Apenas WhatsApp (botão flutuante)</option>
-                    <option value="widget">Widget de Conversa (com painel)</option>
-                  </select>
-                </div>
-                <div class="form-group"><label>Posição</label>
-                  <select id="set_widget_position">
-                    <option value="bottom-right">Canto inferior direito</option>
-                    <option value="bottom-left">Canto inferior esquerdo</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group"><label>Cor de Fundo do Widget</label><input type="color" id="set_widget_color" style="height:44px"></div>
-                <div class="form-group"><label>Ícone do Botão (emoji ou URL da imagem)</label><input type="text" id="set_widget_icon" placeholder="💬 ou URL da imagem"></div>
-              </div>
-              <div class="form-group"><label>Mensagem de Boas-Vindas</label><input type="text" id="set_widget_welcome" placeholder="Olá! Como podemos ajudar você hoje?"></div>
-              <div class="form-group"><label>Texto do Status</label><input type="text" id="set_widget_status" placeholder="Online agora"></div>
-              <div class="form-row">
-                <div class="form-group"><label>Avatar (URL da imagem ou emoji)</label><input type="text" id="set_widget_avatar" placeholder="✦ ou URL da imagem"></div>
-                <div class="form-group"><label>Nome exibido no header</label><input type="text" id="set_widget_header_name" placeholder="Sublimitas"></div>
-              </div>
-              <div class="form-group"><label>Horário de Atendimento</label><input type="text" id="set_widget_hours" placeholder="Seg-Sex: 8h às 18h"></div>
-              <div class="form-row">
-                <div class="form-group"><label>Mostrar WhatsApp</label>
-                  <select id="set_widget_show_whatsapp"><option value="1">Sim</option><option value="0">Não</option></select>
-                </div>
-                <div class="form-group"><label>Mostrar E-mail</label>
-                  <select id="set_widget_show_email"><option value="1">Sim</option><option value="0">Não</option></select>
-                </div>
-                <div class="form-group"><label>Mostrar Formulário</label>
-                  <select id="set_widget_show_form"><option value="1">Sim</option><option value="0">Não</option></select>
-                </div>
               </div>
 
               <div style="margin-top:24px;"><button type="submit" class="btn btn-primary">Salvar Configurações</button></div>
@@ -433,6 +386,99 @@
           </div>
 
           <div style="margin-top:24px"><button class="btn btn-primary" onclick="saveSections()">💾 Salvar Todas as Seções</button></div>
+        </div>
+
+        <!-- Widget Chat -->
+        <div class="admin-section" id="section-widget">
+          <div class="admin-header"><h1>💬 Widget de Chat</h1></div>
+          <p style="color:var(--gray-500);margin-bottom:24px;font-size:.9rem">Configure o widget de atendimento com IA que aparece no canto do site.</p>
+
+          <!-- VISIBILIDADE -->
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px">
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;border-bottom:2px solid var(--primary);padding-bottom:8px;display:inline-block">👁️ Visibilidade</h3>
+            <div class="form-row">
+              <div class="form-group"><label>Mostrar ícone do chat no site</label>
+                <select id="wgt_visible"><option value="1">Sim — ícone aparece</option><option value="0">Não — widget desativado</option></select>
+              </div>
+              <div class="form-group"><label>Exibir em quais páginas</label>
+                <select id="wgt_pages">
+                  <option value="all">Todas as páginas</option>
+                  <option value="home">Apenas na página inicial</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Modo de atendimento</label>
+                <select id="wgt_mode">
+                  <option value="widget">Widget com chat IA</option>
+                  <option value="whatsapp">Apenas botão WhatsApp</option>
+                </select>
+              </div>
+              <div class="form-group"><label>Posição na tela</label>
+                <select id="wgt_position">
+                  <option value="bottom-right">Canto inferior direito</option>
+                  <option value="bottom-left">Canto inferior esquerdo</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- APARÊNCIA -->
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px">
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;border-bottom:2px solid var(--accent);padding-bottom:8px;display:inline-block">🎨 Aparência</h3>
+            <div class="form-row">
+              <div class="form-group"><label>Cor principal do widget</label><input type="color" id="wgt_color" style="height:44px"></div>
+              <div class="form-group"><label>Ícone do botão (emoji ou URL imagem)</label><input type="text" id="wgt_icon" placeholder="💬"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Avatar no header (emoji ou URL imagem)</label><input type="text" id="wgt_avatar" placeholder="✦"></div>
+              <div class="form-group"><label>Nome exibido no header</label><input type="text" id="wgt_header_name" placeholder="Sublimitas"></div>
+            </div>
+            <div class="form-group"><label>Status exibido (ex: Online agora)</label><input type="text" id="wgt_status" placeholder="Online agora"></div>
+            <div class="form-group"><label>Horário de atendimento</label><input type="text" id="wgt_hours" placeholder="Seg-Sex: 8h às 18h"></div>
+            <div class="form-group"><label>Mensagem de boas-vindas</label><textarea id="wgt_welcome" rows="2" placeholder="Olá! Como podemos ajudar você hoje?"></textarea></div>
+          </div>
+
+          <!-- CANAIS -->
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px">
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;border-bottom:2px solid #25D366;padding-bottom:8px;display:inline-block">📲 Canais de Contato</h3>
+            <div class="form-row">
+              <div class="form-group"><label>Mostrar WhatsApp</label>
+                <select id="wgt_show_whatsapp"><option value="1">Sim</option><option value="0">Não</option></select>
+              </div>
+              <div class="form-group"><label>Mostrar E-mail</label>
+                <select id="wgt_show_email"><option value="1">Sim</option><option value="0">Não</option></select>
+              </div>
+              <div class="form-group"><label>Mostrar Formulário</label>
+                <select id="wgt_show_form"><option value="1">Sim</option><option value="0">Não</option></select>
+              </div>
+            </div>
+          </div>
+
+          <!-- IA DO CHAT -->
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px">
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;border-bottom:2px solid #22C55E;padding-bottom:8px;display:inline-block">🤖 IA do Chat</h3>
+            <p style="font-size:.85rem;color:var(--gray-500);margin-bottom:16px;">Configure a inteligência artificial que responde automaticamente no widget de chat.</p>
+            <div class="form-row">
+              <div class="form-group"><label>URL da API (LLM)</label><input type="url" id="wgt_llm_url" placeholder="https://api.openai.com/v1"></div>
+              <div class="form-group"><label>Modelo</label><input type="text" id="wgt_llm_model" placeholder="gpt-4o-mini"></div>
+            </div>
+            <div class="form-group"><label>API Key</label><input type="password" id="wgt_llm_apikey" placeholder="sk-..."></div>
+            <div class="form-group"><label>System Prompt (como a IA deve atender)</label>
+              <textarea id="wgt_llm_prompt" rows="6" placeholder="Você é o assistente virtual da Sublimitas, uma gráfica especializada em produtos personalizados. Seja simpático, objetivo e ajude o cliente a escolher o produto ideal. Responda em português brasileiro."></textarea>
+            </div>
+            <div class="form-group"><label>Temperatura (0=focado, 1=criativo)</label><input type="number" id="wgt_llm_temp" min="0" max="1" step="0.1" value="0.7" style="width:100px"></div>
+            <div class="form-row">
+              <div class="form-group"><label>Máximo de tokens por resposta</label><input type="number" id="wgt_llm_max_tokens" min="50" max="4000" value="500" style="width:120px"></div>
+              <div class="form-group"><label>Mensagem off-line (fora do horário)</label><input type="text" id="wgt_offline_msg" placeholder="Estamos fora do horário. Envie um WhatsApp!"></div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:center;margin-top:12px;">
+              <button type="button" class="btn btn-outline" onclick="testWidgetLLM()">🔌 Testar Conexão IA</button>
+              <span id="wgtLlmTestResult" style="font-size:.85rem;"></span>
+            </div>
+          </div>
+
+          <div style="margin-top:24px"><button class="btn btn-primary" onclick="saveWidget()">💾 Salvar Widget</button></div>
         </div>
 
         <!-- Usuários -->
@@ -1087,18 +1133,6 @@
         document.getElementById('set_ai_model').value = map.ai_model || '';
         document.getElementById('set_ai_api_key').value = map.ai_api_key || '';
         document.getElementById('set_ai_system_prompt').value = map.ai_system_prompt || '';
-        document.getElementById('set_widget_mode').value = map.widget_mode || map.admin_support_mode || 'none';
-        document.getElementById('set_widget_position').value = map.widget_position || 'bottom-right';
-        document.getElementById('set_widget_color').value = map.widget_color || '#7B2FBE';
-        document.getElementById('set_widget_icon').value = map.widget_icon || '';
-        document.getElementById('set_widget_welcome').value = map.widget_welcome || 'Olá! Como podemos ajudar você hoje?';
-        document.getElementById('set_widget_status').value = map.widget_status || 'Online agora';
-        document.getElementById('set_widget_avatar').value = map.widget_avatar || '';
-        document.getElementById('set_widget_header_name').value = map.widget_header_name || 'Sublimitas';
-        document.getElementById('set_widget_hours').value = map.widget_hours || '';
-        document.getElementById('set_widget_show_whatsapp').value = map.widget_show_whatsapp || '1';
-        document.getElementById('set_widget_show_email').value = map.widget_show_email || '1';
-        document.getElementById('set_widget_show_form').value = map.widget_show_form || '1';
       } catch {}
     }
 
@@ -1113,7 +1147,6 @@
         { key: 'whatsapp_message', value: document.getElementById('set_whatsapp_message').value.trim(), category: 'contact' },
         { key: 'primary_color', value: document.getElementById('set_primary_color').value, category: 'design' },
         { key: 'accent_color', value: document.getElementById('set_accent_color').value, category: 'design' },
-        { key: 'admin_support_mode', value: document.getElementById('set_admin_support_mode').value, category: 'support' },
         { key: 'social_instagram', value: document.getElementById('set_social_instagram').value.trim(), category: 'social' },
         { key: 'social_instagram_icon', value: document.getElementById('set_social_instagram_icon').value.trim(), category: 'social' },
         { key: 'social_facebook', value: document.getElementById('set_social_facebook').value.trim(), category: 'social' },
@@ -1129,19 +1162,7 @@
         { key: 'ai_url', value: document.getElementById('set_ai_url').value.trim(), category: 'ai' },
         { key: 'ai_model', value: document.getElementById('set_ai_model').value.trim(), category: 'ai' },
         { key: 'ai_api_key', value: document.getElementById('set_ai_api_key').value.trim(), category: 'ai' },
-        { key: 'ai_system_prompt', value: document.getElementById('set_ai_system_prompt').value.trim(), category: 'ai' },
-        { key: 'widget_mode', value: document.getElementById('set_widget_mode').value, category: 'widget' },
-        { key: 'widget_position', value: document.getElementById('set_widget_position').value, category: 'widget' },
-        { key: 'widget_color', value: document.getElementById('set_widget_color').value, category: 'widget' },
-        { key: 'widget_icon', value: document.getElementById('set_widget_icon').value.trim(), category: 'widget' },
-        { key: 'widget_welcome', value: document.getElementById('set_widget_welcome').value.trim(), category: 'widget' },
-        { key: 'widget_status', value: document.getElementById('set_widget_status').value.trim(), category: 'widget' },
-        { key: 'widget_avatar', value: document.getElementById('set_widget_avatar').value.trim(), category: 'widget' },
-        { key: 'widget_header_name', value: document.getElementById('set_widget_header_name').value.trim(), category: 'widget' },
-        { key: 'widget_hours', value: document.getElementById('set_widget_hours').value.trim(), category: 'widget' },
-        { key: 'widget_show_whatsapp', value: document.getElementById('set_widget_show_whatsapp').value, category: 'widget' },
-        { key: 'widget_show_email', value: document.getElementById('set_widget_show_email').value, category: 'widget' },
-        { key: 'widget_show_form', value: document.getElementById('set_widget_show_form').value, category: 'widget' }
+        { key: 'ai_system_prompt', value: document.getElementById('set_ai_system_prompt').value.trim(), category: 'ai' }
       ];
       try {
         await api('/api/admin/settings', { method: 'PUT', body: JSON.stringify({ settings }) });
@@ -1262,6 +1283,86 @@
       }
     }
 
+    // Widget Chat
+    async function loadWidget() {
+      try {
+        const data = await api('/api/admin/settings');
+        const map = {};
+        data.settings.forEach(s => map[s.setting_key] = s.setting_value);
+        document.getElementById('wgt_visible').value = map.widget_visible || '1';
+        document.getElementById('wgt_pages').value = map.widget_pages || 'all';
+        document.getElementById('wgt_mode').value = map.widget_mode || 'widget';
+        document.getElementById('wgt_position').value = map.widget_position || 'bottom-right';
+        document.getElementById('wgt_color').value = map.widget_color || '#7B2FBE';
+        document.getElementById('wgt_icon').value = map.widget_icon || '';
+        document.getElementById('wgt_avatar').value = map.widget_avatar || '';
+        document.getElementById('wgt_header_name').value = map.widget_header_name || 'Sublimitas';
+        document.getElementById('wgt_status').value = map.widget_status || 'Online agora';
+        document.getElementById('wgt_hours').value = map.widget_hours || '';
+        document.getElementById('wgt_welcome').value = map.widget_welcome || 'Olá! Como podemos ajudar você hoje?';
+        document.getElementById('wgt_show_whatsapp').value = map.widget_show_whatsapp || '1';
+        document.getElementById('wgt_show_email').value = map.widget_show_email || '1';
+        document.getElementById('wgt_show_form').value = map.widget_show_form || '1';
+        document.getElementById('wgt_llm_url').value = map.widget_llm_url || '';
+        document.getElementById('wgt_llm_model').value = map.widget_llm_model || '';
+        document.getElementById('wgt_llm_apikey').value = map.widget_llm_apikey || '';
+        document.getElementById('wgt_llm_prompt').value = map.widget_llm_prompt || '';
+        document.getElementById('wgt_llm_temp').value = map.widget_llm_temp || '0.7';
+        document.getElementById('wgt_llm_max_tokens').value = map.widget_llm_max_tokens || '500';
+        document.getElementById('wgt_offline_msg').value = map.widget_offline_msg || 'Estamos fora do horário. Envie um WhatsApp!';
+      } catch {}
+    }
+
+    async function saveWidget() {
+      const settings = [
+        { key: 'widget_visible', value: document.getElementById('wgt_visible').value, category: 'widget' },
+        { key: 'widget_pages', value: document.getElementById('wgt_pages').value, category: 'widget' },
+        { key: 'widget_mode', value: document.getElementById('wgt_mode').value, category: 'widget' },
+        { key: 'widget_position', value: document.getElementById('wgt_position').value, category: 'widget' },
+        { key: 'widget_color', value: document.getElementById('wgt_color').value, category: 'widget' },
+        { key: 'widget_icon', value: document.getElementById('wgt_icon').value.trim(), category: 'widget' },
+        { key: 'widget_avatar', value: document.getElementById('wgt_avatar').value.trim(), category: 'widget' },
+        { key: 'widget_header_name', value: document.getElementById('wgt_header_name').value.trim(), category: 'widget' },
+        { key: 'widget_status', value: document.getElementById('wgt_status').value.trim(), category: 'widget' },
+        { key: 'widget_hours', value: document.getElementById('wgt_hours').value.trim(), category: 'widget' },
+        { key: 'widget_welcome', value: document.getElementById('wgt_welcome').value.trim(), category: 'widget' },
+        { key: 'widget_show_whatsapp', value: document.getElementById('wgt_show_whatsapp').value, category: 'widget' },
+        { key: 'widget_show_email', value: document.getElementById('wgt_show_email').value, category: 'widget' },
+        { key: 'widget_show_form', value: document.getElementById('wgt_show_form').value, category: 'widget' },
+        { key: 'widget_llm_url', value: document.getElementById('wgt_llm_url').value.trim(), category: 'widget' },
+        { key: 'widget_llm_model', value: document.getElementById('wgt_llm_model').value.trim(), category: 'widget' },
+        { key: 'widget_llm_apikey', value: document.getElementById('wgt_llm_apikey').value.trim(), category: 'widget' },
+        { key: 'widget_llm_prompt', value: document.getElementById('wgt_llm_prompt').value.trim(), category: 'widget' },
+        { key: 'widget_llm_temp', value: document.getElementById('wgt_llm_temp').value, category: 'widget' },
+        { key: 'widget_llm_max_tokens', value: document.getElementById('wgt_llm_max_tokens').value, category: 'widget' },
+        { key: 'widget_offline_msg', value: document.getElementById('wgt_offline_msg').value.trim(), category: 'widget' }
+      ];
+      try {
+        await api('/api/admin/settings', { method: 'PUT', body: JSON.stringify({ settings }) });
+        showToast('Widget salvo com sucesso!', 'success');
+      } catch (err) {
+        showToast(err.message || 'Erro ao salvar widget', 'error');
+      }
+    }
+
+    async function testWidgetLLM() {
+      const result = document.getElementById('wgtLlmTestResult');
+      result.innerHTML = '<span style="color:var(--accent)">⏳ Testando...</span>';
+      try {
+        const data = await api('/api/admin/test-ai', {
+          method: 'POST',
+          body: JSON.stringify({
+            ai_url: document.getElementById('wgt_llm_url').value.trim(),
+            ai_api_key: document.getElementById('wgt_llm_apikey').value.trim(),
+            ai_model: document.getElementById('wgt_llm_model').value.trim()
+          })
+        });
+        result.innerHTML = '<span style="color:#22C55E">✅ ' + data.message + '</span>';
+      } catch (err) {
+        result.innerHTML = '<span style="color:#EF4444">❌ ' + (err.message || 'Erro na conexão') + '</span>';
+      }
+    }
+
     // Init
     loadDashboard();
     loadOrders();
@@ -1272,6 +1373,7 @@
     loadReviews();
     loadSettings();
     loadSectionsFromServer();
+    loadWidget();
     loadUsers();
   </script>
 </body>

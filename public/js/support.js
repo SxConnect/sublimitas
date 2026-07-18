@@ -1,5 +1,12 @@
 function initSupport() {
-  var mode = getSetting('widget_mode') || getSetting('admin_support_mode');
+  var visible = getSetting('widget_visible');
+  if (visible === '0') return;
+
+  var pages = getSetting('widget_pages') || 'all';
+  var path = window.location.pathname;
+  if (pages === 'home' && path !== '/' && path !== '/index.html' && path !== '/index') return;
+
+  var mode = getSetting('widget_mode');
 
   if (mode === 'widget') {
     loadWidget();
@@ -40,7 +47,14 @@ function loadWidget() {
         hours: getSetting('widget_hours') || '',
         showWhatsapp: getSetting('widget_show_whatsapp') !== '0',
         showEmail: getSetting('widget_show_email') !== '0',
-        showForm: getSetting('widget_show_form') !== '0'
+        showForm: getSetting('widget_show_form') !== '0',
+        llmUrl: getSetting('widget_llm_url') || '',
+        llmModel: getSetting('widget_llm_model') || '',
+        llmApiKey: getSetting('widget_llm_apikey') || '',
+        llmPrompt: getSetting('widget_llm_prompt') || '',
+        llmTemp: parseFloat(getSetting('widget_llm_temp') || '0.7'),
+        llmMaxTokens: parseInt(getSetting('widget_llm_max_tokens') || '500'),
+        offlineMsg: getSetting('widget_offline_msg') || 'Estamos fora do horário. Envie um WhatsApp!'
       });
     }
   };
