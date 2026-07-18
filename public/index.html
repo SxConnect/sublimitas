@@ -1,257 +1,451 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sublimitas — Produtos Personalizados</title>
-  <meta name="description" content="Produtos personalizados de alta qualidade. Camisetas, canecas, uniformes, brindes e muito mais.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Sublimitas — Produtos Personalizados</title>
+<meta name="description" content="Produtos personalizados de alta qualidade. Camisetas, canecas, uniformes, brindes e muito mais.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="header" id="header">
-    <div class="container header-inner">
-      <a href="/" class="logo">
-        <span class="logo-icon">✦</span>
-        <span class="logo-text">Sublimitas</span>
-      </a>
-      <nav class="nav-desktop">
-        <a href="/" class="nav-link active">Início</a>
-        <a href="/produtos" class="nav-link">Produtos</a>
-        <a href="/categorias" class="nav-link">Categorias</a>
-        <a href="/como-funciona" class="nav-link">Como Funciona</a>
-        <a href="/sobre" class="nav-link">Sobre</a>
-        <a href="/faq" class="nav-link">FAQ</a>
-        <a href="/contato" class="nav-link">Contato</a>
-      </nav>
-      <div class="header-actions">
-        <button class="btn-icon" id="searchBtn" title="Buscar (Ctrl+K)">🔍</button>
-        <a href="/carrinho" class="btn-icon cart-icon" id="cartBtn">
-          🛒
-          <span class="cart-badge" id="cartBadge" style="display:none">0</span>
-        </a>
-        <div id="authButtons">
-          <a href="/login" class="btn btn-outline btn-sm">Entrar</a>
-          <a href="/cadastro" class="btn btn-primary btn-sm">Cadastrar</a>
-        </div>
-        <div id="userMenu" style="display:none">
-          <button class="btn-icon" id="userMenuBtn">👤</button>
-          <div class="dropdown" id="userDropdown" style="display:none">
-            <a href="/meus-pedidos">Meus Pedidos</a>
-            <a href="#" id="logoutBtn">Sair</a>
-          </div>
-        </div>
-        <button class="btn-icon mobile-menu-btn" id="mobileMenuBtn">☰</button>
-      </div>
-    </div>
-    <!-- Mobile Nav -->
-    <nav class="nav-mobile" id="mobileNav" style="display:none">
-      <a href="/">Início</a>
-      <a href="/produtos">Produtos</a>
-      <a href="/categorias">Categorias</a>
-      <a href="/como-funciona">Como Funciona</a>
-      <a href="/sobre">Sobre</a>
-      <a href="/faq">FAQ</a>
-      <a href="/contato">Contato</a>
-    </nav>
-  </header>
+<!-- TOPBAR -->
+<div class="topbar">
+ <div class="c" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem">
+  <ul style="display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap">
+   <li style="display:flex;align-items:center;gap:.4rem">🏭 Produção própria</li>
+   <li style="display:flex;align-items:center;gap:.4rem">🚚 Entrega para todo o Brasil</li>
+   <li style="display:flex;align-items:center;gap:.4rem;color:#4ade80">💬 Atendimento via WhatsApp</li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:.6rem;font-size:.75rem;color:#6B7280">
+   <span>Siga-nos</span>
+   <a href="https://instagram.com/graficasublimitas" target="_blank" class="topbar-social">📸</a>
+  </div>
+ </div>
+</div>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="container">
-      <div class="hero-content">
-        <h1>Produtos <span class="gradient-text">personalizados</span> com qualidade profissional</h1>
-        <p>Camisetas, canecas, uniformes, brindes corporativos e muito mais. Crie designs únicos com nossa ferramenta de IA ou envie seu arquivo.</p>
-        <div class="hero-actions">
-          <a href="/criar-com-ia" class="btn btn-primary btn-lg">🎨 Criar com IA</a>
-          <a href="/produtos" class="btn btn-outline btn-lg">Ver Catálogo</a>
-        </div>
-        <div class="hero-stats">
-          <div class="stat">
-            <span class="stat-number" data-stat="products">0</span>
-            <span class="stat-label">Produtos</span>
-          </div>
-          <div class="stat">
-            <span class="stat-number" data-stat="orders">0</span>
-            <span class="stat-label">Pedidos Entregues</span>
-          </div>
-          <div class="stat">
-            <span class="stat-number" data-stat="companies">0</span>
-            <span class="stat-label">Empresas que Confitam</span>
-          </div>
-        </div>
-      </div>
-      <div class="hero-visual">
-        <div class="hero-card">
-          <div class="hero-card-icon">✨</div>
-          <h3>Design com IA</h3>
-          <p>Descreva o que quer e receba um design profissional em segundos</p>
-        </div>
-        <div class="hero-card">
-          <div class="hero-card-icon">📦</div>
-          <h3>Impressão Premium</h3>
-          <p>Tecnologia de ponta para cores vibrantes e duradouras</p>
-        </div>
-        <div class="hero-card">
-          <div class="hero-card-icon">🚚</div>
-          <h3>Entrega Rápida</h3>
-          <p>Toda o Brasil com rastreamento completo</p>
-        </div>
-      </div>
-    </div>
-  </section>
+<!-- HEADER -->
+<header class="site-header">
+ <div class="c" style="display:flex;align-items:center;gap:1.5rem;height:72px">
+   <a href="/" style="flex-shrink:0;display:flex;align-items:center;gap:.6rem">
+     <img src="/img/Sublimitas-logo.png" alt="Sublimitas" style="height:42px;width:auto">
+     <div><div class="logo-title">Sublimitas</div><div class="logo-sub">Gráfica Personalizada</div></div>
+   </a>
+   <nav class="site-nav">
+    <a href="/" class="nav-active">Início</a>
+    <a href="/produtos.html"">Loja</a>
+    <a href="/categorias.html"">Categorias</a>
+    <a href="/criar-com-ia.html"" style="background:linear-gradient(135deg,#FF6B00,#FFB800);color:#fff;padding:8px 16px;border-radius:10px;font-weight:700">✨ Criar com IA</a>
+    <a href="/como-funciona.html"">Como funciona</a>
+    <a href="/faq.html"">FAQ</a>
+   </nav>
+  <div style="display:flex;align-items:center;gap:.25rem;margin-left:auto">
+   <button class="btn-icon" id="searchBtn" title="Buscar (Ctrl+K)">🔍</button>
+   <a href="/login.html"" class="btn-icon">👤</a>
+   <a href="/carrinho.html"" class="btn-icon" style="position:relative">🛒<span class="cart-badge-header" id="cartBadge" style="display:none">0</span></a>
+  </div>
+ </div>
+</header>
 
-  <!-- Categorias -->
-  <section class="section" id="categoriesSection">
-    <div class="container">
-      <div class="section-header">
-        <h2>Nossas Categorias</h2>
-        <p>Explore我们的 produtos por categoria</p>
-      </div>
-      <div class="categories-grid" id="categoriesGrid">
-        <div class="loading-spinner"></div>
-      </div>
+<!-- HERO -->
+<section class="hero-section">
+ <div class="hero-orb-1"></div>
+ <div class="hero-orb-2"></div>
+ <div class="c" style="position:relative;z-index:1;width:100%">
+  <div class="hero-grid">
+    <div style="color:#fff">
+     <h1 class="hero-title">Personalizados que<span style="color:#FFB800;display:block">contam histórias.</span></h1>
+    <p class="hero-desc">Canecas, Camisetas, Uniformes, Brindes e muito mais — com arte inclusa e entrega para todo o Brasil!</p>
+    <div class="hero-actions">
+     <a href="/produtos.html"" class="btn btn-accent-glow">🛒 Comprar agora</a>
+     <a href="https://wa.me/5522999999999" class="btn btn-ghost-hero" target="_blank">💬 Solicitar orçamento</a>
     </div>
-  </section>
-
-  <!-- Produtos em Destaque -->
-  <section class="section section-alt" id="featuredSection">
-    <div class="container">
-      <div class="section-header">
-        <h2>Produtos em Destaque</h2>
-        <p>Os favoritos dos nossos clientes</p>
-      </div>
-      <div class="products-grid" id="featuredGrid">
-        <div class="loading-spinner"></div>
-      </div>
+    <div class="hero-benefits">
+     <div class="hero-benefit"><span style="font-size:1.2rem">🎨</span><span style="font-size:.7rem;color:rgba(255,255,255,.9);line-height:1.3"><strong style="display:block">Arte inclusa</strong>no pedido</span></div>
+     <div class="hero-benefit"><span style="font-size:1.2rem">🏭</span><span style="font-size:.7rem;color:rgba(255,255,255,.9);line-height:1.3"><strong style="display:block">Prod. própria</strong>qualidade</span></div>
+     <div class="hero-benefit"><span style="font-size:1.2rem">🚚</span><span style="font-size:.7rem;color:rgba(255,255,255,.9);line-height:1.3"><strong style="display:block">Entrega rápida</strong>todo Brasil</span></div>
+     <div class="hero-benefit"><span style="font-size:1.2rem">💬</span><span style="font-size:.7rem;color:rgba(255,255,255,.9);line-height:1.3"><strong style="display:block">Atendimento</strong>WhatsApp</span></div>
     </div>
-  </section>
-
-  <!-- Como Funciona -->
-  <section class="section" id="howItWorks">
-    <div class="container">
-      <div class="section-header">
-        <h2>Como Funciona</h2>
-        <p>Do design à entrega em 4 passos simples</p>
-      </div>
-      <div class="steps-grid">
-        <div class="step-card">
-          <div class="step-number">1</div>
-          <h3>Escolha o Produto</h3>
-          <p>Navegue pelo catálogo e escolha o produto que deseja personalizar</p>
-        </div>
-        <div class="step-card">
-          <div class="step-number">2</div>
-          <h3>Crie o Design</h3>
-          <p>Use nossa IA ou envie seu arquivo pronto para personalização</p>
-        </div>
-        <div class="step-card">
-          <div class="step-number">3</div>
-          <h3>Aprove e Compre</h3>
-          <p>Visualize o resultado em mockups reais e finalize seu pedido</p>
-        </div>
-        <div class="step-card">
-          <div class="step-number">4</div>
-          <h3>Receba em Casa</h3>
-          <p>Acompanhe a produção e receba com rastreamento completo</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Depoimentos -->
-  <section class="section section-alt" id="testimonialsSection">
-    <div class="container">
-      <div class="section-header">
-        <h2>O que dizem nossos clientes</h2>
-      </div>
-      <div class="testimonials-carousel" id="testimonialsCarousel">
-        <div class="loading-spinner"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Empresas que Confitam -->
-  <section class="section" id="trustSection">
-    <div class="container">
-      <div class="section-header">
-        <h2>Empresas que Confitam em Nós</h2>
-      </div>
-      <div class="trust-logos" id="trustLogos">
-        <div class="loading-spinner"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="cta-section">
-    <div class="container">
-      <h2>Pronto para personalizar?</h2>
-      <p>Comece agora mesmo e crie produtos únicos para sua empresa ou evento</p>
-      <div class="cta-actions">
-        <a href="/criar-com-ia" class="btn btn-accent btn-lg">🎨 Criar com IA</a>
-        <a href="/contato" class="btn btn-outline-light btn-lg">Fale Conosco</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <a href="/" class="logo">
-            <span class="logo-icon">✦</span>
-            <span class="logo-text">Sublimitas</span>
-          </a>
-          <p>Produtos personalizados de alta qualidade para empresas e eventos.</p>
-          <div class="social-links" id="socialLinks"></div>
-        </div>
-        <div class="footer-col">
-          <h4>Produtos</h4>
-          <a href="/produtos">Catálogo</a>
-          <a href="/categorias">Categorias</a>
-          <a href="/criar-com-ia">Criar com IA</a>
-          <a href="/produtos?featured=1">Destaques</a>
-        </div>
-        <div class="footer-col">
-          <h4>Empresa</h4>
-          <a href="/sobre">Sobre Nós</a>
-          <a href="/como-funciona">Como Funciona</a>
-          <a href="/faq">FAQ</a>
-          <a href="/contato">Contato</a>
-        </div>
-        <div class="footer-col">
-          <h4>Minha Conta</h4>
-          <a href="/login">Entrar</a>
-          <a href="/cadastro">Cadastrar</a>
-          <a href="/meus-pedidos">Meus Pedidos</a>
-          <a href="/rastrear">Rastrear Pedido</a>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; <span id="year"></span> Sublimitas. Todos os direitos reservados.</p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Search Modal -->
-  <div class="modal-overlay" id="searchModal" style="display:none">
-    <div class="modal search-modal">
-      <div class="search-input-wrap">
-        <input type="text" id="searchInput" placeholder="Buscar produtos, categorias..." autofocus>
-        <kbd>ESC</kbd>
-      </div>
-      <div class="search-results" id="searchResults"></div>
+   </div>
+    <div class="hero-visual">
+     <div class="hero-blob"></div>
+     <img src="/img/hero1-removebg-preview.png" alt="Produtos personalizados Sublimitas" style="position:relative;z-index:2;max-height:360px;width:auto;filter:drop-shadow(0 20px 40px rgba(0,0,0,.3));animation:float 6s ease-in-out infinite">
+     <div class="hero-float-text">✨ Sua ideia,<br>do seu jeito</div>
     </div>
   </div>
+ </div>
+</section>
 
-  <!-- Toast -->
-  <div class="toast-container" id="toastContainer"></div>
+<!-- CATEGORIAS -->
+<section id="cat" style="background:#fff;padding:2.5rem 0">
+ <div class="c">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem">
+   <h2 style="font-size:1.5rem;font-weight:800;color:#111827">O que você quer personalizar?</h2>
+   <a href="/produtos.html"" class="btn btn-outline-purple btn-sm">Ver todos →</a>
+  </div>
+  <div class="categories-row" id="categoriesGrid">
+   <div class="loading-spinner"></div>
+  </div>
+ </div>
+</section>
 
-  <script src="/js/main.js"></script>
+<!-- PRODUTOS EM DESTAQUE -->
+<section id="prod" style="background:#fff;padding:4rem 0">
+ <div class="c">
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem">
+   <div><h2 style="font-size:1.75rem;font-weight:800;color:#111827;margin-bottom:.25rem">Produtos em Destaque</h2><p style="color:#6B7280">Os mais pedidos pelos nossos clientes</p></div>
+   <a href="/produtos.html"" class="btn btn-outline-purple btn-sm">Ver todos →</a>
+  </div>
+  <div class="products-row" id="featuredGrid">
+   <div class="loading-spinner"></div>
+  </div>
+ </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section id="how" style="background:#F9FAFB;padding:4rem 0">
+ <div class="c">
+  <div style="text-align:center;margin-bottom:3rem"><h2 style="font-size:1.75rem;font-weight:800;color:#111827;margin-bottom:.5rem">Como funciona?</h2><p style="color:#6B7280">Personalizar nunca foi tão fácil — em 4 passos simples</p></div>
+  <div class="steps-row">
+   <div class="step-item"><div class="step-circle" style="background:#7B2FBE;box-shadow:0 8px 24px rgba(123,47,190,.35)">1</div><h3>Escolha o produto</h3><p>Navegue pelo catálogo e selecione o que deseja personalizar.</p></div>
+   <div class="step-item"><div class="step-circle" style="background:#FF6B00;box-shadow:0 8px 24px rgba(255,107,0,.35)">2</div><h3>Envie sua arte</h3><p>Mande sua logo ou ideia. Nossa equipe cria a arte gratuitamente.</p></div>
+   <div class="step-item"><div class="step-circle" style="background:#22C55E;box-shadow:0 8px 24px rgba(34,197,94,.35)">3</div><h3>Produzimos</h3><p>Produção própria com controle de qualidade e equipamentos modernos.</p></div>
+   <div class="step-item"><div class="step-circle" style="background:#3B82F6;box-shadow:0 8px 24px rgba(59,130,246,.35)">4</div><h3>Receba em casa</h3><p>Enviamos para todo o Brasil com rastreamento e prazo garantido.</p></div>
+  </div>
+ </div>
+</section>
+
+<!-- BANNER UNIFORMES -->
+<section style="background:linear-gradient(135deg,#1a0a2e 0%,#5A1F8C 50%,#FF6B00 100%);padding:5rem 0;overflow:hidden">
+ <div class="c">
+  <div class="promo-grid">
+   <div>
+    <span style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#FFB800;margin-bottom:.75rem;display:block">EMPRESAS · EVENTOS · EQUIPES</span>
+    <h2 style="font-size:clamp(1.75rem,3vw,2.5rem);font-weight:800;color:#fff;line-height:1.15;margin-bottom:1rem">Uniformes que<br>fortalecem sua marca</h2>
+    <p style="color:rgba(255,255,255,.8);margin-bottom:2rem;line-height:1.6">Camisetas, polos, bonés e muito mais com a identidade da sua empresa. Pedidos a partir de 10 peças.</p>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap">
+     <a href="https://wa.me/5522999999999" class="btn btn-whatsapp" target="_blank">💬 Solicitar orçamento</a>
+     <a href="/produtos.html"" class="btn btn-ghost-hero">Ver catálogo</a>
+    </div>
+   </div>
+    <div style="display:flex;align-items:center;justify-content:center;min-height:280px">
+     <img id="uniformImg" src="/img/img-unif/escola.png" alt="Uniforme personalizado" style="max-width:420px;max-height:360px;object-fit:contain;border-radius:20px;filter:drop-shadow(0 12px 32px rgba(0,0,0,.25));transition:opacity 0.5s ease">
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- PARCEIROS -->
+<section style="background:#fff;padding:2.5rem 0">
+ <div class="c">
+  <p style="text-align:center;font-size:.75rem;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:.08em;margin-bottom:1.5rem">Empresas que confiam na Sublimitas</p>
+  <div class="trust-names" id="trustLogos">
+   <span class="trust-name">🏫 Escola Futuro</span>
+   <span class="trust-name">🏥 Clínica Bem Viver</span>
+   <span class="trust-name">🛒 Supermercado Economia</span>
+   <span class="trust-name">💪 Academia Força Total</span>
+   <span class="trust-name">⛪ Igreja Vida Nova</span>
+   <span class="trust-name">🎉 Festa Perfeita</span>
+  </div>
+ </div>
+</section>
+
+<!-- PROVA SOCIAL -->
+<section style="background:#F9FAFB;padding:4rem 0">
+ <div class="c">
+  <div class="social-proof-grid">
+   <!-- Depoimento -->
+   <div>
+    <h3 style="font-size:1rem;font-weight:700;color:#111827;margin-bottom:1.25rem">O que nossos clientes dizem</h3>
+    <div class="testimonial-box">
+     <div style="color:#FBBF24;font-size:1.1rem;margin-bottom:.75rem;letter-spacing:2px">★★★★★</div>
+     <p style="font-size:.9375rem;color:#374151;line-height:1.6;margin-bottom:1rem;font-style:italic">"Encomendei canecas personalizadas para o evento da empresa e ficaram perfeitas! Qualidade excelente, prazo cumprido e atendimento super atencioso."</p>
+     <div style="display:flex;align-items:center;gap:.75rem">
+      <div style="width:40px;height:40px;border-radius:50%;background:#7B2FBE;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.875rem;flex-shrink:0">MC</div>
+      <div><div style="font-size:.875rem;font-weight:600;color:#1F2937">Mariana Costa</div><div style="font-size:.75rem;color:#9CA3AF">Gestora de RH — Empresa Tech</div></div>
+     </div>
+    </div>
+    <div style="display:flex;gap:.4rem;margin-top:.875rem">
+     <span style="width:8px;height:8px;border-radius:50%;background:#7B2FBE;display:inline-block"></span>
+     <span style="width:8px;height:8px;border-radius:50%;background:#D1D5DB;display:inline-block"></span>
+     <span style="width:8px;height:8px;border-radius:50%;background:#D1D5DB;display:inline-block"></span>
+    </div>
+   </div>
+   <!-- Instagram -->
+   <div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem">
+     <h3 style="font-size:1rem;font-weight:700;color:#111827">Siga no Instagram</h3>
+     <a href="https://instagram.com/graficasublimitas" target="_blank" style="font-size:.75rem;font-weight:600;color:#7B2FBE">@graficasublimitas</a>
+    </div>
+    <div class="insta-grid">
+     <div class="insta-item" style="background:#EEF1FF">☕</div>
+     <div class="insta-item" style="background:#E8F8EE">👕</div>
+     <div class="insta-item" style="background:#F0EAFF">🧥</div>
+     <div class="insta-item" style="background:#FFF4E5">🍶</div>
+     <div class="insta-item" style="background:#FFF0E5">🎁</div>
+     <div class="insta-item" style="background:#FEE8F0">💌</div>
+    </div>
+    <div style="text-align:center;margin-top:.875rem"><a href="https://instagram.com/graficasublimitas" target="_blank" class="btn btn-outline-purple btn-sm">Ver perfil completo</a></div>
+   </div>
+   <!-- Google Reviews -->
+   <div>
+    <h3 style="font-size:1rem;font-weight:700;color:#111827;margin-bottom:1.25rem">Avaliações no Google</h3>
+    <div class="google-reviews-box">
+     <div style="font-size:2.5rem;margin-bottom:.5rem">🔵</div>
+     <div style="font-size:3rem;font-weight:800;color:#111827;line-height:1;margin-bottom:.4rem">4.9</div>
+     <div style="color:#FBBF24;font-size:1.25rem;margin-bottom:.5rem;letter-spacing:3px">★★★★★</div>
+     <p style="font-size:.875rem;color:#6B7280;margin-bottom:1.25rem">Baseado em 250+ avaliações reais</p>
+     <div style="display:flex;flex-direction:column;gap:.5rem;text-align:left">
+      <div class="review-mini"><div style="display:flex;justify-content:space-between;margin-bottom:.25rem"><span style="font-size:.8rem;font-weight:600">Ana Paula M.</span><span style="color:#FBBF24;font-size:.75rem">★★★★★</span></div><p style="font-size:.8rem;color:#6B7280;margin:0">Ótima qualidade e prazo cumprido!</p></div>
+      <div class="review-mini"><div style="display:flex;justify-content:space-between;margin-bottom:.25rem"><span style="font-size:.8rem;font-weight:600">João Victor S.</span><span style="color:#FBBF24;font-size:.75rem">★★★★★</span></div><p style="font-size:.8rem;color:#6B7280;margin:0">Atendimento nota 10, voltarei sempre.</p></div>
+      <div class="review-mini"><div style="display:flex;justify-content:space-between;margin-bottom:.25rem"><span style="font-size:.8rem;font-weight:600">Carla Rodrigues</span><span style="color:#FBBF24;font-size:.75rem">★★★★★</span></div><p style="font-size:.8rem;color:#6B7280;margin:0">Melhor gráfica de personalização!</p></div>
+     </div>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- PARCEIROS SUBLIMITAS -->
+<section id="parceiros" style="background:#F9FAFB;padding:4rem 0">
+ <div class="c">
+  <div style="text-align:center;margin-bottom:2.5rem">
+   <h2 style="font-size:1.75rem;font-weight:800;color:#111827;margin-bottom:.5rem">Parceiros Sublimitas</h2>
+   <p style="color:#6B7280;max-width:600px;margin:0 auto">Lojas autorizadas que revendem nossos produtos com identidade visual própria.</p>
+  </div>
+  <div class="trust-names">
+   <a href="/parceiro.html?slug=mundo-automatik" class="trust-name" style="text-decoration:none">🏭 Mundo Automatik</a>
+   <a href="/parceiro.html?slug=automate" class="trust-name" style="text-decoration:none">⚙️ Automate</a>
+   <a href="/parceiro.html?slug=fabricando-sua-ideia" class="trust-name" style="text-decoration:none">🔨 Fabricando Sua Ideia</a>
+   <a href="/parceiro.html?slug=igreja-fe-divina" class="trust-name" style="text-decoration:none">⛪ Igreja Fé Divina</a>
+   <a href="/parceiro.html?slug=casa-dos-personalizados" class="trust-name" style="text-decoration:none">🏠 Casa dos Personalizados</a>
+  </div>
+  <div style="text-align:center;margin-top:2rem">
+   <a href="https://wa.me/5522999999999?text=Olá! Quero ser um parceiro Sublimitas" class="btn btn-primary" target="_blank">🤝 Quero ser parceiro</a>
+  </div>
+ </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="background:#fff;padding:4rem 0">
+ <div class="c">
+  <div style="text-align:center;margin-bottom:2.5rem"><h2 style="font-size:1.75rem;font-weight:800;color:#111827;margin-bottom:.5rem">Perguntas Frequentes</h2><p style="color:#6B7280">Tudo o que você precisa saber antes de pedir</p></div>
+  <div class="faq-grid">
+   <div class="faq-item faq-open">
+    <button class="faq-btn faq-btn-active" onclick="toggleFaq(this)">Qual é o prazo de produção? <span class="faq-icon faq-icon-active">✕</span></button>
+    <div class="faq-answer" style="display:block">Em geral, produzimos em 3 a 7 dias úteis após aprovação da arte. Pedidos urgentes via WhatsApp.</div>
+   </div>
+   <div class="faq-item">
+    <button class="faq-btn" onclick="toggleFaq(this)">Vocês fazem a arte gratuitamente? <span class="faq-icon">+</span></button>
+    <div class="faq-answer">Sim! Nossa equipe de design cria a arte gratuitamente. Basta enviar sua logo ou ideia pelo WhatsApp.</div>
+   </div>
+   <div class="faq-item">
+    <button class="faq-btn" onclick="toggleFaq(this)">Como envio minha arte? <span class="faq-icon">+</span></button>
+    <div class="faq-answer">Por WhatsApp, e-mail ou pelo site. Aceitamos PDF, AI, CDR, PNG ou JPEG em alta resolução (300 DPI).</div>
+   </div>
+   <div class="faq-item">
+    <button class="faq-btn" onclick="toggleFaq(this)">Quais as formas de pagamento? <span class="faq-icon">+</span></button>
+    <div class="faq-answer">Pix, cartão de crédito (até 12x), débito e boleto. Para corporativos, nota fiscal e faturamento.</div>
+   </div>
+   <div class="faq-item">
+    <button class="faq-btn" onclick="toggleFaq(this)">Entregam para todo o Brasil? <span class="faq-icon">+</span></button>
+    <div class="faq-answer">Sim! Entregamos via Correios ou transportadoras com rastreamento. Retirada gratuita para clientes locais.</div>
+   </div>
+   <div class="faq-item">
+    <button class="faq-btn" onclick="toggleFaq(this)">Qual o pedido mínimo? <span class="faq-icon">+</span></button>
+    <div class="faq-answer">Para a maioria dos produtos, 1 unidade. Para uniformes e camisetas personalizadas, mínimo de 10 peças.</div>
+   </div>
+  </div>
+  <div style="text-align:center;margin-top:2rem"><a href="https://wa.me/5522999999999" class="btn btn-whatsapp" target="_blank">💬 Falar no WhatsApp</a></div>
+ </div>
+</section>
+
+<!-- CTA FINAL -->
+<section style="background:linear-gradient(135deg,#1a0a2e 0%,#5A1F8C 60%);padding:4rem 0;text-align:center;position:relative;overflow:hidden">
+ <div class="cta-radials"></div>
+ <div class="c" style="position:relative;z-index:1">
+  <h2 style="font-size:clamp(1.5rem,3vw,2.25rem);font-weight:800;color:#fff;margin-bottom:.5rem">Pronto para personalizar?</h2>
+  <p style="color:rgba(255,255,255,.8);font-size:1.125rem;margin-bottom:2rem">Transforme sua ideia em algo único!</p>
+  <div style="display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap">
+   <a href="/produtos.html"" class="btn btn-accent-glow">🛒 Comprar agora</a>
+   <a href="https://wa.me/5522999999999" class="btn btn-whatsapp" target="_blank">💬 Falar no WhatsApp</a>
+  </div>
+ </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+ <div class="c">
+  <div class="footer-grid">
+   <div>
+    <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:1rem">
+     <img src="/img/Sublimitas-logo.png" alt="Sublimitas" style="height:36px;width:auto">
+    </div>
+    <p style="font-size:.875rem;color:#6B7280;line-height:1.7;margin-bottom:1.25rem">Personalizados que contam histórias. Qualidade, criatividade e compromisso para transformar suas ideias em produtos incríveis.</p>
+    <div style="display:flex;gap:.75rem">
+     <a href="https://instagram.com/graficasublimitas" target="_blank" class="footer-social" onmouseover="this.style.background='#7B2FBE'" onmouseout="this.style.background='rgba(255,255,255,.08)'">📸</a>
+     <a href="#" class="footer-social" onmouseover="this.style.background='#25D366'" onmouseout="this.style.background='rgba(255,255,255,.08)'">💬</a>
+    </div>
+   </div>
+   <div>
+    <h4 class="footer-heading">Institucional</h4>
+    <ul class="footer-links">
+     <li><a href="/sobre.html"">Sobre nós</a></li>
+     <li><a href="/como-funciona.html"">Como funciona</a></li>
+     <li><a href="#">Blog</a></li>
+     <li><a href="#">Trabalhe conosco</a></li>
+    </ul>
+   </div>
+   <div>
+    <h4 class="footer-heading">Ajuda</h4>
+    <ul class="footer-links">
+     <li><a href="/faq.html"">Perguntas frequentes</a></li>
+     <li><a href="#">Política de troca</a></li>
+     <li><a href="/rastrear.html"">Rastrear pedido</a></li>
+     <li><a href="#">Termos de uso</a></li>
+    </ul>
+   </div>
+   <div>
+    <h4 class="footer-heading">Categorias</h4>
+    <ul class="footer-links">
+     <li><a href="/produtos.html"?category=canecas">Canecas</a></li>
+     <li><a href="/produtos.html"?category=camisetas">Camisetas</a></li>
+     <li><a href="/produtos.html"?category=uniformes">Uniformes</a></li>
+     <li><a href="/produtos.html"?category=brindes">Brindes</a></li>
+    </ul>
+   </div>
+   <div>
+    <h4 class="footer-heading">Fale conosco</h4>
+    <ul class="footer-contact">
+     <li>📞 (22) 99999-9999</li>
+     <li>✉️ contato@sublimitas.com.br</li>
+      <li>📍 Nilópolis - RJ</li>
+      <li>🕐 Ou 24h na conversa pelo site ou no WhatsApp</li>
+    </ul>
+   </div>
+  </div>
+  <div class="footer-bottom">
+   <span>© 2024 Sublimitas — Todos os direitos reservados.</span>
+   <span>Desenvolvido por <a href="https://sxconnect.com.br" style="color:#9B4FDE" target="_blank">SxConnect</a></span>
+  </div>
+ </div>
+</footer>
+
+<!-- SEARCH MODAL -->
+<div class="modal-overlay" id="searchModal" style="display:none">
+ <div class="modal search-modal">
+  <div class="search-input-wrap">
+   <input type="text" id="searchInput" placeholder="Buscar produtos, categorias..." autofocus>
+   <kbd>ESC</kbd>
+  </div>
+  <div class="search-results" id="searchResults"></div>
+ </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+async function applySectionSettings(){
+ try{
+  const res=await fetch('/api/settings/public');
+  if(!res.ok)return;
+  const d=await res.json();
+  const g=k=>d['section_'+k]||'';
+
+  // Hero
+  if(g('hero_title'))document.querySelector('.hero-title').innerHTML=g('hero_title')+'<span style="color:#FFB800;display:block">'+g('hero_title_highlight')+'</span>';
+  if(g('hero_desc'))document.querySelector('.hero-desc').textContent=g('hero_desc');
+  if(g('hero_btn1'))document.querySelector('.hero-actions a:first-child').innerHTML='🛒 '+g('hero_btn1');
+  if(g('hero_btn2'))document.querySelector('.hero-actions a:last-child').innerHTML='💬 '+g('hero_btn2');
+  if(g('hero_bg'))document.querySelector('.hero-section').style.background='linear-gradient(135deg,'+g('hero_bg')+' 0%,'+g('hero_bg')+'dd 100%)';
+  if(g('hero_bg_img'))document.querySelector('.hero-section').style.backgroundImage='url('+g('hero_bg_img')+')';
+  if(g('hero_img'))document.querySelector('.hero-visual img').src=g('hero_img');
+
+  // Categories
+  if(g('categories_title'))document.querySelector('#cat h2').textContent=g('categories_title');
+  if(g('categories_desc'))document.querySelector('#cat .sub-cat')&&(document.querySelector('#cat .sub-cat').textContent=g('categories_desc'));
+  if(g('categories_bg'))document.querySelector('#cat').style.background=g('categories_bg');
+
+  // Products
+  if(g('products_title'))document.querySelector('#prod h2').textContent=g('products_title');
+  if(g('products_desc'))document.querySelector('#prod p')&&(document.querySelector('#prod p').textContent=g('products_desc'));
+  if(g('products_bg'))document.querySelector('#prod').style.background=g('products_bg');
+
+  // How
+  if(g('how_title'))document.querySelector('#how h2').textContent=g('how_title');
+  if(g('how_desc'))document.querySelector('#how p')&&(document.querySelector('#how p').textContent=g('how_desc'));
+  if(g('how_bg'))document.querySelector('#how').style.background=g('how_bg');
+  const steps=document.querySelectorAll('.step-item');
+  for(let i=1;i<=4;i++){
+   const t=g('how_step'+i+'_title'),ds=g('how_step'+i+'_desc'),c=g('how_step'+i+'_color');
+   if(steps[i-1]){
+    if(t)steps[i-1].querySelector('h3').textContent=t;
+    if(ds)steps[i-1].querySelector('p').textContent=ds;
+    if(c)steps[i-1].querySelector('.step-circle').style.background=c;
+   }
+  }
+
+  // Banner
+  if(g('banner_tag'))document.querySelector('[style*="EMPRESAS"]')&&(document.querySelector('[style*="EMPRESAS"]').textContent=g('banner_tag'));
+  if(g('banner_title')){const el=document.querySelectorAll('h2');for(const e of el){if(e.textContent.includes('Uniformes que')){e.innerHTML=g('banner_title').replace('<br>','<br>');break;}}}
+  if(g('banner_img'))document.getElementById('uniformImg').src=g('banner_img');
+
+  // Trust
+  if(g('trust_title')){const el=document.querySelector('#trustLogos')?.previousElementSibling;if(el)el.textContent=g('trust_title');}
+  if(g('trust_bg')){const s=document.querySelector('#trustLogos')?.closest('section');if(s)s.style.background=g('trust_bg');}
+
+  // Testimonials
+  if(g('testimonials_title')){const el=document.querySelector('.testimonial-box')?.previousElementSibling;if(el)el.textContent=g('testimonials_title');}
+  if(g('testimonials_text')){const el=document.querySelector('.testimonial-box p');if(el)el.textContent='"'+g('testimonials_text')+'"';}
+  if(g('testimonials_author')){const el=document.querySelector('.testimonial-box strong');if(el)el.textContent=g('testimonials_author');}
+  if(g('testimonials_role')){const el=document.querySelector('.testimonial-box div div:last-child');if(el)el.textContent=g('testimonials_role');}
+
+  // FAQ
+  if(g('faq_title')){const el=document.querySelector('#faq h2');if(el)el.textContent=g('faq_title');}
+  if(g('faq_desc')){const el=document.querySelector('#faq p');if(el)el.textContent=g('faq_desc');}
+  if(g('faq_bg'))document.querySelector('#faq').style.background=g('faq_bg');
+
+  // CTA
+  if(g('cta_title')){const el=document.querySelector('[style*="1a0a2e"] h2');if(el)el.textContent=g('cta_title');}
+  if(g('cta_desc')){const el=document.querySelector('[style*="1a0a2e"] p');if(el)el.textContent=g('cta_desc');}
+
+  // Instagram
+  if(g('insta_title')){const el=document.querySelector('.insta-grid')?.previousElementSibling?.querySelector('h3');if(el)el.textContent=g('insta_title');}
+  if(g('insta_user')){const el=document.querySelector('.insta-grid')?.previousElementSibling?.querySelector('a');if(el){el.textContent=g('insta_user');if(g('insta_url'))el.href=g('insta_url');}}
+
+ }catch{}
+}
+applySectionSettings();
+</script>
+<script>
+function toggleFaq(btn){
+ var item=btn.parentElement;
+ var answer=item.querySelector('.faq-answer');
+ var icon=btn.querySelector('.faq-icon');
+ var isOpen=answer.style.display==='block';
+ answer.style.display=isOpen?'none':'block';
+ icon.textContent=isOpen?'+':'✕';
+ btn.classList.toggle('faq-btn-active',!isOpen);
+ icon.classList.toggle('faq-icon-active',!isOpen);
+ item.classList.toggle('faq-open',!isOpen);
+}
+
+/* Rotaciona imagens de uniformes */
+(function(){
+ var imgs=['/img/img-unif/escola.png','/img/img-unif/mama-mia.png','/img/img-unif/sua-marca.png'];
+ var el=document.getElementById('uniformImg');
+ if(!el)return;
+ var idx=0;
+ setInterval(function(){
+  idx=(idx+1)%imgs.length;
+  el.style.opacity='0';
+  setTimeout(function(){el.src=imgs[idx];el.style.opacity='1';},500);
+ },3000);
+})();
+</script>
+<script src="/js/main.js"></script>
+<script src="/js/support.js"></script>
 </body>
 </html>

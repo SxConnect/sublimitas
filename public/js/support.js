@@ -1,9 +1,11 @@
 function initSupport() {
-  const mode = getSetting('admin_support_mode');
+  var mode = getSetting('admin_support_mode');
 
   if (mode === 'widget') {
     loadWidget();
   } else if (mode === 'whatsapp') {
+    createWhatsappButton();
+  } else {
     createWhatsappButton();
   }
 }

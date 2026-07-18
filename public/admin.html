@@ -38,10 +38,7 @@
 
   <header class="header" id="header">
     <div class="container header-inner">
-      <a href="/" class="logo">
-        <span class="logo-icon">✦</span>
-        <span class="logo-text">Sublimitas</span>
-      </a>
+      <a href="/" class="logo"><img src="/img/Sublimitas-logo.png" alt="Sublimitas" style="height:36px;width:auto"><span style="display:flex;flex-direction:column;line-height:1.2"><strong style="font-size:1rem">Sublimitas</strong><span style="font-size:.65rem;color:var(--g5)">Gráfica Personalizada</span></span></a>
       <div class="header-actions">
         <a href="/" class="btn btn-outline btn-sm">Voltar ao Site</a>
         <div id="userMenu">
@@ -68,6 +65,7 @@
           <a href="#" data-section="trust"><span class="nav-icon">🏢</span> Confiança</a>
           <a href="#" data-section="reviews"><span class="nav-icon">⭐</span> Reviews</a>
           <a href="#" data-section="settings"><span class="nav-icon">⚙️</span> Configurações</a>
+          <a href="#" data-section="sections"><span class="nav-icon">📝</span> Seções do Site</a>
           <a href="#" data-section="users"><span class="nav-icon">👥</span> Usuários</a>
         </div>
       </aside>
@@ -199,12 +197,202 @@
                   <option value="widget">Widget</option>
                 </select>
               </div>
-              <div class="form-group"><label>Instagram URL</label><input type="url" id="set_social_instagram"></div>
-              <div class="form-group"><label>Facebook URL</label><input type="url" id="set_social_facebook"></div>
-              <div class="form-group"><label>LinkedIn URL</label><input type="url" id="set_social_linkedin"></div>
-              <button type="submit" class="btn btn-primary">Salvar Configurações</button>
+
+              <h3 style="margin:24px 0 12px;font-size:1.1rem;border-bottom:2px solid var(--border);padding-bottom:8px;">Redes Sociais</h3>
+              <p style="font-size:.85rem;color:var(--gray-500);margin-bottom:12px;">Preencha apenas as redes que a Sublimitas utiliza. O ícone pode ser uma imagem (URL) ou emoji. Os ícones aparecem no footer do site.</p>
+              <div class="form-row">
+                <div class="form-group"><label>Instagram URL</label><input type="url" id="set_social_instagram" placeholder="https://instagram.com/..."></div>
+                <div class="form-group"><label>Ícone Instagram (URL da imagem ou emoji)</label><input type="text" id="set_social_instagram_icon" placeholder="📸 ou URL da imagem"></div>
+              </div>
+              <div class="form-row">
+                <div class="form-group"><label>Facebook URL</label><input type="url" id="set_social_facebook" placeholder="https://facebook.com/..."></div>
+                <div class="form-group"><label>Ícone Facebook</label><input type="text" id="set_social_facebook_icon" placeholder="💬 ou URL da imagem"></div>
+              </div>
+              <div class="form-row">
+                <div class="form-group"><label>TikTok URL</label><input type="url" id="set_social_tiktok" placeholder="https://tiktok.com/@..."></div>
+                <div class="form-group"><label>Ícone TikTok</label><input type="text" id="set_social_tiktok_icon" placeholder="🎵 ou URL da imagem"></div>
+              </div>
+              <div class="form-row">
+                <div class="form-group"><label>YouTube URL</label><input type="url" id="set_social_youtube" placeholder="https://youtube.com/..."></div>
+                <div class="form-group"><label>Ícone YouTube</label><input type="text" id="set_social_youtube_icon" placeholder="▶️ ou URL da imagem"></div>
+              </div>
+              <div class="form-row">
+                <div class="form-group"><label>LinkedIn URL</label><input type="url" id="set_social_linkedin" placeholder="https://linkedin.com/..."></div>
+                <div class="form-group"><label>Ícone LinkedIn</label><input type="text" id="set_social_linkedin_icon" placeholder="💼 ou URL da imagem"></div>
+              </div>
+              <div class="form-row">
+                <div class="form-group"><label>Twitter/X URL</label><input type="url" id="set_social_twitter" placeholder="https://x.com/..."></div>
+                <div class="form-group"><label>Ícone Twitter/X</label><input type="text" id="set_social_twitter_icon" placeholder="🐦 ou URL da imagem"></div>
+              </div>
+
+              <h3 style="margin:24px 0 12px;font-size:1.1rem;border-bottom:2px solid var(--border);padding-bottom:8px;">🤖 Configuração da IA (Design)</h3>
+              <p style="font-size:.85rem;color:var(--gray-500);margin-bottom:12px;">Configure a inteligência artificial que gera designs personalizados para os clientes.</p>
+              <div class="form-row">
+                <div class="form-group"><label>URL da API (LLM)</label><input type="url" id="set_ai_url" placeholder="https://api.openai.com/v1"></div>
+                <div class="form-group"><label>Modelo</label><input type="text" id="set_ai_model" placeholder="gpt-4o-mini"></div>
+              </div>
+              <div class="form-group"><label>API Key</label><input type="password" id="set_ai_api_key" placeholder="sk-..."></div>
+              <div class="form-group"><label>System Prompt (como a IA deve se comportar)</label>
+                <textarea id="set_ai_system_prompt" rows="5" placeholder="Você é um designer gráfico especializado em produtos personalizados da Sublimitas..."></textarea>
+              </div>
+              <div style="display:flex;gap:10px;align-items:center;margin-top:8px;">
+                <button type="button" class="btn btn-outline" onclick="testAiConnection()">🔌 Testar Conexão IA</button>
+                <span id="aiTestResult" style="font-size:.85rem;"></span>
+              </div>
+
+              <div style="margin-top:24px;"><button type="submit" class="btn btn-primary">Salvar Configurações</button></div>
             </form>
           </div>
+        </div>
+
+        <!-- Seções do Site -->
+        <div class="admin-section" id="section-sections">
+          <div class="admin-header"><h1>Seções do Site</h1></div>
+          <p style="color:var(--gray-500);margin-bottom:24px;font-size:.9rem">Edite o conteúdo, cores e imagens de cada seção da página inicial.</p>
+
+          <!-- HERO -->
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px">
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;border-bottom:2px solid var(--primary);padding-bottom:8px;display:inline-block">🏠 Hero (Topo)</h3>
+            <div class="form-group"><label>Título Principal</label><input type="text" id="sec_hero_title" placeholder="Personalizados que..."></div>
+            <div class="form-group"><label>Subtítulo (destaque amarelo)</label><input type="text" id="sec_hero_title_highlight" placeholder="contam histórias."></div>
+            <div class="form-group"><label>Descrição</label><textarea id="sec_hero_desc" rows="2" placeholder="Canecas, Camisetas..."></textarea></div>
+            <div class="form-row">
+              <div class="form-group"><label>Texto Botão Principal</label><input type="text" id="sec_hero_btn1" placeholder="Comprar agora"></div>
+              <div class="form-group"><label>Texto Botão Secundário</label><input type="text" id="sec_hero_btn2" placeholder="Solicitar orçamento"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Cor de Fundo</label><input type="color" id="sec_hero_bg" style="height:44px"></div>
+              <div class="form-group"><label>Imagem de Fundo (URL)</label><input type="url" id="sec_hero_bg_img" placeholder="https://..."></div>
+            </div>
+            <div class="form-group"><label>Imagem Hero (lado direito)</label><input type="url" id="sec_hero_img" placeholder="URL da imagem do produto"></div>
+          </div>
+
+          <!-- CATEGORIAS -->
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px">
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;border-bottom:2px solid var(--primary);padding-bottom:8px;display:inline-block">📂 Categorias</h3>
+            <div class="form-group"><label>Título</label><input type="text" id="sec_categories_title" placeholder="Categorias"></div>
+            <div class="form-group"><label>Subtítulo</label><input type="text" id="sec_categories_desc" placeholder="Explore por tipo de produto"></div>
+            <div class="form-row">
+              <div class="form-group"><label>Cor de Fundo</label><input type="color" id="sec_categories_bg" style="height:44px"></div>
+              <div class="form-group"><label>Cor do Texto</label><input type="color" id="sec_categories_color" style="height:44px"></div>
+            </div>
+          </div>
+
+          <!-- PRODUTOS -->
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px">
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;border-bottom:2px solid var(--primary);padding-bottom:8px;display:inline-block">🏷️ Produtos em Destaque</h3>
+            <div class="form-group"><label>Título</label><input type="text" id="sec_products_title" placeholder="Produtos em Destaque"></div>
+            <div class="form-group"><label>Subtítulo</label><input type="text" id="sec_products_desc" placeholder="Os mais pedidos pelos nossos clientes"></div>
+            <div class="form-row">
+              <div class="form-group"><label>Cor de Fundo</label><input type="color" id="sec_products_bg" style="height:44px"></div>
+              <div class="form-group"><label>Cor do Texto</label><input type="color" id="sec_products_color" style="height:44px"></div>
+            </div>
+          </div>
+
+          <!-- COMO FUNCIONA -->
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px">
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;border-bottom:2px solid var(--primary);padding-bottom:8px;display:inline-block">📋 Como Funciona</h3>
+            <div class="form-group"><label>Título</label><input type="text" id="sec_how_title" placeholder="Como funciona?"></div>
+            <div class="form-group"><label>Subtítulo</label><input type="text" id="sec_how_desc" placeholder="Personalizar nunca foi tão fácil"></div>
+            <div class="form-row">
+              <div class="form-group"><label>Cor de Fundo</label><input type="color" id="sec_how_bg" style="height:44px"></div>
+              <div class="form-group"><label>Cor do Texto</label><input type="color" id="sec_how_color" style="height:44px"></div>
+            </div>
+            <div class="form-group"><label>Passo 1 — Título</label><input type="text" id="sec_how_step1_title" placeholder="Escolha o produto"></div>
+            <div class="form-group"><label>Passo 1 — Descrição</label><input type="text" id="sec_how_step1_desc" placeholder="Navegue pelo catálogo..."></div>
+            <div class="form-group"><label>Passo 1 — Cor do círculo</label><input type="color" id="sec_how_step1_color" style="height:44px"></div>
+            <div class="form-group"><label>Passo 2 — Título</label><input type="text" id="sec_how_step2_title" placeholder="Envie sua arte"></div>
+            <div class="form-group"><label>Passo 2 — Descrição</label><input type="text" id="sec_how_step2_desc" placeholder="Mande sua logo ou ideia..."></div>
+            <div class="form-group"><label>Passo 2 — Cor do círculo</label><input type="color" id="sec_how_step2_color" style="height:44px"></div>
+            <div class="form-group"><label>Passo 3 — Título</label><input type="text" id="sec_how_step3_title" placeholder="Produzimos"></div>
+            <div class="form-group"><label>Passo 3 — Descrição</label><input type="text" id="sec_how_step3_desc" placeholder="Produção própria com controle..."></div>
+            <div class="form-group"><label>Passo 3 — Cor do círculo</label><input type="color" id="sec_how_step3_color" style="height:44px"></div>
+            <div class="form-group"><label>Passo 4 — Título</label><input type="text" id="sec_how_step4_title" placeholder="Receba em casa"></div>
+            <div class="form-group"><label>Passo 4 — Descrição</label><input type="text" id="sec_how_step4_desc" placeholder="Enviamos para todo o Brasil..."></div>
+            <div class="form-group"><label>Passo 4 — Cor do círculo</label><input type="color" id="sec_how_step4_color" style="height:44px"></div>
+          </div>
+
+          <!-- BANNER UNIFORMES -->
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px">
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;border-bottom:2px solid var(--accent);padding-bottom:8px;display:inline-block">👔 Banner Uniformes</h3>
+            <div class="form-group"><label>Tagline (topo)</label><input type="text" id="sec_banner_tag" placeholder="EMPRESAS · EVENTOS · EQUIPES"></div>
+            <div class="form-group"><label>Título</label><input type="text" id="sec_banner_title" placeholder="Uniformes que fortalecem sua marca"></div>
+            <div class="form-group"><label>Descrição</label><textarea id="sec_banner_desc" rows="2" placeholder="Camisetas, polos, bonés..."></textarea></div>
+            <div class="form-row">
+              <div class="form-group"><label>Texto Botão 1</label><input type="text" id="sec_banner_btn1" placeholder="Solicitar orçamento"></div>
+              <div class="form-group"><label>Texto Botão 2</label><input type="text" id="sec_banner_btn2" placeholder="Ver catálogo"></div>
+            </div>
+            <div class="form-group"><label>Imagem (lado direito)</label><input type="url" id="sec_banner_img" placeholder="URL da imagem de uniforme"></div>
+            <div class="form-row">
+              <div class="form-group"><label>Cor Fundo 1</label><input type="color" id="sec_banner_bg1" style="height:44px"></div>
+              <div class="form-group"><label>Cor Fundo 2</label><input type="color" id="sec_banner_bg2" style="height:44px"></div>
+            </div>
+          </div>
+
+          <!-- PARCEIROS / CONFIANÇA -->
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px">
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;border-bottom:2px solid var(--primary);padding-bottom:8px;display:inline-block">🤝 Parceiros / Confiança</h3>
+            <div class="form-group"><label>Título acima dos logos</label><input type="text" id="sec_trust_title" placeholder="Empresas que confiam na Sublimitas"></div>
+            <div class="form-row">
+              <div class="form-group"><label>Cor de Fundo</label><input type="color" id="sec_trust_bg" style="height:44px"></div>
+              <div class="form-group"><label>Cor do Texto</label><input type="color" id="sec_trust_color" style="height:44px"></div>
+            </div>
+          </div>
+
+          <!-- DEPOIMENTOS -->
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px">
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;border-bottom:2px solid var(--primary);padding-bottom:8px;display:inline-block">⭐ Depoimentos</h3>
+            <div class="form-group"><label>Título</label><input type="text" id="sec_testimonials_title" placeholder="O que nossos clientes dizem"></div>
+            <div class="form-group"><label>Texto do Depoimento</label><textarea id="sec_testimonials_text" rows="3" placeholder="&quot;Encomendei canecas personalizadas...&quot;"></textarea></div>
+            <div class="form-group"><label>Autor</label><input type="text" id="sec_testimonials_author" placeholder="Mariana Costa"></div>
+            <div class="form-group"><label>Cargo/Empresa</label><input type="text" id="sec_testimonials_role" placeholder="Gestora de RH — Empresa Tech"></div>
+            <div class="form-group"><label>Foto do Autor (URL)</label><input type="url" id="sec_testimonials_img" placeholder="URL da foto"></div>
+            <div class="form-row">
+              <div class="form-group"><label>Cor de Fundo</label><input type="color" id="sec_testimonials_bg" style="height:44px"></div>
+              <div class="form-group"><label>Cor do Card</label><input type="color" id="sec_testimonials_card" style="height:44px"></div>
+            </div>
+          </div>
+
+          <!-- INSTAGRAM -->
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px">
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;border-bottom:2px solid #E4405F;padding-bottom:8px;display:inline-block">📸 Instagram</h3>
+            <div class="form-group"><label>Título</label><input type="text" id="sec_insta_title" placeholder="Siga no Instagram"></div>
+            <div class="form-group"><label>@Usuário</label><input type="text" id="sec_insta_user" placeholder="@graficasublimitas"></div>
+            <div class="form-group"><label>URL do Instagram</label><input type="url" id="sec_insta_url" placeholder="https://instagram.com/..."></div>
+          </div>
+
+          <!-- FAQ -->
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px">
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;border-bottom:2px solid var(--primary);padding-bottom:8px;display:inline-block">❓ FAQ</h3>
+            <div class="form-group"><label>Título</label><input type="text" id="sec_faq_title" placeholder="Perguntas Frequentes"></div>
+            <div class="form-group"><label>Subtítulo</label><input type="text" id="sec_faq_desc" placeholder="Tudo o que você precisa saber"></div>
+            <div class="form-row">
+              <div class="form-group"><label>Cor de Fundo</label><input type="color" id="sec_faq_bg" style="height:44px"></div>
+              <div class="form-group"><label>Cor do Texto</label><input type="color" id="sec_faq_color" style="height:44px"></div>
+            </div>
+          </div>
+
+          <!-- CTA FINAL -->
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px">
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;border-bottom:2px solid var(--accent);padding-bottom:8px;display:inline-block">🚀 CTA Final</h3>
+            <div class="form-group"><label>Título</label><input type="text" id="sec_cta_title" placeholder="Pronto para personalizar?"></div>
+            <div class="form-group"><label>Descrição</label><textarea id="sec_cta_desc" rows="2" placeholder="Fale com a gente..."></textarea></div>
+            <div class="form-group"><label>Texto Botão WhatsApp</label><input type="text" id="sec_cta_btn" placeholder="Falar com especialista"></div>
+            <div class="form-row">
+              <div class="form-group"><label>Cor Fundo 1</label><input type="color" id="sec_cta_bg1" style="height:44px"></div>
+              <div class="form-group"><label>Cor Fundo 2</label><input type="color" id="sec_cta_bg2" style="height:44px"></div>
+            </div>
+          </div>
+
+          <!-- FOOTER -->
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px">
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;border-bottom:2px solid var(--primary);padding-bottom:8px;display:inline-block">📄 Footer</h3>
+            <div class="form-group"><label>Texto "Fale conosco"</label><input type="text" id="sec_footer_contact" placeholder="Fale conosco · Nilópolis-RJ · 24h"></div>
+            <div class="form-group"><label>Texto "Desenvolvido por"</label><input type="text" id="sec_footer_dev" placeholder="Desenvolvido por SxConnect"></div>
+            <div class="form-group"><label>Copyright</label><input type="text" id="sec_footer_copy" placeholder="© 2025 Sublimitas. Todos os direitos reservados."></div>
+          </div>
+
+          <div style="margin-top:24px"><button class="btn btn-primary" onclick="saveSections()">💾 Salvar Todas as Seções</button></div>
         </div>
 
         <!-- Usuários -->
@@ -844,8 +1032,21 @@
         document.getElementById('set_accent_color').value = map.accent_color || '#FF6B00';
         document.getElementById('set_admin_support_mode').value = map.admin_support_mode || 'none';
         document.getElementById('set_social_instagram').value = map.social_instagram || '';
+        document.getElementById('set_social_instagram_icon').value = map.social_instagram_icon || '';
         document.getElementById('set_social_facebook').value = map.social_facebook || '';
+        document.getElementById('set_social_facebook_icon').value = map.social_facebook_icon || '';
         document.getElementById('set_social_linkedin').value = map.social_linkedin || '';
+        document.getElementById('set_social_linkedin_icon').value = map.social_linkedin_icon || '';
+        document.getElementById('set_social_tiktok').value = map.social_tiktok || '';
+        document.getElementById('set_social_tiktok_icon').value = map.social_tiktok_icon || '';
+        document.getElementById('set_social_youtube').value = map.social_youtube || '';
+        document.getElementById('set_social_youtube_icon').value = map.social_youtube_icon || '';
+        document.getElementById('set_social_twitter').value = map.social_twitter || '';
+        document.getElementById('set_social_twitter_icon').value = map.social_twitter_icon || '';
+        document.getElementById('set_ai_url').value = map.ai_url || '';
+        document.getElementById('set_ai_model').value = map.ai_model || '';
+        document.getElementById('set_ai_api_key').value = map.ai_api_key || '';
+        document.getElementById('set_ai_system_prompt').value = map.ai_system_prompt || '';
       } catch {}
     }
 
@@ -862,8 +1063,21 @@
         { key: 'accent_color', value: document.getElementById('set_accent_color').value, category: 'design' },
         { key: 'admin_support_mode', value: document.getElementById('set_admin_support_mode').value, category: 'support' },
         { key: 'social_instagram', value: document.getElementById('set_social_instagram').value.trim(), category: 'social' },
+        { key: 'social_instagram_icon', value: document.getElementById('set_social_instagram_icon').value.trim(), category: 'social' },
         { key: 'social_facebook', value: document.getElementById('set_social_facebook').value.trim(), category: 'social' },
-        { key: 'social_linkedin', value: document.getElementById('set_social_linkedin').value.trim(), category: 'social' }
+        { key: 'social_facebook_icon', value: document.getElementById('set_social_facebook_icon').value.trim(), category: 'social' },
+        { key: 'social_linkedin', value: document.getElementById('set_social_linkedin').value.trim(), category: 'social' },
+        { key: 'social_linkedin_icon', value: document.getElementById('set_social_linkedin_icon').value.trim(), category: 'social' },
+        { key: 'social_tiktok', value: document.getElementById('set_social_tiktok').value.trim(), category: 'social' },
+        { key: 'social_tiktok_icon', value: document.getElementById('set_social_tiktok_icon').value.trim(), category: 'social' },
+        { key: 'social_youtube', value: document.getElementById('set_social_youtube').value.trim(), category: 'social' },
+        { key: 'social_youtube_icon', value: document.getElementById('set_social_youtube_icon').value.trim(), category: 'social' },
+        { key: 'social_twitter', value: document.getElementById('set_social_twitter').value.trim(), category: 'social' },
+        { key: 'social_twitter_icon', value: document.getElementById('set_social_twitter_icon').value.trim(), category: 'social' },
+        { key: 'ai_url', value: document.getElementById('set_ai_url').value.trim(), category: 'ai' },
+        { key: 'ai_model', value: document.getElementById('set_ai_model').value.trim(), category: 'ai' },
+        { key: 'ai_api_key', value: document.getElementById('set_ai_api_key').value.trim(), category: 'ai' },
+        { key: 'ai_system_prompt', value: document.getElementById('set_ai_system_prompt').value.trim(), category: 'ai' }
       ];
       try {
         await api('/api/admin/settings', { method: 'PUT', body: JSON.stringify({ settings }) });
@@ -873,21 +1087,115 @@
       }
     }
 
+    async function testAiConnection() {
+      const result = document.getElementById('aiTestResult');
+      result.innerHTML = '<span style="color:var(--accent)">⏳ Testando...</span>';
+      try {
+        const data = await api('/api/admin/test-ai', {
+          method: 'POST',
+          body: JSON.stringify({
+            ai_url: document.getElementById('set_ai_url').value.trim(),
+            ai_api_key: document.getElementById('set_ai_api_key').value.trim(),
+            ai_model: document.getElementById('set_ai_model').value.trim()
+          })
+        });
+        result.innerHTML = '<span style="color:#22C55E">✅ ' + data.message + '</span>';
+      } catch (err) {
+        result.innerHTML = '<span style="color:#EF4444">❌ ' + (err.message || 'Erro na conexão') + '</span>';
+      }
+    }
+
     // Users
     async function loadUsers() {
       try {
         const data = await api('/api/admin/users');
-        const roleLabels = { admin: 'Admin', customer: 'Cliente' };
+        const roleLabels = { admin: 'Admin', customer: 'Cliente', partner: 'Parceiro' };
+        const roleBadge = { admin: 'badge-shipped', customer: 'badge-paid', partner: 'badge-processing' };
         document.getElementById('usersTable').innerHTML = data.users.map(u => `
           <tr>
             <td>${u.name}</td>
             <td>${u.email}</td>
             <td>${u.phone || '-'}</td>
-            <td><span class="badge ${u.role === 'admin' ? 'badge-shipped' : 'badge-paid'}">${roleLabels[u.role] || u.role}</span></td>
+            <td>
+              <select class="form-control" style="padding:4px 8px;font-size:.8rem;width:auto" onchange="changeUserRole(${u.id}, this.value)">
+                <option value="customer" ${u.role==='customer'?'selected':''}>Cliente</option>
+                <option value="partner" ${u.role==='partner'?'selected':''}>Parceiro</option>
+                <option value="admin" ${u.role==='admin'?'selected':''}>Admin</option>
+              </select>
+            </td>
             <td>${new Date(u.created_at).toLocaleDateString('pt-BR')}</td>
           </tr>
         `).join('') || '<tr><td colspan="5" style="text-align:center;color:var(--gray-500);">Nenhum usuário</td></tr>';
       } catch {}
+    }
+
+    async function changeUserRole(userId, newRole) {
+      try {
+        await api('/api/admin/users/' + userId + '/role', { method: 'PATCH', body: JSON.stringify({ role: newRole }) });
+        loadUsers();
+      } catch(e) { alert('Erro ao alterar role'); }
+    }
+
+    // Seções do Site
+    const SECTION_FIELDS = [
+      'hero_title','hero_title_highlight','hero_desc','hero_btn1','hero_btn2','hero_bg','hero_bg_img','hero_img',
+      'categories_title','categories_desc','categories_bg','categories_color',
+      'products_title','products_desc','products_bg','products_color',
+      'how_title','how_desc','how_bg','how_color',
+      'how_step1_title','how_step1_desc','how_step1_color',
+      'how_step2_title','how_step2_desc','how_step2_color',
+      'how_step3_title','how_step3_desc','how_step3_color',
+      'how_step4_title','how_step4_desc','how_step4_color',
+      'banner_tag','banner_title','banner_desc','banner_btn1','banner_btn2','banner_img','banner_bg1','banner_bg2',
+      'trust_title','trust_bg','trust_color',
+      'testimonials_title','testimonials_text','testimonials_author','testimonials_role','testimonials_img','testimonials_bg','testimonials_card',
+      'insta_title','insta_user','insta_url',
+      'faq_title','faq_desc','faq_bg','faq_color',
+      'cta_title','cta_desc','cta_btn','cta_bg1','cta_bg2',
+      'footer_contact','footer_dev','footer_copy'
+    ];
+
+    function loadSections() {
+      SECTION_FIELDS.forEach(f => {
+        const el = document.getElementById('sec_' + f);
+        if (el) el.value = '';
+      });
+      try {
+        const data = sectionsData || {};
+        SECTION_FIELDS.forEach(f => {
+          const el = document.getElementById('sec_' + f);
+          if (el && data['section_' + f]) el.value = data['section_' + f];
+        });
+      } catch {}
+    }
+
+    let sectionsData = {};
+
+    async function loadSectionsFromServer() {
+      try {
+        const data = await api('/api/admin/settings');
+        sectionsData = {};
+        data.settings.forEach(s => {
+          if (s.setting_key.startsWith('section_')) {
+            sectionsData[s.setting_key] = s.setting_value;
+          }
+        });
+        loadSections();
+      } catch {}
+    }
+
+    async function saveSections() {
+      const settings = SECTION_FIELDS.map(f => ({
+        key: 'section_' + f,
+        value: (document.getElementById('sec_' + f)?.value || '').trim(),
+        category: 'sections'
+      }));
+      try {
+        await api('/api/admin/settings', { method: 'PUT', body: JSON.stringify({ settings }) });
+        showToast('Seções salvas com sucesso!', 'success');
+      } catch (err) {
+        showToast(err.message || 'Erro ao salvar seções', 'error');
+      }
     }
 
     // Init
@@ -899,6 +1207,7 @@
     loadTrust();
     loadReviews();
     loadSettings();
+    loadSectionsFromServer();
     loadUsers();
   </script>
 </body>

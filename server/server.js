@@ -96,12 +96,14 @@ app.get('/api/settings/public', async (req, res) => {
   try {
     const { query } = require('./config/db');
     const settings = await query(
-      "SELECT setting_key, setting_value FROM settings WHERE category IN ('general', 'design', 'contact', 'social', 'support')"
+      "SELECT setting_key, setting_value FROM settings WHERE category IN ('general', 'design', 'contact', 'social', 'support', 'ai', 'sections')"
     );
 
     const publicSettings = {};
     settings.forEach(s => {
-      publicSettings[s.setting_key] = s.setting_value;
+      if (s.setting_key !== 'ai_api_key') {
+        publicSettings[s.setting_key] = s.setting_value;
+      }
     });
 
     res.json(publicSettings);

@@ -28,22 +28,21 @@ router.get('/dashboard', async (req, res) => {
        ORDER BY o.created_at DESC
        LIMIT 5`
     );
-    const products = await query('SELECT COUNT(*) as count FROM products');
-    const categories = await query('SELECT COUNT(*) as count FROM categories');
-    const reviews = await query('SELECT COUNT(*) as count FROM reviews');
-    const partners = await query('SELECT COUNT(*) as count FROM partners');
+    const [catCount] = await query('SELECT COUNT(*) as count FROM categories');
+    const [revCount] = await query('SELECT COUNT(*) as count FROM reviews');
+    const [partCount] = await query('SELECT COUNT(*) as count FROM partners');
 
     res.json({
       dashboard: {
-        totalProducts: totalProducts[0].count,
-        totalOrders: totalOrders[0].count,
-        pendingOrders: pendingOrders[0].count,
-        totalUsers: totalUsers[0].count,
-        totalRevenue: parseFloat(totalRevenue[0].total),
-        monthlyRevenue: parseFloat(monthlyRevenue[0].total),
-        totalCategories: categories[0].count,
-        totalReviews: reviews[0].count,
-        totalPartners: partners[0].count,
+        totalProducts: totalProducts.count,
+        totalOrders: totalOrders.count,
+        pendingOrders: pendingOrders.count,
+        totalUsers: totalUsers.count,
+        totalRevenue: parseFloat(totalRevenue.total),
+        monthlyRevenue: parseFloat(monthlyRevenue.total),
+        totalCategories: catCount.count,
+        totalReviews: revCount.count,
+        totalPartners: partCount.count,
         recentOrders
       }
     });
@@ -445,6 +444,19 @@ router.get('/users', async (req, res) => {
   }
 });
 
+router.patch('/users/:id/role', async (req, res) => {
+  try {
+    const { role } = req.body;
+    if (!['customer', 'admin', 'partner'].includes(role)) {
+      return res.status(400).json({ error: 'Role inválido' });
+    }
+    await query('UPDATE users SET role = ? WHERE id = ?', [role, req.params.id]);
+    res.json({ message: 'Role atualizado com sucesso' });
+  } catch (err) {
+    res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+});
+
 // =============================================
 // Log de Atividades (Admin)
 // =============================================
@@ -460,6 +472,38 @@ router.get('/logs', async (req, res) => {
     res.json({ logs });
   } catch (err) {
     res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+});
+
+router.post('/test-ai', async (req, res) => {
+  try {
+    const { ai_url, ai_api_key, ai_model } = req.body;
+    if (!ai_url || !ai_api_key) {
+      return res.status(400).json({ error: 'URL e API Key são obrigatórias' });
+    }
+    const url = ai_url.replace(/\/+$/, '') + '/chat/completions';
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + ai_api_key
+      },
+      body: JSON.stringify({
+        model: ai_model || 'gpt-4o-mini',
+        messages: [{ role: 'user', content: 'Diga apenas: OK' }],
+        max_tokens: 10
+      }),
+      signal: AbortSignal.timeout(15000)
+    });
+    if (!response.ok) {
+      const err = await response.text();
+      return res.status(400).json({ error: 'Erro da API: ' + response.status + ' - ' + err.substring(0, 200) });
+    }
+    const data = await response.json();
+    const reply = data.choices && data.choices[0] ? data.choices[0].message.content : 'OK';
+    res.json({ message: 'Conexão OK! Resposta: "' + reply.trim() + '"' });
+  } catch (err) {
+    res.status(500).json({ error: 'Falha na conexão: ' + err.message });
   }
 });
 

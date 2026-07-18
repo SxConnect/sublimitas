@@ -13,33 +13,30 @@
 
   <header class="header" id="header">
     <div class="container header-inner">
-      <a href="/" class="logo">
-        <span class="logo-icon">✦</span>
-        <span class="logo-text">Sublimitas</span>
-      </a>
+      <a href="/" class="logo"><img src="/img/Sublimitas-logo.png" alt="Sublimitas" style="height:36px;width:auto"><span style="display:flex;flex-direction:column;line-height:1.2"><strong style="font-size:1rem">Sublimitas</strong><span style="font-size:.65rem;color:var(--g5)">Gráfica Personalizada</span></span></a>
       <nav class="nav-desktop">
         <a href="/" class="nav-link">Início</a>
-        <a href="/produtos" class="nav-link">Produtos</a>
-        <a href="/categorias" class="nav-link">Categorias</a>
-        <a href="/como-funciona" class="nav-link active">Como Funciona</a>
-        <a href="/sobre" class="nav-link">Sobre</a>
-        <a href="/faq" class="nav-link">FAQ</a>
-        <a href="/contato" class="nav-link">Contato</a>
+        <a href="/produtos.html" class="nav-link">Produtos</a>
+        <a href="/categorias.html" class="nav-link">Categorias</a>
+        <a href="/como-funciona.html" class="nav-link active">Como Funciona</a>
+        <a href="/sobre.html" class="nav-link">Sobre</a>
+        <a href="/faq.html" class="nav-link">FAQ</a>
+        <a href="/contato.html" class="nav-link">Contato</a>
       </nav>
       <div class="header-actions">
         <button class="btn-icon" id="searchBtn" title="Buscar (Ctrl+K)">🔍</button>
-        <a href="/carrinho" class="btn-icon cart-icon" id="cartBtn">
+        <a href="/carrinho.html" class="btn-icon cart-icon" id="cartBtn">
           🛒
           <span class="cart-badge" id="cartBadge" style="display:none">0</span>
         </a>
         <div id="authButtons">
-          <a href="/login" class="btn btn-outline btn-sm">Entrar</a>
-          <a href="/cadastro" class="btn btn-primary btn-sm">Cadastrar</a>
+          <a href="/login.html" class="btn btn-outline btn-sm">Entrar</a>
+          <a href="/cadastro.html" class="btn btn-primary btn-sm">Cadastrar</a>
         </div>
         <div id="userMenu" style="display:none">
           <button class="btn-icon" id="userMenuBtn">👤</button>
           <div class="dropdown" id="userDropdown" style="display:none">
-            <a href="/meus-pedidos">Meus Pedidos</a>
+            <a href="/meus-pedidos.html">Meus Pedidos</a>
             <a href="#" id="logoutBtn">Sair</a>
           </div>
         </div>
@@ -48,12 +45,12 @@
     </div>
     <nav class="nav-mobile" id="mobileNav" style="display:none">
       <a href="/">Início</a>
-      <a href="/produtos">Produtos</a>
-      <a href="/categorias">Categorias</a>
-      <a href="/como-funciona">Como Funciona</a>
-      <a href="/sobre">Sobre</a>
-      <a href="/faq">FAQ</a>
-      <a href="/contato">Contato</a>
+      <a href="/produtos.html">Produtos</a>
+      <a href="/categorias.html">Categorias</a>
+      <a href="/como-funciona.html">Como Funciona</a>
+      <a href="/sobre.html">Sobre</a>
+      <a href="/faq.html">FAQ</a>
+      <a href="/contato.html">Contato</a>
     </nav>
   </header>
 
@@ -66,28 +63,65 @@
     </div>
   </section>
 
+  <style>
+    .steps-row{display:flex;align-items:stretch;justify-content:center;gap:0;position:relative;margin:0 auto;max-width:1000px}
+    .step-item{flex:1;text-align:center;padding:0 12px;position:relative;display:flex;flex-direction:column;align-items:center}
+    .step-icon-wrap{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--pd));display:flex;align-items:center;justify-content:center;margin:0 auto 16px;position:relative;z-index:2;box-shadow:0 8px 24px rgba(123,47,190,.25)}
+    .step-icon-wrap .step-num{position:absolute;top:-6px;right:-6px;width:28px;height:28px;border-radius:50%;background:var(--a);color:#fff;font-size:.75rem;font-weight:800;display:flex;align-items:center;justify-content:center;border:3px solid #fff;z-index:3}
+    .step-icon-wrap .step-emoji{font-size:2rem;filter:grayscale(0)}
+    .step-item h3{font-size:1rem;font-weight:700;color:var(--g9);margin-bottom:8px}
+    .step-item p{font-size:.85rem;color:var(--g5);line-height:1.6;max-width:220px;margin:0 auto;flex:1}
+    .step-arrow{position:absolute;top:40px;right:-20px;color:var(--p);font-size:1.5rem;z-index:1;opacity:.5}
+    .step-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:var(--radius-full);background:linear-gradient(135deg,#FF6B00,#FFB800);color:#fff;font-weight:700;font-size:.85rem;text-decoration:none;margin-top:12px;transition:all .2s;box-shadow:0 4px 16px rgba(255,107,0,.3)}
+    .step-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(255,107,0,.4)}
+    @media(max-width:900px){
+      .steps-row{flex-wrap:wrap;gap:32px}
+      .step-item{flex:0 0 calc(50% - 16px)}
+      .step-arrow{display:none}
+    }
+    @media(max-width:540px){
+      .step-item{flex:0 0 100%}
+    }
+  </style>
+
   <section class="section">
     <div class="container">
-      <div class="steps-grid" style="gap:32px;">
-        <div class="step-card" style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:40px 24px;transition:all var(--transition);">
-          <div class="step-number">1</div>
-          <h3 style="font-size:1.15rem;">Escolha o Produto</h3>
-          <p style="margin-top:8px;">Navegue pelo nosso catálogo com dezenas de categorias. Camisetas, canecas, bonés, uniformes, brindes corporativos e muito mais. Use os filtros para encontrar exatamente o que precisa.</p>
+      <div class="steps-row">
+        <div class="step-item">
+          <div class="step-icon-wrap">
+            <span class="step-emoji">🛍️</span>
+            <span class="step-num">1</span>
+          </div>
+          <h3>Escolha o Produto</h3>
+          <p>Navegue pelo catálogo com dezenas de categorias. Use os filtros para encontrar o que precisa.</p>
+          <span class="step-arrow">→</span>
         </div>
-        <div class="step-card" style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:40px 24px;transition:all var(--transition);">
-          <div class="step-number">2</div>
-          <h3 style="font-size:1.15rem;">Crie o Design</h3>
-          <p style="margin-top:8px;">Use nossa ferramenta de inteligência artificial para gerar um design profissional em segundos, ou envie sua arte pronta. Você tem total liberdade criativa.</p>
+        <div class="step-item">
+          <div class="step-icon-wrap">
+            <span class="step-emoji">🎨</span>
+            <span class="step-num">2</span>
+          </div>
+          <h3>Crie o Design</h3>
+          <p>Use nossa IA para gerar um design profissional ou envie sua arte pronta.</p>
+          <a href="/criar-com-ia.html" class="step-btn">✨ Criar com IA</a>
+          <span class="step-arrow">→</span>
         </div>
-        <div class="step-card" style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:40px 24px;transition:all var(--transition);">
-          <div class="step-number">3</div>
-          <h3 style="font-size:1.15rem;">Aprove e Compre</h3>
-          <p style="margin-top:8px;">Visualize o resultado em mockups realistas antes de confirmar. Escolha quantidades, tamanhos e cores, finalize o pedido com segurança.</p>
+        <div class="step-item">
+          <div class="step-icon-wrap">
+            <span class="step-emoji">✅</span>
+            <span class="step-num">3</span>
+          </div>
+          <h3>Aprove e Compre</h3>
+          <p>Visualize em mockups realistas, escolha quantidades e finalize com segurança.</p>
+          <span class="step-arrow">→</span>
         </div>
-        <div class="step-card" style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:40px 24px;transition:all var(--transition);">
-          <div class="step-number">4</div>
-          <h3 style="font-size:1.15rem;">Receba em Casa</h3>
-          <p style="margin-top:8px;">Produção com tecnologia de ponta e entrega para todo o Brasil. Acompanhe seu pedido do início ao fim com rastreamento completo.</p>
+        <div class="step-item">
+          <div class="step-icon-wrap">
+            <span class="step-emoji">🚚</span>
+            <span class="step-num">4</span>
+          </div>
+          <h3>Receba em Casa</h3>
+          <p>Produção rápida com rastreamento completo para todo o Brasil.</p>
         </div>
       </div>
     </div>
@@ -164,7 +198,7 @@
         </div>
       </div>
       <div style="text-align:center;margin-top:32px;">
-        <a href="/faq" class="btn btn-outline btn-lg">Ver Todas as Perguntas →</a>
+        <a href="/faq.html" class="btn btn-outline btn-lg">Ver Todas as Perguntas →</a>
       </div>
     </div>
   </section>
@@ -174,8 +208,8 @@
       <h2>Pronto para começar?</h2>
       <p>Crie seu primeiro produto personalizado agora mesmo</p>
       <div class="cta-actions">
-        <a href="/criar-com-ia" class="btn btn-accent btn-lg">🎨 Criar com IA</a>
-        <a href="/produtos" class="btn btn-outline-light btn-lg">Ver Catálogo</a>
+        <a href="/criar-com-ia.html" class="btn btn-accent btn-lg">🎨 Criar com IA</a>
+        <a href="/produtos.html" class="btn btn-outline-light btn-lg">Ver Catálogo</a>
       </div>
     </div>
   </section>
@@ -184,37 +218,39 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-col">
-          <a href="/" class="logo">
-            <span class="logo-icon">✦</span>
-            <span class="logo-text">Sublimitas</span>
-          </a>
+          <a href="/" class="logo"><img src="/img/Sublimitas-logo.png" alt="Sublimitas" style="height:36px;width:auto"><span style="display:flex;flex-direction:column;line-height:1.2"><strong style="font-size:1rem">Sublimitas</strong><span style="font-size:.65rem;color:var(--g5)">Gráfica Personalizada</span></span></a>
           <p>Produtos personalizados de alta qualidade para empresas e eventos.</p>
           <div class="social-links" id="socialLinks"></div>
         </div>
         <div class="footer-col">
           <h4>Produtos</h4>
-          <a href="/produtos">Catálogo</a>
-          <a href="/categorias">Categorias</a>
-          <a href="/criar-com-ia">Criar com IA</a>
+          <a href="/produtos.html">Catálogo</a>
+          <a href="/categorias.html">Categorias</a>
+          <a href="/criar-com-ia.html">Criar com IA</a>
           <a href="/produtos?featured=1">Destaques</a>
         </div>
         <div class="footer-col">
           <h4>Empresa</h4>
-          <a href="/sobre">Sobre Nós</a>
-          <a href="/como-funciona">Como Funciona</a>
-          <a href="/faq">FAQ</a>
-          <a href="/contato">Contato</a>
+          <a href="/sobre.html">Sobre Nós</a>
+          <a href="/como-funciona.html">Como Funciona</a>
+          <a href="/faq.html">FAQ</a>
+          <a href="/contato.html">Contato</a>
         </div>
         <div class="footer-col">
           <h4>Minha Conta</h4>
-          <a href="/login">Entrar</a>
-          <a href="/cadastro">Cadastrar</a>
-          <a href="/meus-pedidos">Meus Pedidos</a>
-          <a href="/rastrear">Rastrear Pedido</a>
+          <a href="/login.html">Entrar</a>
+          <a href="/cadastro.html">Cadastrar</a>
+          <a href="/meus-pedidos.html">Meus Pedidos</a>
+          <a href="/rastrear.html">Rastrear Pedido</a>
+        </div>
+        <div class="footer-col">
+          <h4>Fale conosco</h4>
+          <p style="font-size:.85rem;color:var(--g4);line-height:1.8">📞 (22) 99999-9999<br>✉️ contato@sublimitas.com.br<br>📍 Nilópolis - RJ<br>🕐 Ou 24h na conversa pelo site ou no WhatsApp</p>
         </div>
       </div>
       <div class="footer-bottom">
         <p>&copy; <span id="year"></span> Sublimitas. Todos os direitos reservados.</p>
+        <span>Desenvolvido por <a href="https://sxconnect.com.br" style="color:#9B4FDE" target="_blank">SxConnect</a></span>
       </div>
     </div>
   </footer>

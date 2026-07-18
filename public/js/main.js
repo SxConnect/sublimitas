@@ -228,53 +228,104 @@ async function loadCategories() {
   const grid = document.getElementById('categoriesGrid');
   if (!grid) return;
 
+  const defaultCategories = [
+    { slug:'canecas', icon:'☕', name:'Canecas', product_count:8 },
+    { slug:'camisetas', icon:'👕', name:'Camisetas', product_count:12 },
+    { slug:'uniformes', icon:'👔', name:'Uniformes', product_count:6 },
+    { slug:'brindes', icon:'🎁', name:'Brindes', product_count:10 },
+    { slug:'copos', icon:'🥤', name:'Copos Térmicos', product_count:5 },
+    { slug:'garrafas', icon:'🍶', name:'Garrafas', product_count:4 },
+    { slug:'bone', icon:'🧢', name:'Bonés', product_count:7 },
+    { slug:'agenda', icon:'📓', name:'Agendas', product_count:3 }
+  ];
+
   try {
     const data = await api('/api/categories');
-    if (data.categories && data.categories.length > 0) {
-      grid.innerHTML = data.categories.map(c => `
-        <a href="/produtos?category=${c.slug}" class="category-card">
-          <div class="category-icon">${c.icon || '📂'}</div>
-          <div class="category-name">${c.name}</div>
-          <div class="category-count">${c.product_count || 0} produtos</div>
-        </a>
-      `).join('');
-    } else {
-      grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--gray-500)">Nenhuma categoria encontrada</p>';
-    }
+    const cats = data.categories && data.categories.length > 0 ? data.categories : defaultCategories;
+    grid.innerHTML = cats.map(c => `
+      <a href="/produtos?category=${c.slug}" class="cat-card" style="background:${getCategoryColor(c.slug)}">
+        <div class="cat-card-emoji">${c.icon || '📂'}</div>
+        <div class="cat-card-name">${c.name}</div>
+        <div class="cat-card-count">${c.product_count || 0} produtos</div>
+      </a>
+    `).join('');
   } catch {
-    grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--gray-500)">Erro ao carregar categorias</p>';
+    grid.innerHTML = defaultCategories.map(c => `
+      <a href="/produtos?category=${c.slug}" class="cat-card" style="background:${getCategoryColor(c.slug)}">
+        <div class="cat-card-emoji">${c.icon}</div>
+        <div class="cat-card-name">${c.name}</div>
+        <div class="cat-card-count">${c.product_count} produtos</div>
+      </a>
+    `).join('');
   }
+}
+
+function getCategoryColor(slug) {
+  const colors = {
+    canecas:'#EEF1FF', camisetas:'#E8F8EE', uniformes:'#F0EAFF',
+    brindes:'#FFF4E5', copos:'#FFF0E5', garrafas:'#FEE8F0',
+    bone:'#E0F2FE', agenda:'#FDE68A'
+  };
+  return colors[slug] || '#F9FAFB';
 }
 
 async function loadFeaturedProducts() {
   const grid = document.getElementById('featuredGrid');
   if (!grid) return;
 
+  const defaultProducts = [
+    { slug:'caneca-magica', name:'Caneca Mágica Personalizada', category_name:'Canecas', base_price:39.90, stock:45, emoji:'☕', badge:'Novo', badge_class:'product-badge', bg:'#EEF1FF' },
+    { slug:'camiseta-polo', name:'Camiseta Polo Corporativa', category_name:'Camisetas', base_price:59.90, stock:30, emoji:'👕', badge:'Destaque', badge_class:'product-badge product-badge-accent', bg:'#E8F8EE' },
+    { slug:'garrafa-termica', name:'Garrafa Térmica 500ml', category_name:'Garrafas', base_price:49.90, stock:22, emoji:'🍶', badge:'Novo', badge_class:'product-badge', bg:'#FEE8F0' },
+    { slug:'bone-camurca', name:'Boné de Camurça Premium', category_name:'Bonés', base_price:44.90, stock:18, emoji:'🧢', badge:'Destaque', badge_class:'product-badge product-badge-accent', bg:'#E0F2FE' },
+    { slug:'kit-canecas', name:'Kit 6 Canecas Personalizadas', category_name:'Canecas', base_price:189.90, stock:12, emoji:'☕', badge:'Novo', badge_class:'product-badge', bg:'#F0EAFF' },
+    { slug:'uniforme-esportivo', name:'Uniforme Esportivo Completo', category_name:'Uniformes', base_price:129.90, stock:8, emoji:'👔', badge:'Destaque', badge_class:'product-badge product-badge-accent', bg:'#FFF4E5' },
+    { slug:'copo-termico', name:'Copo Térmico 450ml', category_name:'Copos', base_price:34.90, stock:25, emoji:'🥤', badge:'', badge_class:'', bg:'#FFF0E5' },
+    { slug:'agenda-capa', name:'Agenda com Capa Personalizada', category_name:'Agendas', base_price:29.90, stock:15, emoji:'📓', badge:'', badge_class:'', bg:'#F5F4F7' }
+  ];
+
   try {
     const data = await api('/api/products/featured');
-    if (data.products && data.products.length > 0) {
-      grid.innerHTML = data.products.map(p => {
-        const img = (p.images && p.images.length > 0) ? p.images[0] : null;
-        return `
-          <div class="product-card">
-            <div class="product-image">${img ? `<img src="${img}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover">` : '📦'}</div>
-            <div class="product-info">
-              <div class="product-category">${p.category_name || ''}</div>
-              <div class="product-name">${p.name}</div>
-              <div class="product-price">${formatPrice(p.base_price)}</div>
-            </div>
-            <div class="product-actions">
-              <a href="/produto?slug=${p.slug}" class="btn btn-outline btn-sm">Ver Detalhes</a>
-              <button class="btn btn-primary btn-sm" onclick="addToCart(${p.id})">Adicionar</button>
-            </div>
+    const products = data.products && data.products.length > 0 ? data.products : defaultProducts;
+    grid.innerHTML = products.map(p => {
+      const img = (p.images && p.images.length > 0) ? p.images[0] : null;
+      const emoji = p.emoji || '📦';
+      const badge = p.badge ? `<span class="${p.badge_class || 'product-badge'}">${p.badge}</span>` : '';
+      const bg = p.bg || getCategoryColor(p.category_name);
+      return `
+        <a href="/produto?slug=${p.slug}" class="product-card">
+          <div class="product-img" style="background:${bg}">
+            ${img ? `<img src="${img}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover">` : emoji}
+            ${badge}
           </div>
-        `;
-      }).join('');
-    } else {
-      grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--gray-500)">Nenhum produto em destaque</p>';
-    }
+          <div class="product-info">
+            <div class="product-cat">${p.category_name || ''}</div>
+            <div class="product-name">${p.name}</div>
+            <div class="product-stock">📦 Estoque ${p.stock || 'disponível'} unidades</div>
+            <div class="product-price">${formatPrice(p.base_price)}</div>
+            <div class="product-installment">ou 3x de ${formatPrice(p.base_price / 3)}</div>
+          </div>
+          <div class="product-btn">Ver produto</div>
+        </a>
+      `;
+    }).join('');
   } catch {
-    grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--gray-500)">Erro ao carregar produtos</p>';
+    grid.innerHTML = defaultProducts.map(p => `
+      <a href="/produto?slug=${p.slug}" class="product-card">
+        <div class="product-img" style="background:${p.bg}">
+          ${p.emoji}
+          ${p.badge ? `<span class="${p.badge_class}">${p.badge}</span>` : ''}
+        </div>
+        <div class="product-info">
+          <div class="product-cat">${p.category_name}</div>
+          <div class="product-name">${p.name}</div>
+          <div class="product-stock">📦 Estoque ${p.stock} unidades</div>
+          <div class="product-price">${formatPrice(p.base_price)}</div>
+          <div class="product-installment">ou 3x de ${formatPrice(p.base_price / 3)}</div>
+        </div>
+        <div class="product-btn">Ver produto</div>
+      </a>
+    `).join('');
   }
 }
 
@@ -283,19 +334,25 @@ async function loadTestimonials() {
   if (!container) return;
 
   const defaultTestimonials = [
-    { name: 'Maria Silva', role: 'Empresária', text: 'Produtos de excelente qualidade! A personalização ficou perfeita e a entrega foi rápida demais.', rating: 5 },
-    { name: 'João Santos', role: 'Gerente de RH', text: 'Encomendamos uniformes para toda a empresa. Ficou maravilhoso! Recomendo demais.', rating: 5 },
-    { name: 'Ana Costa', role: 'Event Planner', text: 'Sempre uso a Sublimitas para brindes de eventos. Qualidade consistente e preços justos.', rating: 5 },
-    { name: 'Pedro Lima', role: 'Empreendedor', text: 'A ferramenta de IA para criar designs é incrível! Economizei horas de trabalho.', rating: 5 }
+    { name: 'Maria Silva', role: 'Empresária', text: 'Produtos de excelente qualidade! A personalização ficou perfeita e a entrega foi rápida demais.', rating: 5, initials: 'MS' },
+    { name: 'João Santos', role: 'Gerente de RH', text: 'Encomendamos uniformes para toda a empresa. Ficou maravilhoso! Recomendo demais.', rating: 5, initials: 'JS' },
+    { name: 'Ana Costa', role: 'Event Planner', text: 'Sempre uso a Sublimitas para brindes de eventos. Qualidade consistente e preços justos.', rating: 5, initials: 'AC' },
+    { name: 'Pedro Lima', role: 'Empreendedor', text: 'A ferramenta de IA para criar designs é incrível! Economizei horas de trabalho.', rating: 5, initials: 'PL' },
+    { name: 'Carla Mendes', role: 'Dona de Loja', text: 'As canecas personalizadas ficaram lindas! Meus clientes amam. Parceria que veio para ficar.', rating: 5, initials: 'CM' },
+    { name: 'Ricardo Alves', role: 'Diretor Comercial', text: 'Profissionalismo do início ao fim. A qualidade dos produtos superou nossas expectativas.', rating: 5, initials: 'RA' }
   ];
 
-  const testimonials = defaultTestimonials;
-  container.innerHTML = testimonials.map(t => `
-    <div class="testimonial-card">
+  container.innerHTML = defaultTestimonials.map(t => `
+    <div class="testimonial-card-v2">
+      <div class="testimonial-header">
+        <div class="testimonial-avatar">${t.initials}</div>
+        <div>
+          <div class="testimonial-name">${t.name}</div>
+          <div class="testimonial-role">${t.role}</div>
+        </div>
+      </div>
       <div class="testimonial-stars">${'⭐'.repeat(t.rating)}</div>
       <div class="testimonial-text">"${t.text}"</div>
-      <div class="testimonial-author">${t.name}</div>
-      <div class="testimonial-role">${t.role}</div>
     </div>
   `).join('');
 }
@@ -304,11 +361,25 @@ async function loadTrustCompanies() {
   const container = document.getElementById('trustLogos');
   if (!container) return;
 
+  const defaultCompanies = [
+    { name: 'Escola Futuro', icon: '🏫' },
+    { name: 'Clínica Bem Viver', icon: '🏥' },
+    { name: 'Supermercado Economia', icon: '🛒' },
+    { name: 'Academia Força Total', icon: '💪' },
+    { name: 'Igreja Vida Nova', icon: '⛪' },
+    { name: 'Festa Perfeita', icon: '🎉' }
+  ];
+
   try {
-    const data = await api('/api/settings/public');
-    container.innerHTML = '<p style="color:var(--gray-500)">Empresas que confiam em nossos serviços</p>';
+    const data = await api('/api/admin/trust-companies');
+    const companies = data.companies && data.companies.length > 0 ? data.companies : defaultCompanies;
+    container.innerHTML = companies.map(c => `
+      <span class="trust-name">${c.icon || '🏢'} ${c.name}</span>
+    `).join('');
   } catch {
-    container.innerHTML = '';
+    container.innerHTML = defaultCompanies.map(c => `
+      <span class="trust-name">${c.icon} ${c.name}</span>
+    `).join('');
   }
 }
 
@@ -348,7 +419,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Load homepage data
   loadCategories();
   loadFeaturedProducts();
-  loadTestimonials();
   loadTrustCompanies();
 });
 

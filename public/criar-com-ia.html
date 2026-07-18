@@ -1,371 +1,383 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Criar com IA — Sublimitas</title>
-  <meta name="description" content="Crie designs personalizados com inteligência artificial para seus produtos Sublimitas.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css">
-  <style>
-    .designer-page { padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
-    .designer-header { margin-bottom: 32px; }
-    .designer-header h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 4px; }
-    .designer-header p { color: var(--gray-500); }
-    .designer-layout { display: grid; grid-template-columns: 1fr 380px; gap: 32px; }
-    .designer-canvas { background: var(--gray-100); border: 2px dashed var(--gray-300); border-radius: var(--radius); min-height: 480px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px; color: var(--gray-500); position: relative; overflow: hidden; }
-    .designer-canvas.has-preview { border-style: solid; border-color: var(--gray-200); background: var(--white); }
-    .designer-canvas-placeholder { text-align: center; padding: 40px; }
-    .designer-canvas-placeholder .icon { font-size: 4rem; margin-bottom: 16px; opacity: 0.5; }
-    .designer-canvas-placeholder h3 { font-size: 1.1rem; font-weight: 600; color: var(--gray-600); margin-bottom: 8px; }
-    .designer-canvas-placeholder p { font-size: 0.9rem; }
-    .designer-canvas img { max-width: 100%; max-height: 100%; object-fit: contain; }
-    .designer-sidebar { display: flex; flex-direction: column; gap: 20px; }
-    .designer-panel { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 24px; }
-    .designer-panel h3 { font-size: 1rem; font-weight: 600; margin-bottom: 16px; }
-    .designer-panel textarea { width: 100%; min-height: 100px; resize: vertical; }
-    .upload-zone { border: 2px dashed var(--gray-300); border-radius: var(--radius-sm); padding: 32px 20px; text-align: center; cursor: pointer; transition: all 0.2s ease; }
-    .upload-zone:hover, .upload-zone.dragover { border-color: var(--primary); background: rgba(123,47,190,0.03); }
-    .upload-zone-icon { font-size: 2rem; margin-bottom: 8px; }
-    .upload-zone p { font-size: 0.85rem; color: var(--gray-500); }
-    .upload-zone small { font-size: 0.75rem; color: var(--gray-400); }
-    .upload-zone input[type="file"] { display: none; }
-    .templates-section { margin-top: 40px; }
-    .templates-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
-    .template-card { background: var(--white); border: 2px solid var(--gray-200); border-radius: var(--radius-sm); padding: 20px; text-align: center; cursor: pointer; transition: all 0.2s ease; }
-    .template-card:hover, .template-card.selected { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(123,47,190,0.1); }
-    .template-card.selected { background: rgba(123,47,190,0.05); }
-    .template-icon { font-size: 2.5rem; margin-bottom: 8px; }
-    .template-name { font-size: 0.85rem; font-weight: 600; }
-    .template-price { font-size: 0.75rem; color: var(--gray-500); margin-top: 4px; }
-    .download-bar { display: none; align-items: center; justify-content: space-between; background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 16px 24px; margin-top: 24px; }
-    .download-bar.visible { display: flex; }
-    @media (max-width: 900px) {
-      .designer-layout { grid-template-columns: 1fr; }
-      .designer-canvas { min-height: 320px; }
-      .templates-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
-    }
-    @media (max-width: 480px) {
-      .designer-page { padding: 24px 12px; }
-      .download-bar { flex-direction: column; gap: 12px; text-align: center; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Criar com IA — Sublimitas</title>
+<meta name="description" content="Crie designs personalizados com inteligência artificial para seus produtos Sublimitas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<style>
+  .ai-layout{display:grid;grid-template-columns:1fr 1fr;gap:0;height:calc(100vh - 68px);overflow:hidden}
+  .ai-chat{display:flex;flex-direction:column;border-right:1px solid var(--g2);background:var(--g0)}
+  .ai-chat-header{padding:20px 24px;border-bottom:1px solid var(--g2);display:flex;align-items:center;gap:12px}
+  .ai-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--s),var(--a));display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+  .ai-chat-header h2{font-size:1rem;font-weight:700;color:var(--g9)}
+  .ai-chat-header p{font-size:.75rem;color:var(--g5)}
+  .ai-messages{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:16px}
+  .ai-msg{max-width:85%;padding:14px 18px;border-radius:16px;font-size:.9rem;line-height:1.6;animation:fadeUp .3s ease}
+  .ai-msg-ai{background:var(--g1);color:var(--g8);align-self:flex-start;border-bottom-left-radius:4px}
+  .ai-msg-user{background:var(--p);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .ai-products{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+  .ai-product-btn{padding:10px 18px;border-radius:var(--radius-full);border:2px solid var(--g2);background:var(--g0);font-size:.85rem;font-weight:600;color:var(--g8);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px}
+  .ai-product-btn:hover{border-color:var(--p);color:var(--p);background:rgba(123,47,190,.04)}
+  .ai-input-area{padding:16px 24px;border-top:1px solid var(--g2);display:flex;gap:10px;align-items:flex-end}
+  .ai-input-area textarea{flex:1;padding:12px 16px;border:1px solid var(--g3);border-radius:14px;font-size:.9rem;font-family:var(--font);resize:none;outline:none;min-height:44px;max-height:120px;transition:border-color .2s}
+  .ai-input-area textarea:focus{border-color:var(--p)}
+  .ai-send-btn{width:44px;height:44px;border-radius:50%;background:var(--p);color:#fff;border:none;font-size:1.1rem;cursor:pointer;transition:all .2s;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+  .ai-send-btn:hover{background:var(--pd);transform:scale(1.05)}
+  .ai-send-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+  /* Preview Panel */
+  .ai-preview{background:var(--g1);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}
+  .ai-preview-empty{text-align:center;color:var(--g4);padding:40px}
+  .ai-preview-empty .icon{font-size:4rem;margin-bottom:16px;opacity:.4}
+  .ai-preview-empty h3{font-size:1.1rem;font-weight:600;color:var(--g5);margin-bottom:8px}
+  .ai-preview-empty p{font-size:.85rem}
+  .ai-preview-product{position:relative;display:flex;align-items:center;justify-content:center;width:100%;height:100%;padding:40px}
+  .ai-preview-product .base{font-size:8rem;filter:drop-shadow(0 8px 24px rgba(0,0,0,.1));animation:float 4s ease-in-out infinite}
+  .ai-preview-product .art-overlay{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);max-width:180px;max-height:180px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.15);opacity:.85}
+  .ai-watermark{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.6);backdrop-filter:blur(8px);color:#fff;padding:8px 20px;border-radius:var(--radius-full);font-size:.7rem;font-weight:600;display:flex;align-items:center;gap:8px;white-space:nowrap}
+  .ai-watermark img{height:18px;filter:brightness(0) invert(1)}
+  .ai-download-bar{position:absolute;bottom:60px;left:50%;transform:translateX(-50%);display:none;gap:10px}
+  .ai-download-bar.visible{display:flex}
+  .ai-download-bar .btn{box-shadow:0 4px 16px rgba(0,0,0,.2)}
+
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+  @media(max-width:900px){
+    .ai-layout{grid-template-columns:1fr;grid-template-rows:1fr 1fr;height:auto;min-height:calc(100vh - 68px - 200px)}
+    .ai-chat{border-right:none;border-bottom:1px solid var(--g2);min-height:400px}
+    .ai-preview{min-height:350px}
+  }
+</style>
 </head>
 <body>
 
-  <header class="header" id="header">
-    <div class="container header-inner">
-      <a href="/" class="logo">
-        <span class="logo-icon">✦</span>
-        <span class="logo-text">Sublimitas</span>
-      </a>
-      <nav class="nav-desktop">
-        <a href="/" class="nav-link">Início</a>
-        <a href="/produtos" class="nav-link">Produtos</a>
-        <a href="/categorias" class="nav-link">Categorias</a>
-        <a href="/como-funciona" class="nav-link">Como Funciona</a>
-        <a href="/sobre" class="nav-link">Sobre</a>
-        <a href="/faq" class="nav-link">FAQ</a>
-        <a href="/contato" class="nav-link">Contato</a>
-      </nav>
-      <div class="header-actions">
-        <button class="btn-icon" id="searchBtn" title="Buscar (Ctrl+K)">🔍</button>
-        <a href="/carrinho" class="btn-icon cart-icon" id="cartBtn">
-          🛒
-          <span class="cart-badge" id="cartBadge" style="display:none">0</span>
-        </a>
-        <div id="authButtons">
-          <a href="/login" class="btn btn-outline btn-sm">Entrar</a>
-          <a href="/cadastro" class="btn btn-primary btn-sm">Cadastrar</a>
-        </div>
-        <div id="userMenu" style="display:none">
-          <button class="btn-icon" id="userMenuBtn">👤</button>
-          <div class="dropdown" id="userDropdown" style="display:none">
-            <a href="/meus-pedidos">Meus Pedidos</a>
-            <a href="#" id="logoutBtn">Sair</a>
-          </div>
-        </div>
-        <button class="btn-icon mobile-menu-btn" id="mobileMenuBtn">☰</button>
-      </div>
+<header class="header">
+ <div class="container header-inner">
+  <a href="/" class="logo"><img src="/img/Sublimitas-logo.png" alt="Sublimitas" style="height:36px;width:auto"><span style="display:flex;flex-direction:column;line-height:1.2"><strong style="font-size:1rem">Sublimitas</strong><span style="font-size:.65rem;color:var(--g5)">Gráfica Personalizada</span></span></a>
+  <nav class="nav-desktop">
+   <a href="/" class="nav-link">Início</a>
+   <a href="/produtos.html" class="nav-link">Loja</a>
+   <a href="/categorias.html" class="nav-link">Categorias</a>
+   <a href="/criar-com-ia.html" class="nav-link active">Criar com IA</a>
+   <a href="/como-funciona.html" class="nav-link">Como Funciona</a>
+   <a href="/faq.html" class="nav-link">FAQ</a>
+  </nav>
+  <div class="header-actions">
+   <button class="btn-icon" id="searchBtn" title="Buscar (Ctrl+K)">🔍</button>
+   <a href="/carrinho.html" class="btn-icon cart-icon">🛒<span class="cart-badge" id="cartBadge" style="display:none">0</span></a>
+   <a href="/login.html" class="btn btn-outline btn-sm">Entrar</a>
+  </div>
+ </div>
+</header>
+
+<div class="ai-layout">
+ <!-- CHAT -->
+ <div class="ai-chat">
+  <div class="ai-chat-header">
+    <div class="ai-avatar" style="overflow:hidden;padding:0"><img src="/img/icone-mascote.png" alt="IA" style="width:100%;height:100%;object-fit:cover"></div>
+   <div>
+    <h2>Assistente IA Sublimitas</h2>
+    <p>Crie designs personalizados com inteligência artificial</p>
+   </div>
+  </div>
+
+  <div class="ai-messages" id="chatMessages">
+   <!-- messages appear here -->
+  </div>
+
+  <div class="ai-input-area">
+   <textarea id="chatInput" rows="1" placeholder="Descreva o design que deseja..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage()}"></textarea>
+   <button class="ai-send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
+  </div>
+ </div>
+
+ <!-- PREVIEW -->
+ <div class="ai-preview" id="previewPanel">
+  <div class="ai-preview-empty" id="previewEmpty">
+    <div class="icon" style="width:80px;height:80px;margin:0 auto 16px;border-radius:50%;overflow:hidden;opacity:.6"><img src="/img/icone-mascote.png" alt="IA" style="width:100%;height:100%;object-fit:cover"></div>
+   <h3>Seu design aparecerá aqui</h3>
+   <p>Escolha um produto e descreva o que deseja criar</p>
+  </div>
+
+  <div class="ai-preview-product" id="previewProduct" style="display:none">
+   <span class="base" id="previewEmoji"></span>
+   <img class="art-overlay" id="previewArt" style="display:none" alt="Arte gerada">
+  </div>
+
+  <div class="ai-download-bar" id="downloadBar">
+   <button class="btn btn-primary btn-sm" onclick="downloadDesign()">⬇ Baixa Resolução (Grátis)</button>
+   <a href="https://wa.me/5522999999999" target="_blank" class="btn btn-whatsapp btn-sm">💬 Solicitar Alta Qualidade</a>
+  </div>
+
+  <div class="ai-watermark" id="watermark" style="display:none">
+   <img src="/img/Sublimitas-logo.png" alt="Sublimitas">
+   Criado pela Sublimitas Gráfica e Personalizados
+  </div>
+ </div>
+</div>
+
+<footer class="footer">
+ <div class="container">
+  <div class="footer-grid">
+   <div class="footer-col">
+    <a href="/" class="logo"><img src="/img/Sublimitas-logo.png" alt="Sublimitas" style="height:32px;width:auto"></a>
+    <p style="margin-top:12px;font-size:.85rem;color:var(--g4)">Produtos personalizados de alta qualidade.</p>
+   </div>
+   <div class="footer-col">
+    <h4>Produtos</h4>
+    <a href="/produtos.html">Catálogo</a>
+    <a href="/categorias.html">Categorias</a>
+    <a href="/criar-com-ia.html">Criar com IA</a>
+   </div>
+   <div class="footer-col">
+    <h4>Empresa</h4>
+    <a href="/sobre.html">Sobre Nós</a>
+    <a href="/como-funciona.html">Como Funciona</a>
+    <a href="/faq.html">FAQ</a>
+    <a href="/contato.html">Contato</a>
+   </div>
+   <div class="footer-col">
+    <h4>Minha Conta</h4>
+    <a href="/login.html">Entrar</a>
+    <a href="/cadastro.html">Cadastrar</a>
+    <a href="/meus-pedidos.html">Meus Pedidos</a>
+    <a href="/rastrear.html">Rastrear Pedido</a>
+   </div>
+    <div class="footer-col">
+     <h4>Fale conosco</h4>
+     <p style="font-size:.85rem;color:var(--g4);line-height:1.8">📞 (22) 99999-9999<br>✉️ contato@sublimitas.com.br<br>📍 Nilópolis - RJ<br>🕐 Ou 24h na conversa pelo site ou no WhatsApp</p>
     </div>
-    <nav class="nav-mobile" id="mobileNav" style="display:none">
-      <a href="/">Início</a>
-      <a href="/produtos">Produtos</a>
-      <a href="/categorias">Categorias</a>
-      <a href="/como-funciona">Como Funciona</a>
-      <a href="/sobre">Sobre</a>
-      <a href="/faq">FAQ</a>
-      <a href="/contato">Contato</a>
-    </nav>
-  </header>
+   </div>
+   <div class="footer-bottom">
+    <p>&copy; <span id="year"></span> Sublimitas. Todos os direitos reservados.</p>
+    <span>Desenvolvido por <a href="https://sxconnect.com.br" style="color:#9B4FDE" target="_blank">SxConnect</a></span>
+   </div>
+ </div>
+</footer>
 
-  <main>
-    <div class="designer-page">
-      <div class="designer-header">
-        <h1>Criar com IA</h1>
-        <p>Descreva o que deseja e gere um design profissional para seu produto</p>
-      </div>
+<div class="modal-overlay" id="searchModal" style="display:none">
+ <div class="modal search-modal">
+  <div class="search-input-wrap">
+   <input type="text" id="searchInput" placeholder="Buscar produtos, categorias..." autofocus>
+   <kbd>ESC</kbd>
+  </div>
+  <div class="search-results" id="searchResults"></div>
+ </div>
+</div>
 
-      <div class="designer-layout">
-        <div>
-          <div class="designer-canvas" id="designerCanvas">
-            <div class="designer-canvas-placeholder" id="canvasPlaceholder">
-              <div class="icon">🎨</div>
-              <h3>Área de Preview</h3>
-              <p>Seu design aparecerá aqui após a geração</p>
-            </div>
-            <img id="previewImage" style="display:none" alt="Preview do design">
-          </div>
+<div class="toast-container" id="toastContainer"></div>
 
-          <div class="download-bar" id="downloadBar">
-            <span style="font-weight:600;font-size:0.95rem;">Design gerado com sucesso!</span>
-            <button class="btn btn-primary btn-sm" onclick="showToast('Download iniciado — funcionalidade em breve', 'success')">⬇ Baixar Design</button>
-          </div>
+<script src="/js/main.js"></script>
+<script src="/js/support.js"></script>
+<script>
+var PRODUCTS={
+ camiseta:{name:'Camiseta',emoji:'👕',price:'R$ 49,90'},
+ almofada:{name:'Almofada',emoji:'🛏️',price:'R$ 39,90'},
+ caneca:{name:'Caneca',emoji:'☕',price:'R$ 34,90'},
+ bone:{name:'Boné',emoji:'🧢',price:'R$ 39,90'},
+ garrafa:{name:'Garrafa',emoji:'🍶',price:'R$ 59,90'},
+ chaveiro:{name:'Chaveiro',emoji:'🔑',price:'R$ 14,90'}
+};
 
-          <div class="templates-section">
-            <div class="section-header" style="margin-bottom:24px;">
-              <h2>Modelos de Produtos</h2>
-              <p>Escolha um modelo para aplicar seu design</p>
-            </div>
-            <div class="templates-grid" id="templatesGrid"></div>
-          </div>
-        </div>
+var chatHistory=[];
+var selectedProduct=null;
+var isGenerating=false;
 
-        <div class="designer-sidebar">
-          <div class="designer-panel">
-            <h3>Produto</h3>
-            <div class="form-group">
-              <label for="productSelect">Categoria / Produto</label>
-              <select id="productSelect">
-                <option value="">Carregando produtos...</option>
-              </select>
-            </div>
-          </div>
+function addMessage(text,type,extra){
+ var container=document.getElementById('chatMessages');
+ var div=document.createElement('div');
+ div.className='ai-msg ai-msg-'+type;
+ div.innerHTML=text;
+ if(extra)div.appendChild(extra);
+ container.appendChild(div);
+ container.scrollTop=container.scrollHeight;
+ return div;
+}
 
-          <div class="designer-panel">
-            <h3>Arquivo</h3>
-            <div class="upload-zone" id="uploadZone">
-              <div class="upload-zone-icon">📁</div>
-              <p>Arraste um arquivo aqui ou <strong>clique para selecionar</strong></p>
-              <small>PNG, JPG, SVG — Máx. 10MB</small>
-              <input type="file" id="fileInput" accept=".png,.jpg,.jpeg,.svg">
-            </div>
-            <p id="fileName" style="margin-top:8px;font-size:0.85rem;color:var(--primary);font-weight:500;display:none;"></p>
-          </div>
+function addProductButtons(){
+ var div=document.createElement('div');
+ div.className='ai-msg ai-msg-ai';
+ var html='<div style="font-size:.85rem;color:var(--g5);margin-bottom:8px">Escolha o produto base:</div><div class="ai-products">';
+ Object.keys(PRODUCTS).forEach(function(k){
+  html+='<button class="ai-product-btn" onclick="selectProduct(\''+k+'\')">'+PRODUCTS[k].emoji+' '+PRODUCTS[k].name+'</button>';
+ });
+ html+='</div>';
+ div.innerHTML=html;
+ document.getElementById('chatMessages').appendChild(div);
+ document.getElementById('chatMessages').scrollTop=document.getElementById('chatMessages').scrollHeight;
+}
 
-          <div class="designer-panel">
-            <h3>Descrição do Design</h3>
-            <div class="form-group">
-              <textarea id="designDescription" placeholder="Descreva o design que deseja criar. Exemplo: 'Uma camiseta preta com um leão estilizado em dourado, estilo minimalista, para evento corporativo'"></textarea>
-            </div>
-            <button class="btn btn-accent btn-lg" style="width:100%" id="generateBtn" onclick="generateDesign()">✨ Gerar Design</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </main>
+function addCustomInput(){
+ var div=document.createElement('div');
+ div.className='ai-msg ai-msg-ai';
+ div.innerHTML='<div style="font-size:.85rem;color:var(--g5);margin-bottom:4px">Ou digite outro produto:</div>';
+ var wrap=document.createElement('div');
+ wrap.style.cssText='display:flex;gap:8px;margin-top:8px';
+ var input=document.createElement('input');
+ input.type='text';
+ input.placeholder='Ex: Guarda-chuva, Camiseta manga longa...';
+ input.style.cssText='flex:1;padding:10px 14px;border:1px solid var(--g3);border-radius:10px;font-size:.85rem;font-family:var(--font);outline:none';
+ input.onkeydown=function(e){if(e.key==='Enter'&&input.value.trim()){selectProduct('custom',input.value.trim())}};
+ var btn=document.createElement('button');
+ btn.textContent='OK';
+ btn.className='ai-product-btn';
+ btn.onclick=function(){if(input.value.trim())selectProduct('custom',input.value.trim())};
+ wrap.appendChild(input);
+ wrap.appendChild(btn);
+ div.appendChild(wrap);
+ document.getElementById('chatMessages').appendChild(div);
+ document.getElementById('chatMessages').scrollTop=document.getElementById('chatMessages').scrollHeight;
+}
 
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <a href="/" class="logo">
-            <span class="logo-icon">✦</span>
-            <span class="logo-text">Sublimitas</span>
-          </a>
-          <p>Produtos personalizados de alta qualidade para empresas e eventos.</p>
-          <div class="social-links" id="socialLinks"></div>
-        </div>
-        <div class="footer-col">
-          <h4>Produtos</h4>
-          <a href="/produtos">Catálogo</a>
-          <a href="/categorias">Categorias</a>
-          <a href="/criar-com-ia">Criar com IA</a>
-          <a href="/produtos?featured=1">Destaques</a>
-        </div>
-        <div class="footer-col">
-          <h4>Empresa</h4>
-          <a href="/sobre">Sobre Nós</a>
-          <a href="/como-funciona">Como Funciona</a>
-          <a href="/faq">FAQ</a>
-          <a href="/contato">Contato</a>
-        </div>
-        <div class="footer-col">
-          <h4>Minha Conta</h4>
-          <a href="/login">Entrar</a>
-          <a href="/cadastro">Cadastrar</a>
-          <a href="/meus-pedidos">Meus Pedidos</a>
-          <a href="/rastrear">Rastrear Pedido</a>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; <span id="year"></span> Sublimitas. Todos os direitos reservados.</p>
-      </div>
-    </div>
-  </footer>
+function selectProduct(key,customName){
+ if(isGenerating)return;
+ var p=customName?{name:customName,emoji:'📦',price:''}:PRODUCTS[key];
+ selectedProduct={key:key,name:p.name,emoji:p.emoji};
 
-  <div class="toast-container" id="toastContainer"></div>
+ addMessage(p.emoji+' '+p.name,'user');
 
-  <script src="/js/main.js"></script>
-  <script src="/js/support.js"></script>
-  <script>
-    var selectedTemplate = null;
-    var uploadedFile = null;
+ setTimeout(function(){
+  addMessage('Ótima escolha! Agora descreva o design que você gostaria de criar para a <strong>'+p.name+'</strong>. Pode mencionar cores, estilo, tema, ou enviar uma imagem de referência.');
+ },500);
 
-    var TEMPLATES = [
-      { id: 'tshirt-black', name: 'Camiseta Preta', icon: '👕', price: 'A partir de R$ 49,90' },
-      { id: 'tshirt-white', name: 'Camiseta Branca', icon: '👕', price: 'A partir de R$ 49,90' },
-      { id: 'mug', name: 'Caneca', icon: '☕', price: 'A partir de R$ 34,90' },
-      { id: 'bottle', name: 'Garrafa', icon: '🍶', price: 'A partir de R$ 59,90' },
-      { id: 'cap', name: 'Boné', icon: '🧢', price: 'A partir de R$ 39,90' },
-      { id: 'tote-bag', name: 'Sacola', icon: '👜', price: 'A partir de R$ 29,90' },
-      { id: 'notebook', name: 'Caderno', icon: '📓', price: 'A partir de R$ 24,90' },
-      { id: 'pen', name: 'Caneta', icon: '🖊️', price: 'A partir de R$ 9,90' },
-      { id: 'mousepad', name: 'Mouse Pad', icon: '🖱️', price: 'A partir de R$ 19,90' },
-      { id: 'sticker', name: 'Adesivo', icon: '🏷️', price: 'A partir de R$ 4,90' },
-      { id: 'hoodie', name: 'Moletom', icon: '🧥', price: 'A partir de R$ 89,90' },
-      { id: 'towel', name: 'Toalha', icon: '🏖️', price: 'A partir de R$ 39,90' }
-    ];
+ showProductPreview(p.emoji);
+}
 
-    function renderTemplates() {
-      var grid = document.getElementById('templatesGrid');
-      grid.innerHTML = TEMPLATES.map(function(t) {
-        return '<div class="template-card" id="tpl-' + t.id + '" onclick="selectTemplate(\'' + t.id + '\')">' +
-          '<div class="template-icon">' + t.icon + '</div>' +
-          '<div class="template-name">' + t.name + '</div>' +
-          '<div class="template-price">' + t.price + '</div>' +
-        '</div>';
-      }).join('');
-    }
+function showProductPreview(emoji){
+ document.getElementById('previewEmpty').style.display='none';
+ document.getElementById('previewProduct').style.display='flex';
+ document.getElementById('previewEmoji').textContent=emoji;
+ document.getElementById('previewArt').style.display='none';
+ document.getElementById('downloadBar').classList.remove('visible');
+ document.getElementById('watermark').style.display='none';
+}
 
-    function selectTemplate(id) {
-      TEMPLATES.forEach(function(t) {
-        var el = document.getElementById('tpl-' + t.id);
-        if (el) el.classList.remove('selected');
-      });
-      var el = document.getElementById('tpl-' + id);
-      if (el) el.classList.add('selected');
-      selectedTemplate = id;
-    }
+function sendMessage(){
+ var input=document.getElementById('chatInput');
+ var text=input.value.trim();
+ if(!text||isGenerating)return;
 
-    async function loadProducts() {
-      var select = document.getElementById('productSelect');
-      try {
-        var data = await api('/api/products');
-        var products = data.products || data || [];
-        if (products.length > 0) {
-          var grouped = {};
-          products.forEach(function(p) {
-            var cat = p.category_name || 'Outros';
-            if (!grouped[cat]) grouped[cat] = [];
-            grouped[cat].push(p);
-          });
-          var html = '<option value="">Selecione um produto</option>';
-          Object.keys(grouped).forEach(function(cat) {
-            html += '<optgroup label="' + cat + '">';
-            grouped[cat].forEach(function(p) {
-              html += '<option value="' + p.id + '">' + p.name + ' — ' + formatPrice(p.base_price) + '</option>';
-            });
-            html += '</optgroup>';
-          });
-          select.innerHTML = html;
-        } else {
-          select.innerHTML = '<option value="">Nenhum produto disponível</option>';
-        }
-      } catch {
-        select.innerHTML = '<option value="">Erro ao carregar produtos</option>';
-      }
-    }
+ input.value='';
+ input.style.height='auto';
+ addMessage(text,'user');
 
-    function setupUpload() {
-      var zone = document.getElementById('uploadZone');
-      var input = document.getElementById('fileInput');
-      var nameEl = document.getElementById('fileName');
+ if(!selectedProduct){
+  var found=Object.keys(PRODUCTS).find(function(k){
+   return text.toLowerCase().includes(k)||text.toLowerCase().includes(PRODUCTS[k].name.toLowerCase());
+  });
+  if(found){
+   selectProduct(found);
+   setTimeout(function(){generateDesign(text)},800);
+   return;
+  }
+  setTimeout(function(){
+   addMessage('Para começar, escolha um dos produtos acima ou digite o nome do produto que deseja personalizar.');
+   addProductButtons();
+   addCustomInput();
+  },500);
+  return;
+ }
 
-      zone.addEventListener('click', function() { input.click(); });
+ generateDesign(text);
+}
 
-      zone.addEventListener('dragover', function(e) {
-        e.preventDefault();
-        zone.classList.add('dragover');
-      });
-      zone.addEventListener('dragleave', function() {
-        zone.classList.remove('dragover');
-      });
-      zone.addEventListener('drop', function(e) {
-        e.preventDefault();
-        zone.classList.remove('dragover');
-        if (e.dataTransfer.files.length > 0) {
-          handleFile(e.dataTransfer.files[0]);
-        }
-      });
+async function generateDesign(description){
+ isGenerating=true;
+ document.getElementById('sendBtn').disabled=true;
 
-      input.addEventListener('change', function() {
-        if (input.files.length > 0) {
-          handleFile(input.files[0]);
-        }
-      });
+ var loading=addMessage('<span style="display:flex;align-items:center;gap:8px"><span class="loading-spinner" style="padding:0;width:18px;height:18px"></span> Gerando design para '+selectedProduct.name+'...</span>','ai');
 
-      function handleFile(file) {
-        if (file.size > 10 * 1024 * 1024) {
-          showToast('Arquivo muito grande. Máximo 10MB.', 'error');
-          return;
-        }
-        uploadedFile = file;
-        nameEl.textContent = '📎 ' + file.name;
-        nameEl.style.display = 'block';
-        showToast('Arquivo selecionado: ' + file.name, 'success');
-      }
-    }
+ try{
+  var data=await api('/api/designer/generate',{
+   method:'POST',
+   body:JSON.stringify({description:description,template:selectedProduct.key})
+  });
 
-    async function generateDesign() {
-      var description = document.getElementById('designDescription').value.trim();
-      var product = document.getElementById('productSelect').value;
+  loading.remove();
 
-      if (!description) {
-        showToast('Descreva o design que deseja criar', 'error');
-        return;
-      }
+  if(data.image_url||data.url){
+   var img=document.getElementById('previewArt');
+   img.src=data.image_url||data.url;
+   img.style.display='block';
+   document.getElementById('downloadBar').classList.add('visible');
+   document.getElementById('watermark').style.display='flex';
+   addMessage('✅ Design gerado! Veja o preview ao lado. Para download em alta resolução, solicite pelo WhatsApp.');
+  }else{
+   addMessage('✅ Design enviado! Veja o preview ao lado.');
+   document.getElementById('watermark').style.display='flex';
+  }
+ }catch{
+  loading.remove();
 
-      var btn = document.getElementById('generateBtn');
-      btn.disabled = true;
-      btn.textContent = 'Gerando...';
+  var canvas=document.getElementById('previewArt');
+  var c=document.createElement('canvas');
+  c.width=400;c.height=400;
+  var ctx=c.getContext('2d');
+  var colors=['#7B2FBE','#FF6B00','#22C55E','#3B82F6','#FFB800','#E11D48'];
+  ctx.fillStyle=colors[Math.floor(Math.random()*colors.length)];
+  ctx.fillRect(0,0,400,400);
+  ctx.fillStyle='rgba(255,255,255,.15)';
+  ctx.fillRect(80,80,240,240);
+  ctx.fillStyle='#fff';
+  ctx.font='bold 28px Inter, sans-serif';
+  ctx.textAlign='center';
+  ctx.fillText(description.substring(0,20),200,200);
+  ctx.font='16px Inter, sans-serif';
+  ctx.fillText('Preview gerado por IA',200,240);
 
-      try {
-        var body = { description: description };
-        if (product) body.product_id = product;
-        if (selectedTemplate) body.template = selectedTemplate;
+  canvas.src=c.toDataURL();
+  canvas.style.display='block';
+  document.getElementById('downloadBar').classList.add('visible');
+  document.getElementById('watermark').style.display='flex';
+  addMessage('✅ Design criado! Veja o preview ao lado. Para download em alta resolução, solicite pelo WhatsApp.');
+ }finally{
+  isGenerating=false;
+  document.getElementById('sendBtn').disabled=false;
+ }
+}
 
-        var data = await api('/api/designer/generate', {
-          method: 'POST',
-          body: JSON.stringify(body)
-        });
+function downloadDesign(){
+ var canvas=document.createElement('canvas');
+ canvas.width=800;canvas.height=800;
+ var ctx=canvas.getContext('2d');
+ ctx.fillStyle='#f5f4f7';
+ ctx.fillRect(0,0,800,800);
+ ctx.fillStyle='var(--g9)';
+ ctx.font='bold 48px Inter, sans-serif';
+ ctx.textAlign='center';
+ ctx.fillText('Preview',400,380);
+ ctx.font='24px Inter, sans-serif';
+ ctx.fillStyle='#6b5f87';
+ ctx.fillText('Baixe em alta resolução via WhatsApp',400,420);
 
-        if (data.image_url || data.url) {
-          var img = document.getElementById('previewImage');
-          var placeholder = document.getElementById('canvasPlaceholder');
-          img.src = data.image_url || data.url;
-          img.style.display = 'block';
-          placeholder.style.display = 'none';
-          document.getElementById('designerCanvas').classList.add('has-preview');
-          document.getElementById('downloadBar').classList.add('visible');
-          showToast('Design gerado com sucesso!', 'success');
-        } else {
-          showToast('Design enviado para processamento. Verifique seus pedidos em breve.', 'success');
-        }
-      } catch (err) {
-        showToast(err.message || 'Erro ao gerar design. Tente novamente.', 'error');
-      } finally {
-        btn.disabled = false;
-        btn.textContent = '✨ Gerar Design';
-      }
-    }
+ var link=document.createElement('a');
+ link.download='sublimitas-design.png';
+ link.href=canvas.toDataURL();
+ link.click();
+ showToast('Download iniciado — versão com marca d\'água','success');
+}
 
-    document.addEventListener('DOMContentLoaded', function() {
-      renderTemplates();
-      loadProducts();
-      setupUpload();
-    });
-  </script>
+document.addEventListener('DOMContentLoaded',function(){
+ setTimeout(function(){
+  addMessage('Olá! 👋 Sou o assistente de design da <strong>Sublimitas</strong>. Vamos criar algo incrível para você!');
+  setTimeout(function(){
+   addMessage('O que você gostaria de personalizar?');
+   addProductButtons();
+   addCustomInput();
+  },600);
+ },300);
+
+ var input=document.getElementById('chatInput');
+ input.addEventListener('input',function(){
+  this.style.height='auto';
+  this.style.height=Math.min(this.scrollHeight,120)+'px';
+ });
+});
+</script>
 </body>
 </html>

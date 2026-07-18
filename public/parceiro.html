@@ -1,214 +1,311 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Parceiro — Sublimitas</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css">
-  <style>
-    .partner-page { min-height: 100vh; }
-    .partner-banner { position: relative; height: 320px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-    .partner-banner-bg { position: absolute; inset: 0; background-size: cover; background-position: center; }
-    .partner-banner-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,0,0,0.6), rgba(0,0,0,0.3)); }
-    .partner-banner-content { position: relative; z-index: 1; text-align: center; color: var(--white); padding: 20px; }
-    .partner-logo-wrap { width: 120px; height: 120px; border-radius: 50%; background: var(--white); margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.3); border: 4px solid rgba(255,255,255,0.3); }
-    .partner-logo-wrap img { width: 100%; height: 100%; object-fit: cover; }
-    .partner-logo-wrap span { font-size: 3rem; }
-    .partner-name { font-size: 2.5rem; font-weight: 800; margin-bottom: 8px; text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
-    .partner-desc { font-size: 1.1rem; opacity: 0.9; max-width: 600px; margin: 0 auto 24px; }
-    .partner-contact-btn { display: inline-flex; align-items: center; gap: 10px; background: var(--whatsapp); color: var(--white); padding: 14px 32px; border-radius: var(--radius-full); font-weight: 700; font-size: 1.05rem; transition: all var(--transition); text-decoration: none; }
-    .partner-contact-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,0.4); }
-    .partner-products { padding: 60px 0; }
-    .partner-products .section-header { margin-bottom: 40px; }
-    .partner-not-found { text-align: center; padding: 120px 20px; }
-    .partner-not-found h2 { font-size: 2rem; margin-bottom: 12px; }
-    .partner-not-found p { color: var(--gray-500); margin-bottom: 24px; }
-    .partner-footer { background: var(--gray-900); color: var(--gray-400); padding: 40px 0; text-align: center; }
-    .partner-footer .logo { justify-content: center; margin-bottom: 12px; }
-    .partner-footer p { font-size: 0.9rem; }
-    @media (max-width: 768px) {
-      .partner-banner { height: 260px; }
-      .partner-name { font-size: 1.75rem; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loja Parceira — Sublimitas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<style>
+  :root{--pp:#7B2FBE;--ppd:#5A1F8C;--pa:#FF6B00;--pad:#CC5500}
+  .partner-page{min-height:100vh}
+  .partner-banner{position:relative;height:340px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:linear-gradient(135deg,var(--pp),var(--ppd))}
+  .partner-banner-overlay{position:absolute;inset:0;background:rgba(0,0,0,.25)}
+  .partner-banner-content{position:relative;z-index:1;text-align:center;color:#fff;padding:20px}
+  .partner-logo-wrap{width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.15);backdrop-filter:blur(8px);margin:0 auto 20px;display:flex;align-items:center;justify-content:center;overflow:hidden;border:3px solid rgba(255,255,255,.3);font-size:2.8rem}
+  .partner-logo-wrap img{width:100%;height:100%;object-fit:cover}
+  .partner-store-name{font-size:2.2rem;font-weight:800;margin-bottom:6px;text-shadow:0 2px 8px rgba(0,0,0,.3)}
+  .partner-store-desc{font-size:1rem;opacity:.85;max-width:500px;margin:0 auto 24px}
+  .partner-wa-btn{display:inline-flex;align-items:center;gap:10px;background:var(--whatsapp);color:#fff;padding:14px 32px;border-radius:var(--radius-full);font-weight:700;font-size:1rem;transition:all var(--transition);text-decoration:none}
+  .partner-wa-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(37,211,102,.4)}
+  .partner-products-section{padding:60px 0}
+  .partner-products-section h2{font-size:1.75rem;font-weight:800;margin-bottom:8px}
+  .partner-products-section .sub{color:var(--g5);margin-bottom:32px}
+  .partner-product-card{background:var(--g0);border:1px solid var(--g2);border-radius:var(--radius);overflow:hidden;transition:all var(--transition);display:flex;flex-direction:column}
+  .partner-product-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:var(--pp)}
+  .partner-product-img{height:220px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative;overflow:hidden}
+  .partner-product-img img{width:100%;height:100%;object-fit:cover}
+  .partner-product-info{padding:18px;flex:1}
+  .partner-product-info .cat{font-size:.72rem;font-weight:600;color:var(--pp);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+  .partner-product-info .name{font-weight:600;font-size:.95rem;margin-bottom:6px;line-height:1.4}
+  .partner-product-info .stock{font-size:.72rem;color:var(--g5);margin-bottom:8px}
+  .partner-product-info .price{font-size:1.2rem;font-weight:800;color:var(--pp)}
+  .partner-product-info .installment{font-size:.72rem;color:var(--g4);margin-top:2px}
+  .partner-product-info .base-note{font-size:.68rem;color:var(--g4);margin-top:4px;font-style:italic}
+  .partner-product-actions{padding:0 18px 18px;display:flex;gap:8px}
+  .partner-product-actions .btn{flex:1}
+  .partner-footer{background:var(--g9);color:var(--g4);padding:40px 0;text-align:center}
+  .partner-footer p{font-size:.85rem}
+  .partner-footer a{color:var(--pp)}
+  .partner-not-found{text-align:center;padding:120px 20px}
+  .partner-not-found h2{font-size:2rem;margin-bottom:12px}
+  .partner-not-found p{color:var(--g5);margin-bottom:24px}
+  .embed-bar{background:var(--g1);border:1px solid var(--g2);border-radius:var(--radius);padding:20px;margin-top:40px}
+  .embed-bar h3{font-size:1rem;font-weight:700;margin-bottom:8px}
+  .embed-bar code{display:block;background:var(--g9);color:var(--g0);padding:12px 16px;border-radius:8px;font-size:.8rem;word-break:break-all;margin-top:8px}
+  @media(max-width:768px){.partner-banner{height:260px}.partner-store-name{font-size:1.6rem}}
+</style>
 </head>
 <body>
 
-  <header class="header" id="header">
-    <div class="container header-inner">
-      <a href="/" class="logo">
-        <span class="logo-icon">✦</span>
-        <span class="logo-text">Sublimitas</span>
-      </a>
-      <div class="header-actions">
-        <a href="/carrinho" class="btn-icon cart-icon">🛒<span class="cart-badge" id="cartBadge" style="display:none">0</span></a>
-        <a href="/login" class="btn btn-outline btn-sm">Entrar</a>
-      </div>
+<header class="header">
+ <div class="container header-inner">
+   <a href="/" class="logo"><img src="/img/Sublimitas-logo.png" alt="Sublimitas" style="height:36px;width:auto"><span style="display:flex;flex-direction:column;line-height:1.2"><strong style="font-size:1rem">Sublimitas</strong><span style="font-size:.65rem;color:var(--g5)">Gráfica Personalizada</span></span></a>
+  <div class="header-actions">
+   <a href="/carrinho.html" class="btn-icon cart-icon">🛒<span class="cart-badge" id="cartBadge" style="display:none">0</span></a>
+   <a href="/login.html" class="btn btn-outline btn-sm">Entrar</a>
+  </div>
+ </div>
+</header>
+
+<main class="partner-page">
+ <div id="partnerNotFound" class="partner-not-found" style="display:none">
+  <h2>Parceiro não encontrado</h2>
+  <p>Este parceiro não está disponível no momento.</p>
+  <a href="/" class="btn btn-primary">Voltar ao Início</a>
+ </div>
+
+ <div id="partnerContent" style="display:none">
+  <section class="partner-banner" id="partnerBanner">
+   <div class="partner-banner-overlay"></div>
+   <div class="partner-banner-content">
+    <div class="partner-logo-wrap" id="partnerLogo"></div>
+    <h1 class="partner-store-name" id="partnerName"></h1>
+    <p class="partner-store-desc" id="partnerDesc"></p>
+     <a href="#" class="partner-wa-btn" id="partnerWhatsapp" target="_blank">💬 Fale Conosco no WhatsApp</a>
+     <div id="partnerSocialLinks" style="margin-top:16px;display:flex;gap:10px;justify-content:center"></div>
     </div>
-  </header>
+  </section>
 
-  <main class="partner-page">
-    <div id="partnerNotFound" class="partner-not-found" style="display:none">
-      <h2>Parceiro não encontrado</h2>
-      <p>Este parceiro não está disponível no momento.</p>
-      <a href="/" class="btn btn-primary">Voltar ao Início</a>
+  <section class="partner-products-section">
+   <div class="container">
+    <h2>Nossos Produtos</h2>
+    <p class="sub">Produtos personalizados com a qualidade Sublimitas</p>
+    <div class="products-grid" id="partnerProductsGrid"><div class="loading-spinner"></div></div>
+
+    <div class="embed-bar" id="embedBar" style="display:none">
+     <h3>🔗 Incorporar esta loja no seu site</h3>
+     <p style="font-size:.85rem;color:var(--g5);margin-bottom:8px">Copie o código abaixo e cole no HTML do seu site:</p>
+     <code id="embedCode"></code>
     </div>
+   </div>
+  </section>
+ </div>
+</main>
 
-    <div id="partnerContent" style="display:none">
-      <section class="partner-banner" id="partnerBanner">
-        <div class="partner-banner-bg" id="partnerBannerBg"></div>
-        <div class="partner-banner-overlay"></div>
-        <div class="partner-banner-content">
-          <div class="partner-logo-wrap" id="partnerLogo"></div>
-          <h1 class="partner-name" id="partnerName"></h1>
-          <p class="partner-desc" id="partnerDesc"></p>
-          <a href="#" class="partner-contact-btn" id="partnerWhatsapp" target="_blank">
-            💬 Fale Conosco no WhatsApp
-          </a>
-        </div>
-      </section>
+ <footer class="partner-footer">
+ <div class="container">
+  <img src="/img/Sublimitas-logo.png" alt="Sublimitas" style="height:32px;width:auto;margin-bottom:12px">
+  <div id="footerPartnerSocialLinks" style="display:flex;gap:10px;justify-content:center;margin-bottom:12px"></div>
+  <p>Loja operada por <strong id="footerPartnerName"></strong> · Powered by <a href="/">Sublimitas</a></p>
+  <p style="margin-top:8px">&copy; <span id="year"></span> Sublimitas. Todos os direitos reservados.</p>
+ </div>
+</footer>
 
-      <section class="partner-products">
-        <div class="container">
-          <div class="section-header">
-            <h2>Nossos Produtos</h2>
-            <p>Conheça os produtos personalizados deste parceiro</p>
-          </div>
-          <div class="products-grid" id="partnerProductsGrid">
-            <div class="loading-spinner"></div>
-          </div>
-        </div>
-      </section>
-    </div>
-  </main>
+<div class="toast-container" id="toastContainer"></div>
 
-  <footer class="partner-footer">
-    <div class="container">
-      <a href="/" class="logo">
-        <span class="logo-icon">✦</span>
-        <span class="logo-text">Sublimitas</span>
-      </a>
-      <p>&copy; <span id="year"></span> Sublimitas. Todos os direitos reservados.</p>
-    </div>
-  </footer>
+<script src="/js/main.js"></script>
+<script>
+let partnerData=null;
 
-  <div class="toast-container" id="toastContainer"></div>
+const DEFAULT_PARTNERS={
+ 'mundo-automatik':{
+  company_name:'Mundo Automatik',
+  description:'Soluções em automação e produtos personalizados para empresas e indústrias.',
+  primary_color:'#1E40AF',accent_color:'#3B82F6',
+  whatsapp_number:'5522999999999',
+  logo_initial:'M',
+  price_markup:0.15
+ },
+ 'automate':{
+  company_name:'Automate',
+  description:'Tecnologia e personalização para o futuro do seu negócio.',
+  primary_color:'#0F172A',accent_color:'#22C55E',
+  whatsapp_number:'5522999999999',
+  logo_initial:'A',
+  price_markup:0.20
+ },
+ 'fabricando-sua-ideia':{
+  company_name:'Fabricando Sua Ideia',
+  description:'Transformamos suas ideias em produtos personalizados únicos.',
+  primary_color:'#B45309',accent_color:'#F59E0B',
+  whatsapp_number:'5522999999999',
+  logo_initial:'F',
+  price_markup:0.15
+ },
+ 'igreja-fe-divina':{
+  company_name:'Igreja Fé Divina',
+  description:'Artigos personalizados para igrejas, eventos e comunidades de fé.',
+  primary_color:'#7C3AED',accent_color:'#A78BFA',
+  whatsapp_number:'5522999999999',
+  logo_initial:'I',
+  price_markup:0.10
+ },
+ 'casa-dos-personalizados':{
+  company_name:'Casa dos Personalizados',
+  description:'A sua loja de confiança para presentes e produtos personalizados.',
+  primary_color:'#DC2626',accent_color:'#F87171',
+  whatsapp_number:'5522999999999',
+  logo_initial:'C',
+  price_markup:0.18
+ }
+};
 
-  <script src="/js/main.js"></script>
-  <script>
-    let partnerData = null;
+function getPartnerSlug(){
+ const params=new URLSearchParams(window.location.search);
+ if(params.get('slug'))return params.get('slug');
+ const parts=window.location.pathname.split('/');
+ return parts[parts.length-1]||'';
+}
 
-    async function loadPartner() {
-      const pathParts = window.location.pathname.split('/');
-      const slug = pathParts[pathParts.length - 1];
+async function loadPartner(){
+ const slug=getPartnerSlug();
+ if(!slug||slug==='parceiro'){showNotFound();return}
 
-      if (!slug) {
-        showNotFound();
-        return;
-      }
+ partnerData=DEFAULT_PARTNERS[slug]||{
+  company_name:slug.replace(/-/g,' ').replace(/\b\w/g,l=>l.toUpperCase()),
+  description:'Produtos personalizados com qualidade Sublimitas',
+  primary_color:'#7B2FBE',accent_color:'#FF6B00',
+  whatsapp_number:'5522999999999',
+  logo_initial:slug.charAt(0).toUpperCase(),
+  price_markup:0.15
+ };
 
-      try {
-        const res = await fetch(`/api/products?partner_slug=${encodeURIComponent(slug)}`);
-        if (!res.ok) {
-          showNotFound();
-          return;
-        }
+ try{
+  const res=await fetch('/api/admin/partners/'+slug);
+  if(res.ok){
+   const server=await res.json();
+   if(server.partner)partnerData={...partnerData,...server.partner};
+  }
+ }catch{}
 
-        const defaultColors = { primary: '#7B2FBE', accent: '#FF6B00' };
+ const localConfig=localStorage.getItem('partner_config_'+slug);
+ if(localConfig){
+  try{partnerData={...partnerData,...JSON.parse(localConfig)}}catch{}
+ }
 
-        partnerData = {
-          slug: slug,
-          company_name: 'Parceiro Sublimitas',
-          description: 'Produtos personalizados com qualidade profissional',
-          logo_url: '',
-          banner_url: '',
-          primary_color: defaultColors.primary,
-          whatsapp_message: 'Olá! Vim pelo site da Sublimitas e gostaria de saber mais sobre seus produtos personalizados.'
-        };
+ renderPartner();
+ loadPartnerProducts();
+}
 
-        renderPartner();
-        loadPartnerProducts(slug);
-      } catch {
-        showNotFound();
-      }
-    }
+function showNotFound(){
+ document.getElementById('partnerNotFound').style.display='block';
+ document.getElementById('partnerContent').style.display='none';
+}
 
-    function showNotFound() {
-      document.getElementById('partnerNotFound').style.display = 'block';
-      document.getElementById('partnerContent').style.display = 'none';
-    }
+function renderPartner(){
+ document.getElementById('partnerContent').style.display='block';
+ document.getElementById('partnerNotFound').style.display='none';
+ document.title=partnerData.company_name+' — Sublimitas';
 
-    function renderPartner() {
-      document.getElementById('partnerContent').style.display = 'block';
-      document.getElementById('partnerNotFound').style.display = 'none';
+ const p=partnerData.primary_color||'#7B2FBE';
+ const a=partnerData.accent_color||'#FF6B00';
+ document.documentElement.style.setProperty('--pp',p);
+ document.documentElement.style.setProperty('--ppd',p+'cc');
+ document.documentElement.style.setProperty('--pa',a);
 
-      document.title = `${partnerData.company_name} — Sublimitas`;
+ document.getElementById('partnerBanner').style.background=`linear-gradient(135deg,${p},${p}bb)`;
 
-      const banner = document.getElementById('partnerBanner');
-      const primary = partnerData.primary_color || '#7B2FBE';
-      banner.style.background = `linear-gradient(135deg, ${primary}, ${primary}cc)`;
+ const logo=document.getElementById('partnerLogo');
+ if(partnerData.logo_url){
+  logo.innerHTML='<img src="'+partnerData.logo_url+'" alt="'+partnerData.company_name+'">';
+ }else{
+  logo.textContent=partnerData.logo_initial||'✦';
+ }
 
-      if (partnerData.banner_url) {
-        document.getElementById('partnerBannerBg').style.backgroundImage = `url(${partnerData.banner_url})`;
-        banner.style.background = 'none';
-      }
+ document.getElementById('partnerName').textContent=partnerData.company_name;
+ document.getElementById('partnerDesc').textContent=partnerData.description||'';
 
-      const logoWrap = document.getElementById('partnerLogo');
-      if (partnerData.logo_url) {
-        logoWrap.innerHTML = `<img src="${partnerData.logo_url}" alt="${partnerData.company_name}">`;
-      } else {
-        logoWrap.innerHTML = `<span>✦</span>`;
-      }
+ const phone=(partnerData.whatsapp_number||'').replace(/\D/g,'');
+ const msg=encodeURIComponent('Olá! Vim pelo site do parceiro '+partnerData.company_name+' e gostaria de saber mais.');
+ document.getElementById('partnerWhatsapp').href='https://wa.me/55'+phone+'?text='+msg;
 
-      document.getElementById('partnerName').textContent = partnerData.company_name;
-      document.getElementById('partnerDesc').textContent = partnerData.description || '';
+ document.getElementById('footerPartnerName').textContent=partnerData.company_name;
 
-      const msg = encodeURIComponent(partnerData.whatsapp_message || 'Olá!');
-      const phone = partnerData.whatsapp_number ? partnerData.whatsapp_number.replace(/\D/g, '') : '5500000000000';
-      document.getElementById('partnerWhatsapp').href = `https://wa.me/${phone}?text=${msg}`;
-    }
+ renderPartnerSocialLinks('partnerSocialLinks');
+ renderPartnerSocialLinks('footerPartnerSocialLinks');
 
-    async function loadPartnerProducts(slug) {
-      const grid = document.getElementById('partnerProductsGrid');
-      try {
-        const res = await fetch('/api/products');
-        const data = await res.json();
-        const products = data.products || data || [];
+ const embed=document.getElementById('embedBar');
+ embed.style.display='block';
+ document.getElementById('embedCode').textContent=
+  '<iframe src="'+window.location.href+'" width="100%" height="800" frameborder="0" style="border:none;border-radius:12px"></iframe>';
+}
 
-        if (products.length === 0) {
-          grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--gray-500);">Nenhum produto disponível</p>';
-          return;
-        }
+async function loadPartnerProducts(){
+ const grid=document.getElementById('partnerProductsGrid');
+ try{
+  const res=await fetch('/api/products');
+  const data=await res.json();
+  const products=data.products||data||[];
+  if(products.length===0){
+   grid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:var(--g5)">Nenhum produto disponível</p>';
+   return;
+  }
+  const markup=partnerData.price_markup||0.15;
+  grid.innerHTML=products.slice(0,12).map(p=>{
+   const img=(p.images&&p.images.length>0)?p.images[0]:null;
+   const base=parseFloat(p.base_price);
+   const partnerPrice=(base*(1+markup)).toFixed(2);
+   const installment=(partnerPrice/3).toFixed(2);
+   const pColor=partnerData.primary_color||'#7B2FBE';
+   return `
+    <div class="partner-product-card">
+     <div class="partner-product-img" style="background:var(--g1)">
+      ${img?'<img src="'+img+'" alt="'+p.name+'">':'📦'}
+     </div>
+     <div class="partner-product-info">
+      <div class="cat">${p.category_name||''}</div>
+      <div class="name">${p.name}</div>
+      <div class="stock">📦 Estoque disponível</div>
+      <div class="price" style="color:${pColor}">R$ ${partnerPrice.replace('.',',')}</div>
+      <div class="installment">ou 3x de R$ ${installment.replace('.',',')}</div>
+      <div class="base-note">Vendido por ${partnerData.company_name} via Sublimitas</div>
+     </div>
+     <div class="partner-product-actions">
+      <a href="/produto?slug=${p.slug}" class="btn btn-outline btn-sm">Ver</a>
+      <button class="btn btn-sm" style="background:${pColor};color:#fff" onclick="addToCart(${p.id})">Comprar</button>
+     </div>
+    </div>`;
+  }).join('');
+ }catch{
+  grid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:var(--g5)">Erro ao carregar produtos</p>';
+ }
+}
 
-        grid.innerHTML = products.slice(0, 12).map(p => {
-          const img = (p.images && p.images.length > 0) ? p.images[0] : null;
-          return `
-            <div class="product-card">
-              <div class="product-image">${img ? `<img src="${img}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover">` : '📦'}</div>
-              <div class="product-info">
-                <div class="product-category">${p.category_name || ''}</div>
-                <div class="product-name">${p.name}</div>
-                <div class="product-price">${formatPrice(p.base_price)}</div>
-              </div>
-              <div class="product-actions">
-                <a href="/produto?slug=${p.slug}" class="btn btn-outline btn-sm">Ver Detalhes</a>
-                <button class="btn btn-primary btn-sm" onclick="addToCart(${p.id})">Adicionar</button>
-              </div>
-            </div>
-          `;
-        }).join('');
-      } catch {
-        grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--gray-500);">Erro ao carregar produtos</p>';
-      }
-    }
+function renderPartnerSocialLinks(containerId){
+ var el=document.getElementById(containerId);
+ if(!el)return;
+ var networks=[
+  {key:'social_instagram',iconKey:'social_instagram_icon',label:'Instagram',fallbackIcon:'📸',color:'#E4405F'},
+  {key:'social_facebook',iconKey:'social_facebook_icon',label:'Facebook',fallbackIcon:'💬',color:'#1877F2'},
+  {key:'social_tiktok',iconKey:'social_tiktok_icon',label:'TikTok',fallbackIcon:'🎵',color:'#000'},
+  {key:'social_youtube',iconKey:'social_youtube_icon',label:'YouTube',fallbackIcon:'▶️',color:'#FF0000'},
+  {key:'social_twitter',iconKey:'social_twitter_icon',label:'Twitter/X',fallbackIcon:'🐦',color:'#1DA1F2'},
+  {key:'social_linkedin',iconKey:'social_linkedin_icon',label:'LinkedIn',fallbackIcon:'💼',color:'#0A66C2'}
+ ];
+ var html='';
+ networks.forEach(function(n){
+  var url=partnerData[n.key];
+  if(url){
+   var iconVal=partnerData[n.iconKey]||'';
+   var isImg=iconVal.match(/\.(png|jpe?g|gif|svg|webp)/i)||iconVal.startsWith('http');
+   var iconHtml=isImg
+    ?'<img src="'+iconVal+'" alt="'+n.label+'" style="width:20px;height:20px;border-radius:4px;object-fit:contain">'
+    :(iconVal||n.fallbackIcon);
+   html+='<a href="'+url+'" target="_blank" rel="noopener noreferrer" title="'+n.label+'" '+
+    'style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;font-size:1rem;text-decoration:none;transition:all .2s" '+
+    'onmouseover="this.style.background=\''+n.color+'\'" onmouseout="this.style.background=\'rgba(255,255,255,.15)\'">'+iconHtml+'</a>';
+  }
+ });
+ el.innerHTML=html;
+}
 
-    document.addEventListener('DOMContentLoaded', () => {
-      loadPartner();
-      const yearEl = document.getElementById('year');
-      if (yearEl) yearEl.textContent = new Date().getFullYear();
-    });
-  </script>
+document.addEventListener('DOMContentLoaded',()=>{
+ loadPartner();
+ const y=document.getElementById('year');
+ if(y)y.textContent=new Date().getFullYear();
+});
+</script>
 </body>
 </html>

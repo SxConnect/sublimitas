@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Parceiro — Sublimitas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<style>
+  .partner-admin{display:flex;min-height:100vh}
+  .pa-sidebar{width:240px;background:var(--g9);color:var(--g4);padding:20px 0;flex-shrink:0}
+  .pa-sidebar a{display:flex;align-items:center;gap:10px;padding:12px 20px;font-size:.9rem;transition:all var(--transition);color:var(--g4)}
+  .pa-sidebar a:hover,.pa-sidebar a.active{color:#fff;background:rgba(255,255,255,.08)}
+  .pa-content{flex:1;padding:32px;background:var(--g1)}
+  .pa-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px}
+  .pa-header h1{font-size:1.5rem;font-weight:700}
+  .pa-card{background:var(--g0);border:1px solid var(--g2);border-radius:var(--radius);padding:28px;margin-bottom:24px}
+  .pa-card h2{font-size:1.15rem;font-weight:700;margin-bottom:16px;color:var(--g9)}
+  .color-row{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+  .color-field{display:flex;flex-direction:column;gap:6px}
+  .color-field label{font-size:.85rem;font-weight:600;color:var(--g7)}
+  .color-field input[type="color"]{width:48px;height:48px;border:2px solid var(--g2);border-radius:10px;cursor:pointer;padding:2px}
+  .color-field input[type="text"]{width:100px;padding:8px 12px;border:1px solid var(--g3);border-radius:8px;font-size:.85rem;font-family:var(--font)}
+  .preview-banner{height:180px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.2rem;font-weight:700;margin-top:16px;transition:background .3s}
+  .price-table{width:100%;border-collapse:collapse}
+  .price-table th,.price-table td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--g1);font-size:.85rem}
+  .price-table th{background:var(--g1);font-weight:600;color:var(--g6);font-size:.75rem;text-transform:uppercase;letter-spacing:.5px}
+  .price-table input{width:80px;padding:6px 10px;border:1px solid var(--g3);border-radius:6px;font-size:.85rem}
+  .embed-box{background:var(--g9);color:var(--g0);padding:14px 18px;border-radius:10px;font-size:.8rem;word-break:break-all;font-family:monospace;margin-top:12px}
+  @media(max-width:768px){.pa-sidebar{display:none}.pa-content{padding:16px}}
+</style>
+</head>
+<body>
+
+<div class="partner-admin">
+ <aside class="pa-sidebar">
+  <div style="padding:0 20px 20px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:12px">
+   <div style="font-size:1.1rem;font-weight:800;color:#fff">Painel Parceiro</div>
+   <div style="font-size:.75rem;color:var(--g5)">Personalize sua loja</div>
+  </div>
+  <a href="#personalizacao" class="active">🎨 Personalização</a>
+  <a href="#produtos">📦 Produtos & Preços</a>
+  <a href="#embed">🔗 Embed</a>
+  <a href="#preview" target="_blank">👁️ Ver Loja</a>
+  <div style="flex:1"></div>
+  <a href="/" style="margin-top:auto">← Voltar ao site</a>
+ </aside>
+
+ <main class="pa-content">
+  <div class="pa-header">
+   <h1>Personalizar Minha Loja</h1>
+   <a href="/parceiro?slug=loja-exemplo" target="_blank" class="btn btn-primary btn-sm">👁️ Visualizar Loja</a>
+  </div>
+
+  <!-- PERSONALIZAÇÃO -->
+  <div class="pa-card" id="personalizacao">
+   <h2>🎨 Identidade Visual</h2>
+   <div class="form-group">
+    <label>Nome da Loja</label>
+    <input type="text" id="paName" value="Loja Exemplo" placeholder="Nome da sua loja">
+   </div>
+   <div class="form-group">
+    <label>Descrição</label>
+    <input type="text" id="paDesc" value="Produtos personalizados com qualidade profissional" placeholder="Descrição curta">
+   </div>
+   <div class="form-group">
+    <label>Logo (URL da imagem)</label>
+    <input type="text" id="paLogo" placeholder="https://exemplo.com/logo.png">
+   </div>
+   <div class="form-group">
+    <label>Inicial do Logo (se não tiver imagem)</label>
+    <input type="text" id="paInitial" value="L" maxlength="2" style="width:60px">
+   </div>
+
+   <h2 style="margin-top:24px">🎯 Cores</h2>
+   <div class="color-row">
+    <div class="color-field">
+     <label>Cor Principal</label>
+     <input type="color" id="paColor1" value="#7B2FBE">
+     <input type="text" id="paColor1Text" value="#7B2FBE">
+    </div>
+    <div class="color-field">
+     <label>Cor de Destaque</label>
+     <input type="color" id="paColor2" value="#FF6B00">
+     <input type="text" id="paColor2Text" value="#FF6B00">
+    </div>
+   </div>
+
+    <h2 style="margin-top:24px">💬 WhatsApp</h2>
+    <div class="form-group">
+     <label>Número (somente dígitos com DDD)</label>
+     <input type="text" id="paWhatsapp" value="22999999999" placeholder="22999999999">
+    </div>
+
+    <h2 style="margin-top:24px">📱 Redes Sociais</h2>
+    <p style="font-size:.85rem;color:var(--g5);margin-bottom:12px">Preencha apenas as redes que sua loja utiliza. O ícone pode ser uma imagem (URL) ou emoji.</p>
+    <div class="form-group"><label>Instagram URL</label><input type="url" id="paSocialInstagram" placeholder="https://instagram.com/..."></div>
+    <div class="form-group"><label>Ícone Instagram (URL da imagem ou emoji)</label><input type="text" id="paSocialInstagramIcon" placeholder="📸 ou URL da imagem"></div>
+    <div class="form-group"><label>Facebook URL</label><input type="url" id="paSocialFacebook" placeholder="https://facebook.com/..."></div>
+    <div class="form-group"><label>Ícone Facebook</label><input type="text" id="paSocialFacebookIcon" placeholder="💬 ou URL da imagem"></div>
+    <div class="form-group"><label>TikTok URL</label><input type="url" id="paSocialTiktok" placeholder="https://tiktok.com/@..."></div>
+    <div class="form-group"><label>Ícone TikTok</label><input type="text" id="paSocialTiktokIcon" placeholder="🎵 ou URL da imagem"></div>
+    <div class="form-group"><label>YouTube URL</label><input type="url" id="paSocialYoutube" placeholder="https://youtube.com/..."></div>
+    <div class="form-group"><label>Ícone YouTube</label><input type="text" id="paSocialYoutubeIcon" placeholder="▶️ ou URL da imagem"></div>
+    <div class="form-group"><label>LinkedIn URL</label><input type="url" id="paSocialLinkedin" placeholder="https://linkedin.com/..."></div>
+    <div class="form-group"><label>Ícone LinkedIn</label><input type="text" id="paSocialLinkedinIcon" placeholder="💼 ou URL da imagem"></div>
+    <div class="form-group"><label>Twitter/X URL</label><input type="url" id="paSocialTwitter" placeholder="https://x.com/..."></div>
+    <div class="form-group"><label>Ícone Twitter/X</label><input type="text" id="paSocialTwitterIcon" placeholder="🐦 ou URL da imagem"></div>
+
+    <div class="preview-banner" id="paPreview" style="background:linear-gradient(135deg,#7B2FBE,#7B2FBEcc)">
+    Loja Exemplo
+   </div>
+
+   <div style="margin-top:20px;text-align:right">
+    <button class="btn btn-primary" onclick="savePartnerConfig()">💾 Salvar Alterações</button>
+   </div>
+  </div>
+
+  <!-- PRODUTOS & PREÇOS -->
+  <div class="pa-card" id="produtos">
+   <h2>📦 Markup de Preços</h2>
+   <p style="font-size:.85rem;color:var(--g5);margin-bottom:16px">Defina a margem de lucro sobre o preço base da Sublimitas. O preço final não pode ser menor que o preço da Sublimitas.</p>
+   <div class="form-group">
+    <label>Markup (%) — ex: 15 = +15% sobre o preço base</label>
+    <input type="number" id="paMarkup" value="15" min="0" max="200" style="width:120px">
+   </div>
+
+   <h2 style="margin-top:24px;margin-bottom:16px">📋 Exemplo de Preços</h2>
+   <table class="price-table">
+    <thead><tr><th>Produto</th><th>Preço Sublimitas</th><th>Seu Preço</th><th>Lucro</th></tr></thead>
+    <tbody id="priceTableBody"></tbody>
+   </table>
+  </div>
+
+  <!-- EMBED -->
+  <div class="pa-card" id="embed">
+   <h2>🔗 Incorporar no Seu Site</h2>
+   <p style="font-size:.85rem;color:var(--g5);margin-bottom:16px">Copie o código abaixo e cole no HTML da sua página para exibir sua loja personalizada.</p>
+   <div class="embed-box" id="embedCodeBox"></div>
+   <div style="margin-top:12px">
+    <button class="btn btn-outline-purple btn-sm" onclick="copyEmbed()">📋 Copiar Código</button>
+   </div>
+  </div>
+ </main>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="/js/main.js"></script>
+<script>
+(function(){
+ var user=JSON.parse(localStorage.getItem('user')||'null');
+ if(!user||user.role!=='partner'){
+  window.location.href='/login.html';
+ }
+})();
+const EXAMPLE_PRODUCTS=[
+ {name:'Caneca Mágica',base:39.90,emoji:'☕'},
+ {name:'Camiseta Polo',base:59.90,emoji:'👕'},
+ {name:'Garrafa Térmica',base:49.90,emoji:'🍶'},
+ {name:'Boné Premium',base:44.90,emoji:'🧢'},
+ {name:'Kit Canecas',base:189.90,emoji:'☕'},
+ {name:'Uniforme Esportivo',base:129.90,emoji:'👔'}
+];
+
+function getSlug(){
+ const params=new URLSearchParams(window.location.search);
+ return params.get('slug')||'loja-exemplo';
+}
+
+function syncColor_inputs(){
+ document.getElementById('paColor1Text').value=document.getElementById('paColor1').value;
+ document.getElementById('paColor2Text').value=document.getElementById('paColor2').value;
+ updatePreview();
+}
+
+function syncColor_pickers(){
+ document.getElementById('paColor1').value=document.getElementById('paColor1Text').value;
+ document.getElementById('paColor2').value=document.getElementById('paColor2Text').value;
+ updatePreview();
+}
+
+function updatePreview(){
+ const p=document.getElementById('paColor1').value;
+ const name=document.getElementById('paName').value||'Sua Loja';
+ const el=document.getElementById('paPreview');
+ el.style.background='linear-gradient(135deg,'+p+','+p+'cc)';
+ el.textContent=name;
+ updatePriceTable();
+ updateEmbed();
+}
+
+function updatePriceTable(){
+ const markup=parseFloat(document.getElementById('paMarkup').value)||0;
+ const tbody=document.getElementById('priceTableBody');
+ tbody.innerHTML=EXAMPLE_PRODUCTS.map(p=>{
+  const final=(p.base*(1+markup/100)).toFixed(2);
+  const profit=(final-p.base).toFixed(2);
+  return '<tr><td>'+p.emoji+' '+p.name+'</td><td>R$ '+p.base.toFixed(2).replace('.',',')+'</td><td><strong>R$ '+final.replace('.',',')+'</td><td style="color:var(--g)">+R$ '+profit.replace('.',',')+'</td></tr>';
+ }).join('');
+}
+
+function updateEmbed(){
+ const slug=getSlug();
+ const url=window.location.origin+'/parceiro?slug='+slug;
+ document.getElementById('embedCodeBox').textContent=
+  '<iframe src="'+url+'" width="100%" height="800" frameborder="0" style="border:none;border-radius:12px;min-height:600px"></iframe>';
+}
+
+function copyEmbed(){
+ const code=document.getElementById('embedCodeBox').textContent;
+ navigator.clipboard.writeText(code).then(()=>showToast('Código copiado!','success')).catch(()=>showToast('Erro ao copiar','error'));
+}
+
+function savePartnerConfig(){
+ const config={
+  slug:getSlug(),
+  company_name:document.getElementById('paName').value,
+  description:document.getElementById('paDesc').value,
+  logo_url:document.getElementById('paLogo').value,
+  logo_initial:document.getElementById('paInitial').value,
+  primary_color:document.getElementById('paColor1').value,
+  accent_color:document.getElementById('paColor2').value,
+  whatsapp_number:document.getElementById('paWhatsapp').value,
+  price_markup:parseFloat(document.getElementById('paMarkup').value)/100,
+  social_instagram:document.getElementById('paSocialInstagram').value.trim(),
+  social_instagram_icon:document.getElementById('paSocialInstagramIcon').value.trim(),
+  social_facebook:document.getElementById('paSocialFacebook').value.trim(),
+  social_facebook_icon:document.getElementById('paSocialFacebookIcon').value.trim(),
+  social_tiktok:document.getElementById('paSocialTiktok').value.trim(),
+  social_tiktok_icon:document.getElementById('paSocialTiktokIcon').value.trim(),
+  social_youtube:document.getElementById('paSocialYoutube').value.trim(),
+  social_youtube_icon:document.getElementById('paSocialYoutubeIcon').value.trim(),
+  social_linkedin:document.getElementById('paSocialLinkedin').value.trim(),
+  social_linkedin_icon:document.getElementById('paSocialLinkedinIcon').value.trim(),
+  social_twitter:document.getElementById('paSocialTwitter').value.trim(),
+  social_twitter_icon:document.getElementById('paSocialTwitterIcon').value.trim()
+ };
+ localStorage.setItem('partner_config_'+config.slug,JSON.stringify(config));
+ showToast('Configurações salvas!','success');
+}
+
+function loadPartnerConfig(){
+ const slug=getSlug();
+ const saved=localStorage.getItem('partner_config_'+slug);
+ if(saved){
+  const c=JSON.parse(saved);
+  if(c.company_name)document.getElementById('paName').value=c.company_name;
+  if(c.description)document.getElementById('paDesc').value=c.description;
+  if(c.logo_url)document.getElementById('paLogo').value=c.logo_url;
+  if(c.logo_initial)document.getElementById('paInitial').value=c.logo_initial;
+  if(c.primary_color){document.getElementById('paColor1').value=c.primary_color;document.getElementById('paColor1Text').value=c.primary_color}
+  if(c.accent_color){document.getElementById('paColor2').value=c.accent_color;document.getElementById('paColor2Text').value=c.accent_color}
+  if(c.whatsapp_number)document.getElementById('paWhatsapp').value=c.whatsapp_number;
+  if(c.price_markup!==undefined)document.getElementById('paMarkup').value=Math.round(c.price_markup*100);
+  if(c.social_instagram)document.getElementById('paSocialInstagram').value=c.social_instagram;
+  if(c.social_instagram_icon)document.getElementById('paSocialInstagramIcon').value=c.social_instagram_icon;
+  if(c.social_facebook)document.getElementById('paSocialFacebook').value=c.social_facebook;
+  if(c.social_facebook_icon)document.getElementById('paSocialFacebookIcon').value=c.social_facebook_icon;
+  if(c.social_tiktok)document.getElementById('paSocialTiktok').value=c.social_tiktok;
+  if(c.social_tiktok_icon)document.getElementById('paSocialTiktokIcon').value=c.social_tiktok_icon;
+  if(c.social_youtube)document.getElementById('paSocialYoutube').value=c.social_youtube;
+  if(c.social_youtube_icon)document.getElementById('paSocialYoutubeIcon').value=c.social_youtube_icon;
+  if(c.social_linkedin)document.getElementById('paSocialLinkedin').value=c.social_linkedin;
+  if(c.social_linkedin_icon)document.getElementById('paSocialLinkedinIcon').value=c.social_linkedin_icon;
+  if(c.social_twitter)document.getElementById('paSocialTwitter').value=c.social_twitter;
+  if(c.social_twitter_icon)document.getElementById('paSocialTwitterIcon').value=c.social_twitter_icon;
+ }
+ updatePreview();
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+ loadPartnerConfig();
+ document.getElementById('paColor1').addEventListener('input',syncColor_inputs);
+ document.getElementById('paColor2').addEventListener('input',syncColor_inputs);
+ document.getElementById('paColor1Text').addEventListener('input',syncColor_pickers);
+ document.getElementById('paColor2Text').addEventListener('input',syncColor_pickers);
+ ['paName','paDesc','paInitial'].forEach(id=>{
+  document.getElementById(id).addEventListener('input',updatePreview);
+ });
+ document.getElementById('paMarkup').addEventListener('input',updatePriceTable);
+});
+</script>
+</body>
+</html>
