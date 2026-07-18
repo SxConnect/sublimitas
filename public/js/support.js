@@ -1,5 +1,5 @@
 function initSupport() {
-  var mode = getSetting('admin_support_mode');
+  var mode = getSetting('widget_mode') || getSetting('admin_support_mode');
 
   if (mode === 'widget') {
     loadWidget();
@@ -20,7 +20,7 @@ function loadWidget() {
   script.src = '/widget/widget.js';
   script.onload = () => {
     if (window.SublimitasWidget) {
-      const primary = getSetting('primary_color') || '#7B2FBE';
+      const primary = getSetting('widget_color') || getSetting('primary_color') || '#7B2FBE';
       const accent = getSetting('accent_color') || '#FF6B00';
       const whatsappNumber = getSetting('whatsapp_number') || '';
       const whatsappMessage = getSetting('whatsapp_message') || 'Olá! Gostaria de saber mais sobre os produtos.';
@@ -32,7 +32,15 @@ function loadWidget() {
         whatsappNumber: whatsappNumber,
         whatsappMessage: whatsappMessage,
         email: email,
-        position: 'bottom-right'
+        position: getSetting('widget_position') || 'bottom-right',
+        companyName: getSetting('widget_header_name') || getSetting('site_name') || 'Sublimitas',
+        welcomeMessage: getSetting('widget_welcome') || 'Olá! Como podemos ajudar você hoje?',
+        statusText: getSetting('widget_status') || 'Online agora',
+        avatar: getSetting('widget_avatar') || '',
+        hours: getSetting('widget_hours') || '',
+        showWhatsapp: getSetting('widget_show_whatsapp') !== '0',
+        showEmail: getSetting('widget_show_email') !== '0',
+        showForm: getSetting('widget_show_form') !== '0'
       });
     }
   };

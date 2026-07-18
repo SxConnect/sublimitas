@@ -96,7 +96,7 @@ app.get('/api/settings/public', async (req, res) => {
   try {
     const { query } = require('./config/db');
     const settings = await query(
-      "SELECT setting_key, setting_value FROM settings WHERE category IN ('general', 'design', 'contact', 'social', 'support', 'ai', 'sections')"
+      "SELECT setting_key, setting_value FROM settings WHERE category IN ('general', 'design', 'contact', 'social', 'support', 'ai', 'sections', 'widget')"
     );
 
     const publicSettings = {};
